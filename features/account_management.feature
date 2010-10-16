@@ -41,3 +41,4 @@ Feature: Accounts
     And I fill in my secret key
 
   Scenario: New user must enter valid form stuff
+  Scenario: We strip all non-digits from phone number when you sign up
