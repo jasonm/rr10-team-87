@@ -22,11 +22,11 @@ Feature: Accounts
     And I fill in "8004688487" as my phone number
     And I press the sign up button
     Then I get a text with my secret code
-    When I fill in "this is not a love song"
+    When I fill in "this is not a love song" as my secret code
     And I submit my profile
-    Then I see a no description of how to use the Web site
+    Then I see no description of how to use the Web site
     And "8004688487" is unconfirmed
-    And I see the error "does not match" on the secret code field
+    And I see the error "doesn't match" on the secret code field
 
   @later
   Scenario: Secret code reminder

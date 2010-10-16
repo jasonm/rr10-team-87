@@ -16,8 +16,11 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.update_attributes(params[:user])
-    @user.save
-    redirect_to page_url('how')
+    @user.secret_code_confirmation = params[:user][:secret_code]
+    if @user.update_attributes(params[:user])
+      redirect_to page_url('how')
+    else
+      render :action => :edit
+    end
   end
 end

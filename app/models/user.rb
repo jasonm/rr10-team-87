@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   attr_protected :secret_code, :phone_number
   validates_presence_of :phone_number
+  validates_confirmation_of :secret_code, :allow_nil => true
 
   after_create :deliver_secret_code
 

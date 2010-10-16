@@ -10,6 +10,10 @@ When 'I fill in my secret code' do
   fill_in 'user[secret_code]', :with => secret_code
 end
 
+When 'I fill in "$secret_code" as my secret code' do |code|
+  fill_in 'user[secret_code]', :with => code
+end
+
 When 'I fill in the date of birth with "$date_of_birth"' do |date_of_birth|
   date = Date.parse(date_of_birth)
   select date.year.to_s, :from =>'user_dob_1i'
@@ -43,4 +47,10 @@ end
 
 When 'I submit my profile' do
   click_button 'Get your account'
+end
+
+Then 'I see the error "$error_message" on the secret code field' do |error_message|
+  within("#user_secret_code_input") do
+    page.should have_content(error_message), "expected secret code to have the error: #{error_message}"
+  end
 end
