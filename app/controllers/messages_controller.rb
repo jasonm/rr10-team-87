@@ -1,15 +1,20 @@
 class MessagesController < ApplicationController
   before_filter :must_be_sms
 
+  def log(s)
+    logger = Logger.new("/tmp/somelogs")
+    logger.info(s)
+  end
+
   def index
    puts "testing puts"
-   Rails.logger.warn "testing warn"
-   Rails.logger.error "In index"
+   log "testing warn"
+   log "In index"
     if params[:session][:parameters][:relay]
-      Rails.logger.error "session params relay is true"
+      log "session params relay is true"
       json = Message.json_for_relay(params[:session][:parameters])
-      Rails.logger.error "Relay response:"
-      Rails.logger.error json
+      log "Relay response:"
+      log json
       render :json => json
     else
       if user = User.find_by_phone_number(phone_number)
@@ -23,7 +28,6 @@ class MessagesController < ApplicationController
         render :json => must_register_first_message
       end
     end
-    Rails.logger.flush
   end
 
   protected
