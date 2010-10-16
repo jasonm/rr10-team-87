@@ -50,6 +50,8 @@ h1 {
     #container ol li span {
       color: #fff; }
 
+/* form */
+/*****************************************************************************/
 #container fieldset {
   background: transparent;
   border: 0;
@@ -67,6 +69,7 @@ h1 {
       color: #ddd;
       font-size: 18px;
       font-weight: normal;
+      margin: 0 0 8px 0;
       text-shadow: 0 1px 1px #000; }
     #container fieldset ol li {
       margin: 0 0 16px 0; }
@@ -77,12 +80,17 @@ h1 {
           font-size: 15px; }
         #container fieldset ol li#user_male_input input, #container fieldset ol li#user_female_input input, #container fieldset ol li#user_other_input input, #container fieldset ol li#user_looking_for_female_input input, #container fieldset ol li#user_looking_for_male_input input, #container fieldset ol li#user_looking_for_other_input input {
           margin: 0 4px 0 0; }
+      #container fieldset ol li#user_looking_for_minimum_age_input, #container fieldset ol li#user_looking_for_maximum_age_input {
+        float: left;
+        width: 180px; }
     #container fieldset ol label {
       color: #ddd;
       font-size: 18px;
       font-weight: normal;
       margin: 0 0 2px 0;
       text-shadow: 0 1px 1px #000; }
+      #container fieldset ol label abbr {
+        display: none; }
     #container fieldset ol input[type="text"] {
       background: #ddd;
       border: 1px solid #111;
@@ -91,7 +99,7 @@ h1 {
       font-family: MuseoSlab500;
       font-size: 18px;
       padding: 10px 5px;
-      width: 410px;
+      width: 407px;
       -webkit-background-clip: padding-box; }
     #container fieldset ol textarea {
       border-radius: 4px;
@@ -113,10 +121,11 @@ form ol li.time ol li label {
   display: none; }
 
 body.users-new #container fieldset ol label {
-  margin: 0 0 8px 0;
+  margin: 0 0 5px 0;
   text-align: center; }
 body.users-new #container fieldset ol input[type="text"] {
   font-size: 26px;
+  margin: 0 0 2px 0;
   text-align: center; }
 body.users-new #container fieldset ol p.inline-hints {
   color: #bbb;

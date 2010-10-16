@@ -2,12 +2,12 @@
   <%= form.inputs do %>
     <%= form.input :secret_code %>
     <%= form.input :name, :label => 'First name' %>
-    <%= form.input :description, :label => 'How would someone recognize you?' %>
+    <%= form.input :description, :label => 'A quick description of yourself' %>
     <%= form.input :dob, :start_year => Date.today.year-55, :end_year => Date.today.year-17, :label => "Your birthday" %>
     <fieldset>
       <legend>Your gender</legend>
-      <%= form.input :male %>
       <%= form.input :female %>
+      <%= form.input :male %>
       <%= form.input :other %>
     </fieldset>
     <fieldset id="looking_for">
@@ -21,6 +21,6 @@
   <% end %>
 
   <%= form.buttons do %>
-    <%= form.commit_button 'Right this way' %>
+    <%= form.commit_button 'Get your account' %>
   <% end %>
 <% end %>
