@@ -4,6 +4,7 @@ class MessagesController < ApplicationController
   def log(s)
     logger = Logger.new("/tmp/somelogs")
     logger.info(s)
+    logger.flush
   end
 
   def index
