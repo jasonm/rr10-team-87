@@ -1,15 +1,9 @@
 class MessagesController < ApplicationController
   def index
     if params[:session][:parameters][:relay]
-      Rails.logger.info "session params relay is true"
       json = Message.json_for_relay(params[:session][:parameters])
-      Rails.logger.info "Relay response:"
-      Rails.logger.info json
       render :json => json
     else
-      Rails.logger.info "session params relay is fale"
-      # must_be_sms
-
       if user = User.find_by_phone_number(phone_number)
         @date = user.schedule_date_in(params[:session][:initialText])
         if @date.save
@@ -24,9 +18,6 @@ class MessagesController < ApplicationController
   end
 
   protected
-
-  def must_be_sms
-  end
 
   def date_response_message_for(user)
     if @date.scheduled?
