@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
 
   def deliver_secret_code
     Message.deliver(self.phone_number,
-                    "Before you can become an Instalover you must know this secret code: #{self.secret_code}")
+                    "Before you can become an instalover you must know this secret code: #{self.secret_code}")
   end
 
   def generate_secret_code
