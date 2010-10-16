@@ -2,9 +2,8 @@ class MessagesController < ApplicationController
   before_filter :must_be_sms
 
   def log(s)
-    logger = Logger.new("/tmp/somelogs")
-    logger.info(s)
-    logger.flush
+    HoptoadNotifier.notify(:error_class => "loggin",
+                           :error_message => s)
   end
 
   def index
