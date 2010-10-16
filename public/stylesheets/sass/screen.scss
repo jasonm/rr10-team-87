@@ -13,6 +13,11 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+#container a {
+ color: #c00;
+ text-decoration: none;
+}
+
 h1, h2 {
   font-family: MuseoSlab500;
 }
@@ -44,9 +49,14 @@ h1 {
   font-size: 20px;
   font-weight: normal;
   letter-spacing: 1px;
+  line-height: 130%;
   margin: 0 0 24px 0;
-  text-align: center;
+  text-align: left;
   text-shadow: 0 1px 0 #000;
+}
+
+#decide h2 {
+  text-align: center;
 }
 
 #container ol {
