@@ -18,12 +18,12 @@ Feature: The whole app
 
   Scenario: Existing user tries to get some
     Given I am confirmed as "8004688487"
-    And it is within the dating hours
     When I text instalover with "02108"
     Then I get a response telling me to wait
     When 15 minutes goes by
     Then I get a response telling me that no one is available yet
 
+  @wip
   Scenario: Existing user tries to get some when they can't
     Given I am confirmed as "8004688487"
     And it it outside of the dating hours
