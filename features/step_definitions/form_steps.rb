@@ -15,8 +15,7 @@ When 'I fill in "$secret_code" as my secret code' do |code|
 end
 
 Then 'the secret code field is empty' do
-  save_and_open_page
-  page.should have_css('#user_secret_code_confirmation[value=""]')
+  page.should_not =~ %r{<input.*id="user_secret_code_confirmation".*value=".+"}
 end
 
 When 'I fill in the date of birth with "$date_of_birth"' do |date_of_birth|

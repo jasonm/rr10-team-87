@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   validates_presence_of :phone_number
   validates_confirmation_of :secret_code, :allow_nil => true
 
+  before_create :normalize_phone_number
   after_create :deliver_secret_code
 
   has_many :founded_meetups, :class_name => 'Meetup', :foreign_key => 'first_user_id'
@@ -41,6 +42,11 @@ class User < ActiveRecord::Base
   def deliver_secret_code
     Message.deliver(self.phone_number,
                     "Before you can become an instalover you must know this secret code: #{self.secret_code}")
+  end
+
+  def normalize_phone_number
+    normalized = self.phone_number.gsub(/[^0-9]/,'')
+    self.phone_number = normalized[0] == '1' ? normalized : "1#{normalized}"
   end
 
   def generate_secret_code

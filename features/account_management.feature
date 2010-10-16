@@ -16,7 +16,7 @@ Feature: Accounts
     And I check my desired gender as female
     And I submit my profile
     Then I see a description of how to use the Web site
-    And "8004688487" is confirmed
+    And "18004688487" is confirmed
 
   Scenario: New user fails to enter the proper secret code
     When I go to the home page
@@ -26,12 +26,12 @@ Feature: Accounts
     When I fill in "this is not a love song" as my secret code
     And I submit my profile
     Then I see no description of how to use the Web site
-    And "8004688487" is unconfirmed
+    And "18004688487" is unconfirmed
     And I see the error "doesn't match" on the secret code field
 
   Scenario: New user must enter valid form stuff
 
-  @later
+  @wip @later
   Scenario: Secret code reminder
     Given I am confirmed as "8004688487"
     When I go to the home page
@@ -44,3 +44,7 @@ Feature: Accounts
     And I fill in my secret key
 
   Scenario: We strip all non-digits from phone number when you sign up
+    When I go to the home page
+    And I fill in "(800) 468-84 87" as my phone number
+    And I press the sign up button
+    Then a user has a phone number of "18004688487"
