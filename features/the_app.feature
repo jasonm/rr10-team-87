@@ -1,5 +1,17 @@
 Feature: The whole app
 
+  Background:
+    Given the following users exist:
+      | Phone Number | Male | Female | Looking For Male | Looking For Female | Dob          | Looking For Minimum Age | Looking For Maximum Age | Description |
+      | 1111111111   | yes  | no     | no               | yes                | 11-06-1983   | 18                      | 34                      | red hair    |
+      | 2222222222   | no   | yes    | yes              | no                 | 10-20-1983   | 18                      | 34                      | black shirt |
+      | 8004688487   | yes  | yes    | yes              | yes                | 12-31-1977   | 14                      | 22                      | super hot   |
+    And the time is "8:00 pm"
+    And we suggest dates at:
+      | Date             |
+      | Silvertone       |
+      | Mike's Apartment |
+
   Scenario: New user gets desperate
     When I go to the home page
     And I fill in "8004688487" as my phone number
@@ -21,41 +33,43 @@ Feature: The whole app
 
   @wip
   Scenario: Existing user tries to get some and is happy with everything
-    Given the following users exist:
-      | Phone Number | Male | Female | Looking For Male | Looking For Female | Dob          | Looking For Minimum Age | Looking For Maximum Age | Description |
-      | 1111111111   | yes  | no     | no               | yes                | 11-06-1983   | 18                      | 34                      | red hair    |
-      | 2222222222   | no   | yes    | yes              | no                 | 10-20-1983   | 18                      | 34                      | black shirt |
-      | 8004688487   | yes  | yes    | yes              | yes                | 12-31-1977   | 14                      | 22                      | super hot   |
     When "8004688487" texts instalover with "new date"
-    Then "8004688487" gets a response of "Silvertone" at "9:00"
+    Then "8004688487" should get a text "How about Silvertone at 9:00 pm? Reply 'ok' or 'new date'."
 
-    When "8004688487" text instalover with "ok"
-    Then "1111111111" should get a text "Want to go on a date at Silvertone at 9:00?  Reply 'ok' or ignore."
-    And  "2222222222" should get a text "Want to go on a date at Silvertone at 9:00?  Reply 'ok' or ignore."
+    When "8004688487" texts instalover with "ok"
+    Then "1111111111" should get a text "Want to go on a date at Silvertone at 9:00 pm? Reply 'accept' or ignore."
+    And  "2222222222" should get a text "Want to go on a date at Silvertone at 9:00 pm? Reply 'accept' or ignore."
 
-    When "1111111111" texts instalover with "ok"
-    Then "2222222222" should get a text "Too slow!  Would you like to get a date?  Reply 'new date'."
-    And "1111111111" should get a text "You got it!  Meet at Silvertone at 9:00.  Your date is: 'super hot'"
-    And "8004688487" should get a text "You got it!  Meet at Silvertone at 9:00.  Your date is: 'red hair'"
+    When "1111111111" texts instalover with "accept"
+    Then "2222222222" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
+    And "1111111111" should get a text "You got it! Meet at Silvertone at 9:00 pm. Your date is: 'super hot'"
+    And "8004688487" should get a text "You got it! Meet at Silvertone at 9:00 pm. Your date is: 'red hair'"
 
-  Scenario: Existing user tries to get some when they can't
-    Given I am confirmed as "8004688487"
-    And it it outside of the dating hours
-    When I text instalover with "02108"
-    Then I get a response telling me to try later
+  @later
+  Scenario: Existing user asks for a date, but they're picky
+    When "8004688487" texts instalover with "new date"
+    Then "8004688487" should get a text "How about Silvertone at 9:00? Reply 'ok' or 'new date'."
 
-  Scenario: Existing users actually gets some
-    Given it is within the dating hours
-    And it is "8:00 PM"
-    And "8004688487" is confirmed
-    And we suggest "Silvertone" as a date place
-    When "8004688487" texts instalover
-    Then "8004688487" gets a response telling him to wait
-    Given "6176060842" is confirmed
-    When "6176060842" texts instalover
-    Then "6176060842" gets a response telling him about a date with "8004688487" at "Silvertone" in 15 minutes
-    And "8004688487" gets a response telling him about a date with "6176060842" at "Silvertone" in 15 minutes
+    When "8004688487" texts instalover with "new date"
+    Then "8004688487" should get a text "How about Mike's Apartment at 9:00? Reply 'ok' or 'new date'."
 
+  @later
+  Scenario: Existing user asks for a date, but they get turned down
+    When "8004688487" texts instalover with "new date"
+    Then "8004688487" should get a text "How about Silvertone at 9:00 pm? Reply 'ok' or 'new date'."
+
+    When "8004688487" texts instalover with "ok"
+    Then "1111111111" should get a text "Want to go on a date at Silvertone at 9:00 pm? Reply 'accept' or ignore."
+    And  "2222222222" should get a text "Want to go on a date at Silvertone at 9:00 pm? Reply 'accept' or ignore."
+
+    When 15 minutes go by
+    And the lazy people checker runs
+
+    Then "8004688487" should get a text "We called every number in our little black book, but only got answering machines.  Try again later?  Reply 'new date' to start again."
+    And "1111111111" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
+    And "2222222222" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
+
+  @later
   Scenario: Secret code reminder
     Given I am confirmed as "8004688487"
     When I go to the home page
