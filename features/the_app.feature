@@ -15,6 +15,7 @@ Feature: The whole app
     And I check my desired gender as female
     And I submit my profile
     Then I see a description of how to use the Web site
+    And "8004688487" is confirmed
 
   @wip
   Scenario: Existing user tries to get some and is happy with everything

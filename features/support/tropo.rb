@@ -14,8 +14,8 @@ module FakeTropo
   end
 end
 
-get '/sessions' do
-  get "http://www.example.com/messages",
+get '/1.0/sessions' do
+  r = Net::HTTP.post_form(URI.parse("http://www.example.com/messages"),
     {:session => {
       :id => '1',
       :accountId => '2',
@@ -24,8 +24,10 @@ get '/sessions' do
       :initialText => nil,
       :callId => '3',
       :parameters => params
-    }}.to_json
+    }})
+  p r
   FakeTropo::Response.add!(@response)
+  ''
 end
 
 ShamRack.at('api.tropo.com').rackup do

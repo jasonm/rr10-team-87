@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user])
+    @user = User.new
+    @user.phone_number = params[:user]
     @user.save
     redirect_to edit_user_url(@user)
   end
