@@ -12,12 +12,13 @@ class User < ActiveRecord::Base
   after_create :deliver_secret_code
 
   has_many :founded_meetups, :class_name => 'Meetup', :foreign_key => 'first_user_id'
+  has_many :offers, :foreign_key => "offered_user_id"
 
   # The magic of finding a match and making a date.
   # Produces either a scheduled or an unscheduled meetup.
-  def schedule_date_in(location)
-    meetup_finder_near(location).first || founded_meetups.build(:location => location)
-  end
+  #def schedule_date_in(location)
+  #  meetup_finder_near(location).first || founded_meetups.build(:location => location)
+  #end
 
   # The secret code that the user uses to prove that they have that phone
   # number.
@@ -32,13 +33,11 @@ class User < ActiveRecord::Base
   end
 
   def age_in_years
-    (Date.today - dob)/60.0/60.0/24.0/365.0.floor
+    ((Date.today - dob).to_f / 365.0).floor
   end
 
-  protected
-
-  def meetup_finder_near(location)
-    finder = Meetup.unscheduled.
+  def matching
+    finder = User.
       within_age_range(self.looking_for_minimum_age, self.looking_for_maximum_age).
       looking_for(self)
     finder = finder.men   if self.looking_for_male
@@ -46,6 +45,40 @@ class User < ActiveRecord::Base
     finder = finder.other if self.looking_for_other
     finder
   end
+
+  def self.within_age_range(min, max)
+    where('DATEDIFF(:today, dob) >= :min * 365 AND DATEDIFF(:today,  dob) <= :max * 365', { :today => Date.today, :min => min, :max => max })
+  end
+
+  def self.looking_for(user)
+    where('(users.looking_for_male = ? OR users.looking_for_female = ? OR users.looking_for_other = ?) AND ? >= users.looking_for_minimum_age AND ? <= users.looking_for_maximum_age',
+          user.male, user.female, user.other, user.age_in_years, user.age_in_years)
+  end
+
+  def self.men
+    where('users.male')
+  end
+
+  def self.women
+    where('users.female')
+  end
+
+  def self.other
+    where('users.other')
+  end
+
+
+  protected
+
+  #def meetup_finder_near(location)
+  #  finder = Meetup.unscheduled.
+  #    within_age_range(self.looking_for_minimum_age, self.looking_for_maximum_age).
+  #    looking_for(self)
+  #  finder = finder.men   if self.looking_for_male
+  #  finder = finder.women if self.looking_for_female
+  #  finder = finder.other if self.looking_for_other
+  #  finder
+  #end
 
   def deliver_secret_code
     Message.deliver(self.phone_number,

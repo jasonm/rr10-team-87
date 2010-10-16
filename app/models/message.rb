@@ -57,6 +57,8 @@ class Message < ActiveRecord::Base
     message_text = message_text.downcase
     if message_text == 'new date'
       handle_new_date(user)
+    elsif message_text == 'ok'
+      handle_ok(user)
     end
   end
 
@@ -82,6 +84,26 @@ class Message < ActiveRecord::Base
 
     Message.deliver(user.phone_number,
                     "How about #{meetup.description}? Reply 'ok' or 'new date'.")
+  end
+
+  def self.handle_ok(user)
+    meetup = user.founded_meetups.proposed.first
+    if meetup
+      meetup.make_unscheduled
+      user.matching.each do |matching_user|
+        puts "Found a match for #{user.phone_number} at #{matching_user.phone_number}"
+        Offer.create(:offered_user => matching_user, :meetup => meetup)
+
+      end
+    else
+      handle_unknown(user)
+    end
+  end
+
+  def self.handle_unknown(user)
+      Message.deliver(user.phone_number,
+                      "Please text 'new date' for a new date. To stop receiving texts, please text 'safeword'")
+
   end
 
 end

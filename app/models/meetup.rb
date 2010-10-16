@@ -1,6 +1,7 @@
 class Meetup < ActiveRecord::Base
   belongs_to :first_user, :class_name => 'User'
   belongs_to :second_user, :class_name => 'User'
+  has_many :offers
 
   validates_presence_of :first_user_id
 
@@ -13,27 +14,8 @@ class Meetup < ActiveRecord::Base
     where('state = "unscheduled"')
   end
 
-  def self.within_age_range(min, max)
-    joins('JOIN users ON users.id = first_user_id').
-      where('NOW() - users.dob >= ? AND NOW() - users.dob <= ?', min, max)
-  end
-
-  def self.looking_for(user)
-    joins('JOIN users ON users.id = first_user_id').
-      where('(users.looking_for_male = ? OR users.looking_for_female = ? OR users.looking_for_other = ?) AND users.looking_for_minimum_age >= ? AND users.looking_for_maximum_age <= ?',
-            user.male, user.female, user.other, user.age_in_years, user.age_in_years)
-  end
-
-  def self.men
-    joins('JOIN users ON users.id = first_user_id').where('users.male')
-  end
-
-  def self.women
-    joins('JOIN users ON users.id = first_user_id').where('users.female')
-  end
-
-  def self.other
-    joins('JOIN users ON users.id = first_user_id').where('users.other')
+  def self.proposed
+    where('state = "proposed"')
   end
 
   # In a scheduled date produce the user that is opposite the one passed in.
@@ -46,6 +28,11 @@ class Meetup < ActiveRecord::Base
         first_user
       end
     end
+  end
+
+  def make_unscheduled
+    state = "unscheduled"
+    self.save!
   end
 
   # True if the date has two people and a meeting spot.

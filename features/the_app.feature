@@ -3,10 +3,10 @@ Feature: The whole app
   Background:
     Given the following users exist:
       | Phone Number | Male | Female | Looking For Male | Looking For Female | Dob          | Looking For Minimum Age | Looking For Maximum Age | Description |
-      | 11111111111   | yes  | no     | no               | yes                | 11/06/1983   | 18                      | 34                      | red hair    |
-      | 12222222222   | no   | yes    | yes              | no                 | 10/20/1983   | 18                      | 34                      | black shirt |
-      | 18004688487   | yes  | yes    | yes              | yes                | 12/31/1977   | 14                      | 22                      | super hot   |
-    And the day and time is "October 16, 2010 8:00pm EDT"
+      | 11111111111  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    |
+      | 12222222222  | true | false  | false            | true               | 10/20/1989   | 18                      | 34                      | black shirt |
+      | 18004688487  | false| true   | true             | false              | 12/31/1977   | 14                      | 22                      | super hot   |
+    And the day and time is "October 16, 2010 8:00pm edt"
     And the following date suggestions exist:
       | text             |
       | Silvertone       |
@@ -30,6 +30,11 @@ Feature: The whole app
     And "11111111111" should get a text "You got it! Meet at Silvertone at 09:00PM. Your date is: 'super hot'"
     And "18004688487" should get a text "You got it! Meet at Silvertone at 09:00PM. Your date is: 'red hair'"
 
+  Scenario: Existing user texts ok without having a proposed meetup
+    When "18004688487" texts instalover with "ok"
+    Then "18004688487" should get a text "Please text 'new date' for a new date. To stop receiving texts, please text 'safeword'"
+
+  @later
   Scenario: Existing user asks for a date, but they're picky
     When "18004688487" texts instalover with "new date"
     Then "18004688487" should get a text "How about Silvertone at 09:00PM? Reply 'ok' or 'new date'."
@@ -62,3 +67,6 @@ Feature: The whole app
   Scenario: Unknown command handler
     When "18004688487" texts instalover with "all the dicks you can fit in your mouth?"
     Then "18004688487" should get a text "Sorry dear, I don't know what you mean - if you're waiting to hear about your date, hang tight.  Otherwise, reply 'new date' to get a date!"
+
+  @later
+  Scenario: Edge case: user texts a command e.g. 'new date' after entering their phone number but before confirming - what happens?
