@@ -44,7 +44,3 @@ end
 When 'I submit my profile' do
   click_button 'Get in there'
 end
-
-def secret_code
-  nil # needs to pull it from a text message
-end
