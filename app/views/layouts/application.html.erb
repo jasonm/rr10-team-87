@@ -9,10 +9,14 @@
 </head>
 <body class="<%= body_class %>">
   <div id="header">
-      <h1>Instalover</h1>
+    <h1>Instalover</h1>
   </div>
-  <%= render :partial => 'shared/flashes' -%>
-  <%= yield %>
+
+  <div id="container">
+    <%= render :partial => 'shared/flashes' -%>
+    <%= yield %>
+  </div>
+
   <%= render :partial => 'shared/javascript' %>
 </body>
 </html>
