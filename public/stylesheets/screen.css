@@ -1,0 +1,10 @@
+html, body {
+  height: 100%; }
+
+body {
+  background: url("/images/background.png"); }
+
+h1 {
+  background: url("/images/logo.png") no-repeat;
+  height: 87px;
+  width: 318px; }
