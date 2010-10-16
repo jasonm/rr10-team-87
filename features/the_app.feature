@@ -29,6 +29,7 @@ Feature: The whole app
     Then I see a description of how to use the Web site
     And "8004688487" is confirmed
 
+  Scenario: New user must enter valid form stuff
   Scenario: New user fails to enter the proper secret code
 
   @wip
