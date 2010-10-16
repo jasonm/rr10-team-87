@@ -3,13 +3,13 @@ class MessagesController < ApplicationController
 
   def index
     puts "testing puts"
-    logger.warn "testing warn"
-    logger.error "In index"
+   Rails.logger.warn "testing warn"
+   Rails.logger.error "In index"
     if params[:session][:parameters][:relay]
-      logger.error "session params relay is true"
+      Rails.logger.error "session params relay is true"
       json = Message.json_for_relay(params[:session][:parameters])
-      logger.error "Relay response:"
-      logger.error json
+      Rails.logger.error "Relay response:"
+      Rails.logger.error json
       render :json => json
     else
       if user = User.find_by_phone_number(phone_number)
