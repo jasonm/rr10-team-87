@@ -30,6 +30,23 @@ Feature: Accounts
     And I see the error "doesn't match" on the secret code field
 
   Scenario: New user must enter valid form stuff
+    When I go to the home page
+    And I fill in "8004688487" as my phone number
+    And I press the sign up button
+    Then I get a text with my secret code
+    And the secret code field is empty
+    When I submit my profile
+    Then I see no description of how to use the Web site
+    And "18004688487" is unconfirmed
+    And I see the error "doesn't match" on the secret code field
+    And I see the error "can't be blank" on the following user fields:
+      | name                    |
+      | description             |
+      | looking_for_minimum_age |
+      | looking_for_maximum_age |
+      | dob                     |
+    And I see that my gender can't be blank
+    And I see that my desired gender can't be blank
 
   @wip @later
   Scenario: Secret code reminder

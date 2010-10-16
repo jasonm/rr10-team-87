@@ -58,3 +58,19 @@ Then 'I see the error "$error_message" on the secret code field' do |error_messa
     page.should have_content(error_message), "expected secret code to have the error: #{error_message}"
   end
 end
+
+Then %r{I see the error "(.*)" on the following user fields?:} do |error_message, table|
+  table.raw.flatten.each do |field|
+    within("#user_#{field}_input") do
+      page.should have_content(error_message), "expected #{field} to have the error: #{error_message}"
+    end
+  end
+end
+
+Then "I see that my gender can't be blank" do
+  page.should have_content("must select at least one gender")
+end
+
+Then "I see that my desired gender can't be blank" do
+  page.should have_content("must look for at least one gender")
+end

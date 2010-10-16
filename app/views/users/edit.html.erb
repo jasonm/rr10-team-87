@@ -1,4 +1,5 @@
 <%= semantic_form_for @user do |form| %>
+  <%= form.semantic_errors %>
   <%= form.inputs do %>
     <%= form.input :secret_code_confirmation %>
     <%= form.input :name, :label => 'First name' %>

@@ -2,6 +2,11 @@ class User < ActiveRecord::Base
   attr_protected :secret_code, :phone_number
   validates_presence_of :phone_number
   validates_confirmation_of :secret_code, :allow_nil => true
+  validates_presence_of :name, :description, :looking_for_minimum_age, :looking_for_maximum_age,
+    :on => :update
+  validate :at_least_one_gender, :on => :update
+  validate :at_least_one_desired_gender, :on => :update
+  validates_presence_of :dob, :on => :update
 
   before_create :normalize_phone_number
   after_create :deliver_secret_code
@@ -50,6 +55,18 @@ class User < ActiveRecord::Base
   def normalize_phone_number
     normalized = self.phone_number.gsub(/[^0-9]/,'')
     self.phone_number = normalized.chars.first == '1' ? normalized : "1#{normalized}"
+  end
+
+  def at_least_one_gender
+    unless (male? || female? || other?)
+      errors.add(:base, "must select at least one gender")
+    end
+  end
+
+  def at_least_one_desired_gender
+    unless (looking_for_male? || looking_for_female? || looking_for_other?)
+      errors.add(:base, "must look for at least one gender")
+    end
   end
 
   def generate_secret_code
