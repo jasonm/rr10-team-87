@@ -1,0 +1,23 @@
+--- 
+:files: 
+  public/javascripts/jquery.js: 
+    :git_url: git://github.com/thoughtbot/suspenders-gem.git
+    :filename: public/javascripts/jquery.js
+    :source_root: template/trout
+    :version: 544dc2799dbb07b9ffcf00b87365819ff641c23b
+  public/javascripts/prefilled_input.js: 
+    :git_url: git://github.com/thoughtbot/suspenders-gem.git
+    :filename: public/javascripts/prefilled_input.js
+    :source_root: template/trout
+    :version: 544dc2799dbb07b9ffcf00b87365819ff641c23b
+  Gemfile: 
+    :git_url: git://github.com/thoughtbot/suspenders-gem.git
+    :filename: Gemfile
+    :source_root: template/trout
+    :version: 544dc2799dbb07b9ffcf00b87365819ff641c23b
+  public/javascripts/jquery-ui.js: 
+    :git_url: git://github.com/thoughtbot/suspenders-gem.git
+    :filename: public/javascripts/jquery-ui.js
+    :source_root: template/trout
+    :version: 544dc2799dbb07b9ffcf00b87365819ff641c23b
+:version: "1.0"
