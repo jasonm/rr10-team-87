@@ -10,7 +10,7 @@ class Message < ActiveRecord::Base
   def self.deliver(to, message)
     params = Addressable::URI.new
     params.query_values = {
-      "relay" => true,
+      "relay" => "relay",
       "to" => to,
       "message" => message,
       "token" => MESSAGE_TOKEN,
