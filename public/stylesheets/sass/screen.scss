@@ -29,10 +29,14 @@ h1, h2 {
 }
 
 h1 a {
- background: url("/images/logo.png") center no-repeat;
+ background: url("/images/logo.png") top center no-repeat;
  display: block;
  height: 87px;
  text-indent: -9999px;
+
+ &:hover {
+   background-position: center -87px;
+ }
 }
 
 #container {
