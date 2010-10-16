@@ -1,8 +1,10 @@
 class MessagesController < ApplicationController
   def index
+    #This is when we send messages to user
     if params[:session][:parameters][:relay]
       json = Message.json_for_relay(params[:session][:parameters])
       render :json => json
+    #This is when we receive messags from a user
     else
       if user = User.find_by_phone_number(phone_number)
         @date = user.schedule_date_in(params[:session][:initialText])
