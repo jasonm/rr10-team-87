@@ -15,6 +15,9 @@ class UsersController < ApplicationController
   end
 
   def update
-    render :nothing => true
+    @user = User.find(params[:id])
+    @user.update_attributes(params[:user])
+    @user.save
+    redirect_to page_url('how')
   end
 end

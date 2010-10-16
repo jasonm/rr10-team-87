@@ -12,9 +12,16 @@ class User < ActiveRecord::Base
     meetup_finder_near(location).first || founded_meetups.build(:location => location)
   end
 
+  # The secret code that the user uses to prove that they have that phone
+  # number.
   def secret_code
     read_attribute(:secret_code) ||
       write_attribute(:secret_code, generate_secret_code)
+  end
+
+  # A user is confirmed if they have a name
+  def confirmed?
+    self.name.present?
   end
 
   protected

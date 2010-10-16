@@ -30,11 +30,11 @@ When 'I check my gender as male' do
 end
 
 When 'I fill in the minimum age with "$min_age"' do |min_age|
-  fill_in 'user[looking_for_minimum_age]', :with => min_age
+  select min_age, :from => 'user[looking_for_minimum_age]'
 end
 
 When 'I fill in the maximum age with "$max_age"' do |max_age|
-  fill_in 'user[looking_for_maximum_age]', :with => max_age
+  select max_age, :from => 'user[looking_for_maximum_age]'
 end
 
 When 'I check my desired gender as female' do
@@ -42,5 +42,5 @@ When 'I check my desired gender as female' do
 end
 
 When 'I submit my profile' do
-  click_button 'Get in there'
+  click_button 'Get your account'
 end
