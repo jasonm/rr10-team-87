@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
   before_filter :must_be_sms
 
   def index
-    puts "testing puts"
+   puts "testing puts"
    Rails.logger.warn "testing warn"
    Rails.logger.error "In index"
     if params[:session][:parameters][:relay]
@@ -23,6 +23,7 @@ class MessagesController < ApplicationController
         render :json => must_register_first_message
       end
     end
+    Rails.logger.flush
   end
 
   protected
