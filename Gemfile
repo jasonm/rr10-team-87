@@ -35,5 +35,6 @@ group :test, :cucumber do
   gem "treetop"
   gem "shoulda"
   gem "launchy"
-  gem "vcr"
+  gem 'sinatra'
+  gem 'sham_rack'
 end
