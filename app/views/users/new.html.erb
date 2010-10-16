@@ -1,6 +1,15 @@
+<div id="decide" class="clearfix">
+  <h2>Can I have your phone number?</h2>
+
+  <div id="button_box" class="clearfix">
+    <p id="yes" class="button"><a href="#">Yes</a></p>
+    <p id="no" class="button"><a href="#">No</a></p>
+  </div>
+</div>
+
 <%= semantic_form_for @user do |form| %>
   <%= form.inputs do %>
-    <%= form.input :phone_number, :label => "Can I have your number?", :hint => "We&rsquo;ll text you a secret code to verify your identity." %>
+    <%= form.input :phone_number, :label => "Great, enter it here", :hint => "We&rsquo;ll text you a secret code to verify your identity." %>
   <% end %>
 
   <%= form.buttons do %>
