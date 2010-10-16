@@ -7,6 +7,10 @@ module FakeTropo
     def self.add!(response)
       @@responses << response
     end
+
+    def self.last
+      @@responses.last
+    end
   end
 end
 
