@@ -2,6 +2,7 @@ require 'bundler/capistrano'
 
 set :application, "instalover"
 set :repository,  "git@github.com:railsrumble/rr10-team-87.git"
+set :username, 'root'
 
 set :scm, :git
 
