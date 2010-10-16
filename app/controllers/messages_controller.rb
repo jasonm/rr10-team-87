@@ -2,7 +2,9 @@ class MessagesController < ApplicationController
   before_filter :must_be_sms
 
   def index
-    if params[:session][:relay]
+    logger.info "In index"
+    if params[:session][:parameters][:relay]
+      logger.info "session params relay is true"
       json = Message.json_for_relay(params[:session][:parameters])
       logger.info "Relay response:"
       logger.info json
