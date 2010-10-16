@@ -18,12 +18,16 @@ body {
 h1, h2 {
   font-family: MuseoSlab500; }
 
-h1 {
-  background: url("/images/logo.png") no-repeat;
+#header {
+  margin: 40px auto 40px;
+  padding: 25px 25px 0px 30px;
+  width: 420px; }
+
+h1 a {
+  background: url("/images/logo.png") center no-repeat;
+  display: block;
   height: 87px;
-  margin: 60px auto 40px;
-  text-indent: -9999px;
-  width: 318px; }
+  text-indent: -9999px; }
 
 #container {
   background: rgba(0, 0, 0, 0.3);

@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <meta charset="utf-8">
+  <meta name="description" content="instalover is an instant blind dating service for interesting people in Boston, Brookline, Cambridge, and Somerville.">
+  <meta name="viewport" content = "initial-scale = 0.6,user-scalable = yes">
   <title>Instalover. Because love can't wait.</title>
   <%= stylesheet_link_tag :flutie, 'screen', :media => 'all' %>
+  <%= stylesheet_link_tag 'mobile', :media => 'only screen and (max-device-width: 480px)' %>
   <%= javascript_include_tag "jquery", "jquery-ui", "prefilled_input", "rails", "application" %>
   <%= csrf_meta_tag %>
 </head>
 <body class="<%= body_class %>">
   <div id="header">
-    <h1>instalover</h1>
+    <h1><a href="/">instalover</a></h1>
   </div>
 
   <div id="container">
