@@ -13,7 +13,9 @@ module FakeTropo
     end
 
     def self.has_text?(phone, message)
+      puts "Message Texts:"
       @@responses.any? do |r|
+        p r
         r["to"] == phone && r["message"] == message
       end
     end

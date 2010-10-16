@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   attr_protected :secret_code, :phone_number
   validates_presence_of :phone_number
+  validates_presence_of :dob
   validates_confirmation_of :secret_code, :allow_nil => true
 
   before_create :normalize_phone_number
@@ -26,11 +27,14 @@ class User < ActiveRecord::Base
     self.name.present?
   end
 
+  def age_in_years
+    (Date.today - dob)/60.0/60.0/24.0/365.0.floor
+  end
+
   protected
 
   def meetup_finder_near(location)
     finder = Meetup.unscheduled.
-      near(location).
       within_age_range(self.looking_for_minimum_age, self.looking_for_maximum_age).
       looking_for(self)
     finder = finder.men   if self.looking_for_male

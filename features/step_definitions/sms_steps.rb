@@ -3,8 +3,7 @@ Then 'I get a text with my secret code' do
 end
 
 When /^"([^"]*)" texts instalover with "([^"]*)"$/ do |user_phone, message|
-  user = User.find_by_phone_number(user_phone)
-  Capybara.current_session.driver.process :post, '/messages', { :session => { :initialText => message } }
+  Capybara.current_session.driver.process :post, '/messages', { :session => { :initialText => message, :from => { :id => user_phone} } }
 end
 
 Then /^"([^"]*)" should get a text "([^"]*)"$/ do |user_phone, message|

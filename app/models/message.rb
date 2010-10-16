@@ -45,4 +45,43 @@ class Message < ActiveRecord::Base
     tropo.response
   end
 
+  def self.handle_incoming(phone_number, message_text)
+    user = User.find_by_phone_number(phone_number)
+
+    if user.nil?
+      Message.deliver(phone_number,
+                      "You must register first at instalover.com")
+      return
+    end
+
+    message_text = message_text.downcase
+    if message_text == 'new date'
+      handle_new_date(user)
+    end
+  end
+
+  def self.handle_new_date(user)
+    # Uncomment later
+    # if user.meetups.proposed.any?
+    #   user.meetups.proposed.destroy_all
+    # end
+
+    # Uncomment later
+    # if user.meetups.unscheduled.any?
+    #   Message.deliver(user.phone_number,
+    #                   "Hold tight already!")
+    #   return
+    # end
+
+
+    meetup = Meetup.create({
+      :first_user => user,
+      :description => DateSuggestion.next_place_and_time
+    })
+
+
+    Message.deliver(user.phone_number,
+                    "How about #{meetup.description}? Reply 'ok' or 'new date'.")
+  end
+
 end

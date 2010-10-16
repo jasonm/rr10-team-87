@@ -4,20 +4,18 @@ class Meetup < ActiveRecord::Base
 
   validates_presence_of :first_user_id
 
-  # All the unscheduled dates.
-  def self.unscheduled
-    where('second_user_id IS NOT NULL AND location IS NOT NULL')
+  after_initialize do
+    self.state = "proposed"
   end
 
-  # All dates near a place.
-  ### TODO: Geocoding stuff.
-  def self.near(place)
-    where('location = ?', place)
+  # All the unscheduled dates.
+  def self.unscheduled
+    where('state = "unscheduled"')
   end
 
   def self.within_age_range(min, max)
     joins('JOIN users ON users.id = first_user_id').
-      where('NOW() - users.dob >= ? AND NOW() - users.dob <= max', min, max)
+      where('NOW() - users.dob >= ? AND NOW() - users.dob <= ?', min, max)
   end
 
   def self.looking_for(user)
@@ -52,10 +50,14 @@ class Meetup < ActiveRecord::Base
 
   # True if the date has two people and a meeting spot.
   def scheduled?
-    second_user_id.present? && location.present?
+    state == "scheduled"
   end
 
   def unscheduled?
-    ! scheduled?
+    state == "unscheduled"
+  end
+
+  def proposed?
+    state == "proposed"
   end
 end
