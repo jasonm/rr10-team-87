@@ -6,7 +6,7 @@ Feature: The whole app
       | 11111111111   | yes  | no     | no               | yes                | 11/06/1983   | 18                      | 34                      | red hair    |
       | 12222222222   | no   | yes    | yes              | no                 | 10/20/1983   | 18                      | 34                      | black shirt |
       | 18004688487   | yes  | yes    | yes              | yes                | 12/31/1977   | 14                      | 22                      | super hot   |
-    And the day and time is "October 16, 2010 8:00pm"
+    And the day and time is "October 16, 2010 8:00pm EDT"
     And the following date suggestions exist:
       | text             |
       | Silvertone       |
@@ -30,13 +30,12 @@ Feature: The whole app
     And "11111111111" should get a text "You got it! Meet at Silvertone at 09:00PM. Your date is: 'super hot'"
     And "18004688487" should get a text "You got it! Meet at Silvertone at 09:00PM. Your date is: 'red hair'"
 
-  @later
   Scenario: Existing user asks for a date, but they're picky
     When "18004688487" texts instalover with "new date"
-    Then "18004688487" should get a text "How about Silvertone at 09:00? Reply 'ok' or 'new date'."
+    Then "18004688487" should get a text "How about Silvertone at 09:00PM? Reply 'ok' or 'new date'."
 
     When "18004688487" texts instalover with "new date"
-    Then "18004688487" should get a text "How about Mike's Apartment at 09:00? Reply 'ok' or 'new date'."
+    Then "18004688487" should get a text "How about Mike's Apartment at 09:00PM? Reply 'ok' or 'new date'."
 
   @later
   Scenario: Existing user asks for a date, but they get turned down

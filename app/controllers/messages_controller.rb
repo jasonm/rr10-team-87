@@ -1,9 +1,7 @@
 class MessagesController < ApplicationController
   def index
     #This is when we send messages to user
-    if params[:session] &&
-       params[:session][:parameters] &&
-       params[:session][:parameters][:relay]
+    if params[:session].try(:[], :parameters).try(:[], :relay)
       json = Message.json_for_relay(params[:session][:parameters])
       render :json => json
     #This is when we receive messags from a user
