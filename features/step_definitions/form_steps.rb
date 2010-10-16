@@ -7,11 +7,16 @@ When 'I press the sign up button' do
 end
 
 When 'I fill in my secret code' do
-  fill_in 'user[secret_code]', :with => secret_code
+  fill_in 'user[secret_code_confirmation]', :with => secret_code
 end
 
 When 'I fill in "$secret_code" as my secret code' do |code|
-  fill_in 'user[secret_code]', :with => code
+  fill_in 'user[secret_code_confirmation]', :with => code
+end
+
+Then 'the secret code field is empty' do
+  save_and_open_page
+  page.should have_css('#user_secret_code_confirmation[value=""]')
 end
 
 When 'I fill in the date of birth with "$date_of_birth"' do |date_of_birth|
@@ -50,7 +55,7 @@ When 'I submit my profile' do
 end
 
 Then 'I see the error "$error_message" on the secret code field' do |error_message|
-  within("#user_secret_code_input") do
+  within("#user_secret_code_confirmation_input") do
     page.should have_content(error_message), "expected secret code to have the error: #{error_message}"
   end
 end

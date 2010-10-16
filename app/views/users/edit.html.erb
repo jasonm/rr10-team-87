@@ -1,6 +1,6 @@
 <%= semantic_form_for @user do |form| %>
   <%= form.inputs do %>
-    <%= form.input :secret_code %>
+    <%= form.input :secret_code_confirmation %>
     <%= form.input :name, :label => 'First name' %>
     <%= form.input :description, :label => 'A quick description of yourself' %>
     <%= form.input :dob, :start_year => Date.today.year-55, :end_year => Date.today.year-17, :label => "Your birthday" %>

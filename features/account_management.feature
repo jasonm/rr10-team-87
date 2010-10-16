@@ -5,6 +5,7 @@ Feature: Accounts
     And I fill in "8004688487" as my phone number
     And I press the sign up button
     Then I get a text with my secret code
+    And the secret code field is empty
     When I fill in my secret code
     And I fill in the date of birth with "December 31, 1977"
     And I fill in my name as "Mike"
@@ -28,6 +29,8 @@ Feature: Accounts
     And "8004688487" is unconfirmed
     And I see the error "doesn't match" on the secret code field
 
+  Scenario: New user must enter valid form stuff
+
   @later
   Scenario: Secret code reminder
     Given I am confirmed as "8004688487"
@@ -40,5 +43,4 @@ Feature: Accounts
     And i fill in my phone number as "8004688487"
     And I fill in my secret key
 
-  Scenario: New user must enter valid form stuff
   Scenario: We strip all non-digits from phone number when you sign up
