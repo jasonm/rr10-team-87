@@ -1,5 +1,6 @@
 source :rubygems
 
+gem 'childprocess', '0.0.9'
 gem "rails", ">= 3.0"
 gem "rack"
 gem "clearance", "0.9.0.rc9"
@@ -13,6 +14,7 @@ gem "formtastic"
 gem "mysql"
 gem "flutie"
 gem "dynamic_form"
+gem 'tropo-webapi-ruby'
 
 # http://blog.davidchelimsky.net/2010/07/11/rspec-rails-2-generators-and-rake-tasks/
 group :development, :test, :cucumber do
