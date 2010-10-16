@@ -1,5 +1,5 @@
 Instalover::Application.routes.draw do
-  root :to => 'pages#index'
+  root :to => 'high_voltage/pages#show', :id => 'index'
 
   match '/messages' => 'messages#index'
   #resources :messages, :only => [:index]
