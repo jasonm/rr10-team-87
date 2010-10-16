@@ -2,12 +2,14 @@ class MessagesController < ApplicationController
   before_filter :must_be_sms
 
   def index
-    logger.info "In index"
+    puts "testing puts"
+    logger.warn "testing warn"
+    logger.error "In index"
     if params[:session][:parameters][:relay]
-      logger.info "session params relay is true"
+      logger.error "session params relay is true"
       json = Message.json_for_relay(params[:session][:parameters])
-      logger.info "Relay response:"
-      logger.info json
+      logger.error "Relay response:"
+      logger.error json
       render :json => json
     else
       if user = User.find_by_phone_number(phone_number)
