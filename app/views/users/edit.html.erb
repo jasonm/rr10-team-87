@@ -10,17 +10,17 @@
       <%= form.input :female %>
       <%= form.input :other %>
     </fieldset>
-    <fieldset>
-      <legend>Looking For</legend>
-      <%= form.input :looking_for_minimum_age %>
-      <%= form.input :looking_for_maximum_age %>
-      <%= form.input :looking_for_female %>
-      <%= form.input :looking_for_male %>
-      <%= form.input :looking_for_other%>
+    <fieldset id="looking_for">
+      <legend>Who are you looking for?</legend>
+      <%= form.input :looking_for_minimum_age, :collection => [14,34], :as => :select %>
+      <%= form.input :looking_for_maximum_age, :collection => [14,34], :as => :select %>
+      <%= form.input :looking_for_female, :label => "Female" %>
+      <%= form.input :looking_for_male, :label => "Male" %>
+      <%= form.input :looking_for_other, :label => "Other" %>
     </fieldset>
   <% end %>
 
   <%= form.buttons do %>
-    <%= form.commit_button 'Get in there' %>
+    <%= form.commit_button 'Right this way' %>
   <% end %>
 <% end %>
