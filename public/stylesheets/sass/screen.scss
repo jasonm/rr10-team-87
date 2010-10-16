@@ -82,6 +82,7 @@ h1 {
       color: #ddd;
       font-size: 18px;
       font-weight: normal;
+      text-shadow: 0 1px 1px #000;
     }
 
     li {
@@ -111,13 +112,14 @@ h1 {
       font-size: 18px;
       font-weight: normal;
       margin: 0 0 2px 0;
+      text-shadow: 0 1px 1px #000;
     }
 
     input[type="text"] {
       background: #ddd;
       border: 1px solid #111;
       border-radius: 4px;
-      -webkit-box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.1), 0 0 2px 0 rgba(0, 0, 0, 0.6);
+      -webkit-box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.3), 0 0 2px 0 rgba(0, 0, 0, 0.6);
       font-family: MuseoSlab500;
       font-size: 18px;
       padding: 10px 5px;
@@ -127,6 +129,7 @@ h1 {
 
     textarea {
       border-radius: 4px;
+      -webkit-box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.3), 0 0 2px 0 rgba(0, 0, 0, 0.6);
       font-family: MuseoSlab500;
       font-size: 18px;
       height: 100px;
