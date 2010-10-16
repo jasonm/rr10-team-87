@@ -13,3 +13,11 @@ test: &test
 
 cucumber:
   <<: *test
+
+production:
+  adapter: mysql
+  database: instalover_production
+  username: root
+  password: LastNightsPenis
+  host: localhost
+  encoding: utf8
