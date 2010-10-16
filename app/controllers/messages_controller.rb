@@ -1,18 +1,13 @@
 class MessagesController < ApplicationController
-  def log(s)
-    HoptoadNotifier.notify(:error_class => "loggin",
-                           :error_message => s)
-  end
-
   def index
     if params[:session][:parameters][:relay]
-      log "session params relay is true"
+      Rails.logger.info "session params relay is true"
       json = Message.json_for_relay(params[:session][:parameters])
-      log "Relay response:"
-      log json
+      Rails.logger.info "Relay response:"
+      Rails.logger.info json
       render :json => json
     else
-      log "session params relay is fale"
+      Rails.logger.info "session params relay is fale"
       # must_be_sms
 
       if user = User.find_by_phone_number(phone_number)
