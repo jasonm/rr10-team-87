@@ -49,3 +49,8 @@ Feature: The whole app
     Then "8004688487" should get a text "We called every number in our little black book, but only got answering machines.  Try again later?  Reply 'new date' to start again."
     And "1111111111" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
     And "2222222222" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
+
+  @later
+  Scenario: Unknown command handler
+    When "8004688487" texts instalover with "all the dicks you can fit in your mouth?"
+    Then "8004688487" should get a text "Sorry dear, I don't know what you mean - if you're waiting to hear about your date, hang tight.  Otherwise, reply 'new date' to get a date!"

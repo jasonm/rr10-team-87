@@ -39,3 +39,5 @@ Feature: Accounts
     And I follow the sign in link
     And i fill in my phone number as "8004688487"
     And I fill in my secret key
+
+  Scenario: New user must enter valid form stuff
