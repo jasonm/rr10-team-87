@@ -165,6 +165,7 @@ GEM
       hashie (>= 0.2.0)
       json_pure (>= 1.2.0)
     tzinfo (0.3.23)
+    vcr (1.2.0)
     will_paginate (2.3.15)
 
 PLATFORMS
@@ -198,4 +199,5 @@ DEPENDENCIES
   timecop
   treetop
   tropo-webapi-ruby
+  vcr
   will_paginate
