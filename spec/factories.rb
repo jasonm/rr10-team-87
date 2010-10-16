@@ -7,3 +7,7 @@ Factory.define :user do |u|
   u.secret_code     { "supercode" }
   u.name            { "Jenny" }
 end
+
+Factory.define :date_suggestion do |ds|
+  ds.text  { "Thoughtbot" }
+end

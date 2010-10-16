@@ -6,9 +6,9 @@ Feature: The whole app
       | 1111111111   | yes  | no     | no               | yes                | 11-06-1983   | 18                      | 34                      | red hair    |
       | 2222222222   | no   | yes    | yes              | no                 | 10-20-1983   | 18                      | 34                      | black shirt |
       | 8004688487   | yes  | yes    | yes              | yes                | 12-31-1977   | 14                      | 22                      | super hot   |
-    And the time is "8:00 pm"
-    And we suggest dates at:
-      | Date             |
+    And the day and time is "October 16, 2010 8:00pm"
+    And the following date suggestions exist:
+      | text             |
       | Silvertone       |
       | Mike's Apartment |
 

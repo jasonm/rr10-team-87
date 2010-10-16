@@ -11,6 +11,12 @@ module FakeTropo
     def self.last
       @@responses.last
     end
+
+    def self.has_text?(phone, message)
+      @@responses.any? do |r|
+        r["to"] == phone && r["message"] == message
+      end
+    end
   end
 end
 
