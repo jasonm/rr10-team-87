@@ -61,8 +61,7 @@ class User < ActiveRecord::Base
       sleep
       breakfast
       morning
-      shaved
-    )
+      shaved)
     codes[rand(codes.length)]
   end
 end
