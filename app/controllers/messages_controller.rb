@@ -1,15 +1,10 @@
 class MessagesController < ApplicationController
-  before_filter :must_be_sms
-
   def log(s)
     HoptoadNotifier.notify(:error_class => "loggin",
                            :error_message => s)
   end
 
   def index
-   puts "testing puts"
-   log "testing warn"
-   log "In index"
     if params[:session][:parameters][:relay]
       log "session params relay is true"
       json = Message.json_for_relay(params[:session][:parameters])
@@ -17,6 +12,9 @@ class MessagesController < ApplicationController
       log json
       render :json => json
     else
+      log "session params relay is fale"
+      # must_be_sms
+
       if user = User.find_by_phone_number(phone_number)
         @date = user.schedule_date_in(params[:session][:initialText])
         if @date.save
@@ -33,8 +31,6 @@ class MessagesController < ApplicationController
   protected
 
   def must_be_sms
-    network = params[:session].try(:[], :from).try(:[], :network)
-    render :json => must_be_sms_message if network != 'SMS'
   end
 
   def date_response_message_for(user)
