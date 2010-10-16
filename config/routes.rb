@@ -1,7 +1,9 @@
 Instalover::Application.routes.draw do
-  root :to => 'high_voltage/pages#show', :id => 'index'
+  root :to => 'users#new'
 
   match '/messages' => 'messages#index'
+
+  resources :users, :only => [:new, :create, :edit, :update]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

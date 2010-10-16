@@ -1,0 +1,9 @@
+<%= semantic_form_for @user do |form| %>
+  <%= form.inputs do %>
+    <%= form.input :phone_number %>
+  <% end %>
+
+  <%= form.buttons do %>
+    <%= form.commit_button 'Sign up' %>
+  <% end %>
+<% end %>

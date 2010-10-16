@@ -11,7 +11,10 @@ When 'I fill in my secret code' do
 end
 
 When 'I fill in the date of birth with "$date_of_birth"' do |date_of_birth|
-  fill_in 'user[dob]', :with => date_of_birth
+  date = Date.parse(date_of_birth)
+  select date.year.to_s, :from =>'user_dob_1i'
+  select Date::MONTHNAMES[date.month], :from =>'user_dob_2i'
+  select date.day.to_s, :from =>'user_dob_3i'
 end
 
 When 'I fill in my name as "$name"' do |name|
