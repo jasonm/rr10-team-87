@@ -26,7 +26,7 @@ h1 {
   border: 1px solid #111;
   border-radius: 5px;
   -webkit-box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.1), 0 0 2px 0 rgba(0, 0, 0, 0.6);
-  margin: 20px auto;
+  margin: 20px auto 100px;
   padding: 25px 25px 25px 30px;
   width: 420px; }
 
@@ -58,18 +58,57 @@ h1 {
   #container fieldset ol {
     list-style: none;
     margin: 0; }
-    #container fieldset ol label {
-      color: #eee;
+    #container fieldset ol legend {
+      color: #ddd;
       font-size: 18px;
-      margin: 0 0 6px 0; }
+      font-weight: normal; }
+    #container fieldset ol li {
+      margin: 0 0 16px 0; }
+      #container fieldset ol li#user_male_input, #container fieldset ol li#user_female_input, #container fieldset ol li#user_other_input {
+        float: left;
+        width: 125px; }
+        #container fieldset ol li#user_male_input label, #container fieldset ol li#user_female_input label, #container fieldset ol li#user_other_input label {
+          font-size: 14px; }
+        #container fieldset ol li#user_male_input input, #container fieldset ol li#user_female_input input, #container fieldset ol li#user_other_input input {
+          margin: 0 4px 0 0; }
+    #container fieldset ol label {
+      color: #ddd;
+      font-size: 18px;
+      font-weight: normal;
+      margin: 0 0 2px 0; }
     #container fieldset ol input[type="text"] {
+      background: #ddd;
       border: 1px solid #111;
       border-radius: 4px;
       -webkit-box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.1), 0 0 2px 0 rgba(0, 0, 0, 0.6);
-      font-size: 16px;
+      font-family: MuseoSlab500;
+      font-size: 24px;
       padding: 10px 5px;
-      width: 400px;
+      width: 410px;
       -webkit-background-clip: padding-box; }
+    #container fieldset ol textarea {
+      border-radius: 4px;
+      margin: 0;
+      width: 410px; }
+
+form ol li.date label,
+form ol li.time label {
+  display: inline; }
+
+form ol li.date ol li label,
+form ol li.time ol li label {
+  display: none; }
+
+body.users-new #container fieldset ol label {
+  margin: 0 0 8px 0;
+  text-align: center; }
+body.users-new #container fieldset ol input[type="text"] {
+  font-size: 26px;
+  text-align: center; }
+body.users-new #container fieldset ol p.inline-hints {
+  color: #bbb;
+  margin: 2px 0 16px 0;
+  text-align: center; }
 
 /* slick black
 *******************************************************************************/

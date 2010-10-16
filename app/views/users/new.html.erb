@@ -1,6 +1,6 @@
 <%= semantic_form_for @user do |form| %>
   <%= form.inputs do %>
-    <%= form.input :phone_number, :label => "What&rsquo;s your phone number?" %>
+    <%= form.input :phone_number, :label => "Can I have your number?", :hint => "We&rsquo;ll text you a secret code to verify your identity." %>
   <% end %>
 
   <%= form.buttons do %>
