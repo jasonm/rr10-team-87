@@ -6,7 +6,7 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
-DateSuggestions.create([
+DateSuggestion.create([
   { :text => "Silvertone" },
   { :text => "Mike's Apartment" },
   { :text => "Walmart" }
