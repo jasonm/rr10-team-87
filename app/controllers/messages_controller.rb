@@ -1,27 +1,53 @@
 class MessagesController < ApplicationController
- def index
-    #initial_text captures the very first sms or IM sent to tropo
-    initial_text = params["session"]["initialText"]
-    from = params["session"]["from"]
-    network = from["network"]
-    from_id = from["id"] # this field contains IM login or phone number in case of incoming SMS
-    if network == "SMS" || network == "JABBER"
-      render :json => parse(initial_text)
+  before_filter :must_be_sms
+
+  def index
+    if @user = User.find_by_phone_number(phone_number)
+      @date = @user.schedule_date_in(params[:session][:initialText])
+      if @date.save
+        render :json => date_response_message
+      else
+        render :json => failed_to_save_date_message
+      end
     else
-      render :json => Tropo::Generator.say("Unsupported operation")
+      render :json => must_register_first_message
     end
   end
 
-  private
+  protected
 
-  def parse(input)
-    input.strip!
-    # do whatever parsing you need.  in this example, if user types "n what a new day", tropo will
-    # respond him with "you said: what a new day"
-    if m = input.match(/^(n|N)\s+/)
-      Tropo::Generator.say "you said: " + m.post_match
+  def must_be_sms
+    network = params[:session].try(:[], :from).try(:[], :network)
+    render :json => must_be_sms_message if network != 'SMS'
+  end
+
+  def date_response_message
+    if @date.scheduled?
+      ### Also tell the date
+      send_sms(render :action => 'date_complete')
     else
-      Tropo::Generator.say "Unsupported operation."
+      ### Also enqueue a follow-up 15m later
+      send_sms(render :action => 'date_pending')
     end
+  end
+
+  def failed_to_save_date_message
+    send_sms("Technical issue with making your date: #{@date.errors.full_messages.join(', ')}")
+  end
+
+  def must_register_first_message
+    send_sms("You must register first at instalover.com")
+  end
+
+  def must_be_sms_message
+    send_sms("Only phone texting is supported for now")
+  end
+
+  def phone_number
+    params[:session].try(:[],:from).try(:[], :id)
+  end
+
+  def send_sms(s)
+    Tropo::Generator.say(s)
   end
 end
