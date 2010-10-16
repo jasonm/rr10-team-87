@@ -9,7 +9,7 @@
 body {
   background: url("/images/background.png");
   color: #bbb;
-  font-family: MuseoSlab500;
+  font-family: MuseoSlab500, "helvetica neue", arial, sans-serif;
   text-rendering: optimizeLegibility;
 }
 
@@ -19,7 +19,7 @@ body {
 }
 
 h1, h2 {
-  font-family: MuseoSlab500;
+  font-family: MuseoSlab500, "helvetica neue", arial, sans-serif;
 }
 
 #header {
@@ -94,7 +94,7 @@ h1 a {
 
 p#yes {
   float: left;
-  margin: 0 40px 0 35px;
+  margin: 0 40px 0 37px;
 }
 
 p#no {
@@ -211,7 +211,7 @@ form#new_user {
       -webkit-box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.3), 0 0 2px 0 rgba(0, 0, 0, 0.6);
       font-family: MuseoSlab500;
       font-size: 18px;
-      height: 100px;
+      height: 80px;
       margin: 0;
       width: 410px;
     }
@@ -278,7 +278,7 @@ input[type="submit"] {
   -webkit-box-shadow: inset 1px 1px 1px 0px rgba(135, 135, 135, 0.1), inset -1px -1px 1px 0px rgba(135, 135, 135, 0.1);
   color: #fff;
   font-size: 22px;
-  font-family: MuseoSlab500;
+  font-family: MuseoSlab500, "helvetica neue", arial, sans-serif;
   font-weight: lighter;
   line-height: 1;
   padding: 12px 18px 13px;
@@ -329,9 +329,8 @@ input[type="submit"]:active {
   -webkit-box-shadow: inset 0px 0px 0px 1px rgba(255, 115, 100, 0.4), 0 1px 3px #333;
   color: #fff;
   display: block;
-  font-family: "helvetica neue", helvetica, arial, sans-serif;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: normal;
   letter-spacing: 1px;
   line-height: 1;
   padding: 12px 0 14px 0;
