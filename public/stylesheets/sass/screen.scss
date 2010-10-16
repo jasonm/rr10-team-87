@@ -70,7 +70,7 @@ h1 {
   &#looking_for {
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid #333;
-    margin: 0 0 20px 0;
+    margin: 15px 0 20px 0;
     padding: 15px 15px 0 15px;
   }
 
@@ -135,6 +135,10 @@ h1 {
       height: 100px;
       margin: 0;
       width: 410px;
+    }
+
+    select {
+      width: 80px;
     }
   }
 }

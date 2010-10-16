@@ -1,19 +1,19 @@
 <%= semantic_form_for @user do |form| %>
   <%= form.inputs do %>
     <%= form.input :secret_code %>
-    <%= form.input :dob, :start_year => Date.today.year-55, :end_year => Date.today.year-17, :label => "Your birthday (yyyy / mm / dd)" %>
-    <%= form.input :name %>
-    <%= form.input :description %>
+    <%= form.input :name, :label => 'First name' %>
+    <%= form.input :description, :label => 'How would someone recognize you?' %>
+    <%= form.input :dob, :start_year => Date.today.year-55, :end_year => Date.today.year-17, :label => "Your birthday" %>
     <fieldset>
-      <legend>Gender</legend>
+      <legend>Your gender</legend>
       <%= form.input :male %>
       <%= form.input :female %>
       <%= form.input :other %>
     </fieldset>
     <fieldset id="looking_for">
       <legend>Who are you looking for?</legend>
-      <%= form.input :looking_for_minimum_age, :collection => (14..34).map, :as => :select %>
-      <%= form.input :looking_for_maximum_age, :collection => (14..34).map, :as => :select %>
+      <%= form.input :looking_for_minimum_age, :collection => (18..55).map, :as => :select, :label => 'Minimum age' %>
+      <%= form.input :looking_for_maximum_age, :collection => (18..55).map, :as => :select, :label => 'Maximum age' %>
       <%= form.input :looking_for_female, :label => "Female" %>
       <%= form.input :looking_for_male, :label => "Male" %>
       <%= form.input :looking_for_other, :label => "Other" %>
