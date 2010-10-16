@@ -34,7 +34,7 @@ class Message < ActiveRecord::Base
 
     tropo = Tropo::Generator.new do
       message({
-        :to => 'tel:+1' + to,
+        :to => 'tel:+' + to,
         :channel => 'TEXT',
         :network => 'SMS'
       }) do

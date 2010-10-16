@@ -2,7 +2,7 @@ Feature: Accounts
 
   Scenario: New user gets desperate
     When I go to the home page
-    And I fill in "8004688487" as my phone number
+    And I fill in "18004688487" as my phone number
     And I press the sign up button
     Then I get a text with my secret code
     And the secret code field is empty
