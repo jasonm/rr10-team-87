@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   attr_protected :secret_code, :phone_number
 
-  has_many :founded_meetups, :class => 'Meetup', :foreign_key => 'first_user_id'
+  has_many :founded_meetups, :class_name => 'Meetup', :foreign_key => 'first_user_id'
 
   # The magic of finding a match and making a date.
   # Produces either a scheduled or an unscheduled meetup.
