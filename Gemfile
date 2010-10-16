@@ -14,6 +14,7 @@ gem "mysql"
 gem "flutie"
 gem "dynamic_form"
 gem 'tropo-webapi-ruby'
+gem "addressable"
 
 gem "capistrano"
 
