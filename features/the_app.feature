@@ -25,7 +25,7 @@ Feature: The whole app
       | 15555555555  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
       | 16666666666  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
     When "18004688487" texts instalover with "new date"
-    Then "18004688487" should get a text "How about Silvertone at 09:00PM? Reply 'ok' or 'new date'."
+    Then "18004688487" should get a text "Should we find you a date at Silvertone at 09:00PM? Reply 'ok' or 'new date' to try again."
 
     And there should be a meetup founded by "18004688487" that is "proposed"
 
@@ -54,10 +54,10 @@ Feature: The whole app
 
   Scenario: Existing user asks for a date, but they're picky
     When "18004688487" texts instalover with "new date"
-    Then "18004688487" should get a text "How about Silvertone at 09:00PM? Reply 'ok' or 'new date'."
+    Then "18004688487" should get a text "Should we find you a date at Silvertone at 09:00PM? Reply 'ok' or 'new date' to try again."
 
     When "18004688487" texts instalover with "new date"
-    Then "18004688487" should get a text "How about Mike's Apartment at 09:00PM? Reply 'ok' or 'new date'."
+    Then "18004688487" should get a text "Should we find you a date at Mike's Apartment at 09:00PM? Reply 'ok' or 'new date' to try again."
 
     When "18004688487" texts instalover with "ok"
     Then "11111111111" should get a text "Want to go on a date with Emma at Mike's Apartment at 09:00PM? Reply 'accept' or ignore."
@@ -118,7 +118,7 @@ Feature: The whole app
       | 16666666666  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
 
     When "18004688487" texts instalover with "new date"
-    Then "18004688487" should get a text "How about Silvertone at 09:00PM? Reply 'ok' or 'new date'."
+    Then "18004688487" should get a text "Should we find you a date at Silvertone at 09:00PM? Reply 'ok' or 'new date' to try again."
 
     When "18004688487" texts instalover with "ok"
     Then "11111111111" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
@@ -132,7 +132,7 @@ Feature: The whole app
 
     When I clear the text message history
     When "18004688487" texts instalover with "new date"
-    Then "18004688487" should get a text whose message includes "Reply 'ok' or 'new date'."
+    Then "18004688487" should get a text whose message includes "Reply 'ok' or 'new date'"
 
     When "18004688487" texts instalover with "ok"
     Then "11111111111" should not get a text whose message includes "Want to go on a date"
@@ -143,22 +143,22 @@ Feature: The whole app
     And it is 1 hour later
     And I clear the text message history
     When "18004688487" texts instalover with "new date"
-    Then "18004688487" should get a text whose message includes "Reply 'ok' or 'new date'."
+    Then "18004688487" should get a text whose message includes "Reply 'ok' or 'new date'"
     When "18004688487" texts instalover with "ok"
     Then "11111111111" should get a text whose message includes "Want to go on a date"
 
   Scenario: Existing user falls asleep before oking date location
     When "18004688487" texts instalover with "new date"
-    Then "18004688487" should get a text "How about Silvertone at 09:00PM? Reply 'ok' or 'new date'."
+    Then "18004688487" should get a text "Should we find you a date at Silvertone at 09:00PM? Reply 'ok' or 'new date' to try again."
 
     When jobs in 5 minutes from now are processed
     Then "18004688487" should get a text "I guess you don't want to go on a date... Text 'new date' again when you change your mind"
 
   Scenario: Existing user times out after flicking through dates
     When "18004688487" texts instalover with "new date"
-    Then "18004688487" should get a text whose message includes "Reply 'ok' or 'new date'."
+    Then "18004688487" should get a text whose message includes "Reply 'ok' or 'new date'"
     When "18004688487" texts instalover with "new date"
-    Then "18004688487" should get a text whose message includes "Reply 'ok' or 'new date'."
+    Then "18004688487" should get a text whose message includes "Reply 'ok' or 'new date'"
     Then "18004688487" should have only one proposed meetup
     When jobs in 5 minutes from now are processed
     Then "18004688487" should get a text "I guess you don't want to go on a date... Text 'new date' again when you change your mind"
