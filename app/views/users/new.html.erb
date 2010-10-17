@@ -3,7 +3,7 @@
 
   <div id="button_box" class="clearfix">
     <p id="yes" class="button"><a href="#">Yes</a></p>
-    <p id="no" class="button"><a href="/pages/how-does-this-work">No</a></p>
+    <p id="no" class="button"><a href="/pages/how-does-this-work">Why?</a></p>
   </div>
 </div>
 
@@ -14,6 +14,6 @@
   <% end %>
 
   <%= form.buttons do %>
-    <%= form.commit_button 'Sign up' %>
+    <%= form.commit_button 'Sign up', :label => 'Text me' %>
   <% end %>
 <% end %>

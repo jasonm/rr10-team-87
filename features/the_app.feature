@@ -2,10 +2,10 @@ Feature: The whole app
 
   Background:
     Given the following users exist:
-      | Phone Number | Male | Female | Looking For Male | Looking For Female | Dob          | Looking For Minimum Age | Looking For Maximum Age | Description |
-      | 11111111111  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    |
-      | 12222222222  | true | false  | false            | true               | 10/20/1989   | 18                      | 34                      | black shirt |
-      | 18004688487  | false| true   | true             | false              | 12/31/1977   | 14                      | 22                      | super hot   |
+      | Phone Number | Male | Female | Looking For Male | Looking For Female | Dob          | Looking For Minimum Age | Looking For Maximum Age | Description | Name  |
+      | 11111111111  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
+      | 12222222222  | true | false  | false            | true               | 10/20/1989   | 18                      | 34                      | black shirt | Jason |
+      | 18004688487  | false| true   | true             | false              | 12/31/1977   | 14                      | 22                      | super hot   | Emma  |
     And the day and time is "October 16, 2010 8:00pm edt"
     And the following date suggestions exist:
       | text             |
@@ -15,7 +15,7 @@ Feature: The whole app
 
   Scenario: An unregistered user tries to text instalover
     When "11234567890" texts instalover with "hey!!!"
-    Then "11234567890" should get a text "You must register first at instalover.com"
+    Then "11234567890" should get a text "Sorry, you must register first at instalover.com"
 
   Scenario: Existing user tries to get some and is happy with everything
     When "18004688487" texts instalover with "new date"
@@ -31,8 +31,8 @@ Feature: The whole app
 
     When "11111111111" texts instalover with "accept"
     Then "12222222222" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
-    And "11111111111" should get a text "You got it! Meet at Silvertone at 09:00PM. Your date is: 'super hot'"
-    And "18004688487" should get a text "You got it! Meet at Silvertone at 09:00PM. Your date is: 'red hair'"
+    And "11111111111" should get a text "Nice! You've got a date with Emma, whose self-description is: 'super hot'"
+    And "18004688487" should get a text "Nice! You've got a date with Mike, whose self-description is: 'red hair'"
 
   Scenario: Existing user texts ok without having a proposed meetup
     When "18004688487" texts instalover with "ok"

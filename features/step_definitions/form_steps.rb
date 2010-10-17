@@ -2,8 +2,8 @@ When 'I fill in "$phone_number" as my phone number' do |phone_number|
   fill_in 'user[phone_number]', :with => phone_number
 end
 
-When 'I press the sign up button' do
-  click_button 'Sign up'
+When 'I press the text me button' do
+  click_button 'Text me'
 end
 
 When 'I fill in my secret code' do

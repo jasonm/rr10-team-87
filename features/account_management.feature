@@ -21,7 +21,7 @@ Feature: Accounts
   Scenario: New user fails to enter the proper secret code
     When I go to the home page
     And I fill in "8004688487" as my phone number
-    And I press the sign up button
+    And I press the text me button
     Then I get a text with my secret code
     When I fill in "this is not a love song" as my secret code
     And I submit my profile
@@ -32,7 +32,7 @@ Feature: Accounts
   Scenario: New user must enter valid form stuff
     When I go to the home page
     And I fill in "8004688487" as my phone number
-    And I press the sign up button
+    And I press the text me button
     Then I get a text with my secret code
     And the secret code field is empty
     When I submit my profile
@@ -86,5 +86,5 @@ Feature: Accounts
   Scenario: We strip all non-digits from phone number when you sign up
     When I go to the home page
     And I fill in "(800) 468-84 87" as my phone number
-    And I press the sign up button
+    And I press the text me button
     Then a user has a phone number of "18004688487"
