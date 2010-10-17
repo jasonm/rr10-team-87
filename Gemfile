@@ -18,6 +18,7 @@ gem "addressable"
 
 gem 'resque'
 gem 'resque-restriction'
+gem 'resque-scheduler'
 
 gem "capistrano"
 

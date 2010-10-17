@@ -53,6 +53,9 @@ class User < ActiveRecord::Base
 
 
   def matching
+    puts "#{self.phone_number} is looking for match"
+    p Meetup.all
+    p Offer.all
     finder = User.
       within_age_range(self.looking_for_minimum_age, self.looking_for_maximum_age).
       looking_for(self).

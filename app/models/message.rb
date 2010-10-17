@@ -126,6 +126,7 @@ class Message < ActiveRecord::Base
       user.matching.first(5).each do |matching_user|
         Offer.create(:offered_user => matching_user, :meetup => meetup)
       end
+      QUEUE.enqueue_at(5.minutes.from_now, MessageDelayer, :user_id => user.id)
     else
       handle_unknown(user)
     end
@@ -164,5 +165,21 @@ class Message < ActiveRecord::Base
     Message.deliver(user.phone_number,
       "I got it - 'no' means no!  We could just be friends, but we're not fooling anyone.  You're unsubscribed - have a nice life!")
     user.destroy
+  end
+
+  def self.handle_no_responses(user)
+    meetup = user.founded_meetups.unscheduled.first
+    if !meetup.nil?
+      Message.deliver(user.phone_number,
+                      "We called every number in our little black book, but only got answering machines.  Try again later?  Reply 'new date' to start again.")
+      meetup.offers.each do |o|
+        Message.deliver(o.offered_user.phone_number,
+                        "Too slow! Would you like to get a date? Reply 'new date'.")
+        o.delete
+      end
+      meetup.state = "cancelled"
+      meetup.save!
+    end
+
   end
 end
