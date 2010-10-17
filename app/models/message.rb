@@ -63,6 +63,10 @@ class Message < ActiveRecord::Base
       handle_accept(user)
     elsif message_text =~ /^say (.*)/i
       handle_texting_proxy(user, $1)
+    elsif message_text == 'safeword'
+      handle_safeword(user)
+    else
+      handle_unknown(user)
     end
   end
 
@@ -113,7 +117,7 @@ class Message < ActiveRecord::Base
 
   def self.handle_unknown(user)
       Message.deliver(user.phone_number,
-                      "Please text 'new date' for a new date. To stop receiving texts, please text 'safeword'")
+          "Sorry, I don't know what to do with that. You can text 'new date' to get a date. To stop receiving texts, please text 'safeword'")
 
   end
 
@@ -140,4 +144,9 @@ class Message < ActiveRecord::Base
     end
   end
 
+  def self.handle_safeword(user)
+    Message.deliver(user.phone_number,
+      "I got it - 'no' means no!  We could just be friends, but we're not fooling anyone.  You're unsubscribed - have a nice life!")
+    user.destroy
+  end
 end

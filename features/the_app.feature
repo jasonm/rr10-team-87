@@ -35,7 +35,7 @@ Feature: The whole app
 
   Scenario: Existing user texts ok without having a proposed meetup
     When "18004688487" texts instalover with "ok"
-    Then "18004688487" should get a text "Please text 'new date' for a new date. To stop receiving texts, please text 'safeword'"
+    Then "18004688487" should get a text "Sorry, I don't know what to do with that. You can text 'new date' to get a date. To stop receiving texts, please text 'safeword'")
 
   Scenario: Existing user asks for a date, but they're picky
     When "18004688487" texts instalover with "new date"
@@ -105,10 +105,14 @@ Feature: The whole app
     When "18004688487" texts instalover with "new date"
     Then "18004688487" should get a text "Whoa there, partner - we're looking for someone right now.  If nobody shows after 5 minutes, then you can ask again."
 
-  @wip
   Scenario: Unknown command handler
     When "18004688487" texts instalover with "all the dicks you can fit in your mouth?"
-    Then "18004688487" should get a text "Sorry dear, I don't know what you mean - if you're waiting to hear about your date, hang tight.  Otherwise, reply 'new date' to get a date!"
+    Then "18004688487" should get a text "Sorry, I don't know what to do with that. You can text 'new date' to get a date. To stop receiving texts, please text 'safeword'")
+
+  Scenario: Safeword
+    When "18004688487" texts instalover with "safeword"
+    Then "18004688487" should get a text "I got it - 'no' means no!  We could just be friends, but we're not fooling anyone.  You're unsubscribed - have a nice life!"
+    And the "18004688487" user should be deleted
 
   @wip
   Scenario: Edge case: user texts a command e.g. 'new date' after entering their phone number but before confirming - what happens?

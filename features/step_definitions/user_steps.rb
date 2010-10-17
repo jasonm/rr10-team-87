@@ -25,3 +25,7 @@ Given 'the following two users are scheduled to date:' do |table|
           :first_user => users.first,
           :second_user => users.second)
 end
+
+Then /^the "([^"]*)" user should be deleted$/ do |phone_number|
+  User.find_by_phone_number(phone_number).should be_nil
+end
