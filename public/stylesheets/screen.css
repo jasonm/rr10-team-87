@@ -62,8 +62,6 @@ h1 a {
 #container h2 {
   color: #ddd;
   font-size: 20px;
-  font-weight: normal;
-  letter-spacing: 1px;
   line-height: 130%;
   margin: 0 0 24px 0;
   text-align: left;
@@ -105,7 +103,7 @@ p#no {
   float: left; }
 
 #tweets {
-  margin: 75px auto 75px;
+  margin: 95px auto 75px;
   width: 470px; }
   #tweets h3 {
     color: #666;
@@ -316,7 +314,6 @@ input[type="submit"]:active {
   display: block;
   font-size: 20px;
   font-weight: normal;
-  letter-spacing: 1px;
   line-height: 1;
   padding: 12px 0 14px 0;
   text-align: center;
@@ -336,6 +333,3 @@ input[type="submit"]:active {
   box-shadow: inset 0px 0px 0px 1px rgba(255, 115, 100, 0.4);
   -moz-box-shadow: inset 0px 0px 0px 1px rgba(255, 115, 100, 0.4);
   -webkit-box-shadow: inset 0px 0px 0px 1px rgba(255, 115, 100, 0.4); }
-
-select:focus {
-  outline-color: #c00; }
