@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
     ((Date.today - dob).to_f / 365.0).floor
   end
 
+  # The person this user has as a date right now
   def date
     Meetup.for(self).newest.first.try(:for, self)
   end
