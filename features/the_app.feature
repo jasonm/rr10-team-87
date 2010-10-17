@@ -20,9 +20,13 @@ Feature: The whole app
     When "18004688487" texts instalover with "new date"
     Then "18004688487" should get a text "How about Silvertone at 09:00PM? Reply 'ok' or 'new date'."
 
+    And there should be a meetup founded by "18004688487" that is "proposed"
+
     When "18004688487" texts instalover with "ok"
     Then "11111111111" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
     And  "12222222222" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
+
+    And there should be a meetup founded by "18004688487" that is "unscheduled"
 
     When "11111111111" texts instalover with "accept"
     Then "12222222222" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
