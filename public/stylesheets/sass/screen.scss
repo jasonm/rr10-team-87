@@ -35,8 +35,9 @@ body {
  }
 }
 
-h1, h2 {
+h1, h2, h3 {
   font-family: MuseoSlab500, "helvetica neue", arial, sans-serif;
+  font-weight: normal;
 }
 
 #header {
@@ -154,12 +155,18 @@ p#no {
       }
     }
 
-    .tweet_time {
-      display: block;
-      text-align: right;
+    .more-tweets {
+      border-top: 1px solid #000;
+      color: #333;
+      font-size: 14px;
+      margin: 12px 0 0 0;
+      text-align: center;
 
       a {
+        border-top: 1px solid #222;
         color: #e00;
+        display: block;
+        padding: 12px 0 0 0;
         text-decoration: none;
       }
     }

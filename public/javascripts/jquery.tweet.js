@@ -153,10 +153,11 @@
             var avatar_template = '<a class="tweet_avatar" href="http://twitter.com/'+from_user+'"><img src="'+profile_image_url+'" height="'+s.avatar_size+'" width="'+s.avatar_size+'" alt="'+from_user+'\'s avatar" title="'+from_user+'\'s avatar" border="0"/></a>';
             var avatar = (s.avatar_size ? avatar_template : '');
             var date = '<span class="tweet_time"><a href="http://twitter.com/'+from_user+'/statuses/'+item.id+'" title="view tweet on twitter">'+relative_time(item.created_at)+'</a></span>';
+            var read_more = '<div class=\"more-tweets\"><a href=\"http://twitter.com/instalover\">Read more dates from last night</a>';
             var text = '<span class="tweet_text">' +$([item.text]).linkUrl().linkUser().linkHash().makeHeart().capAwesome().capEpic()[0]+ '</span>';
 
             // until we create a template option, arrange the items below to alter a tweet's display.
-            list.append('<li>' + avatar + join + text + date + '</li>');
+            list.append('<li>' + avatar + join + text + read_more + '</li>');
 
             list.children('li:first').addClass('tweet_first');
             list.children('li:odd').addClass('tweet_even');

@@ -28,8 +28,9 @@ body {
   #container a:hover {
     border-bottom: 1px solid #c00; }
 
-h1, h2 {
-  font-family: MuseoSlab500, "helvetica neue", arial, sans-serif; }
+h1, h2, h3 {
+  font-family: MuseoSlab500, "helvetica neue", arial, sans-serif;
+  font-weight: normal; }
 
 #header {
   margin: 30px auto 40px;
@@ -122,11 +123,17 @@ p#no {
       #tweets ul.tweet_list .tweet_text a {
         color: #e00;
         text-decoration: none; }
-    #tweets ul.tweet_list .tweet_time {
-      display: block;
-      text-align: right; }
-      #tweets ul.tweet_list .tweet_time a {
+    #tweets ul.tweet_list .more-tweets {
+      border-top: 1px solid #000;
+      color: #333;
+      font-size: 14px;
+      margin: 12px 0 0 0;
+      text-align: center; }
+      #tweets ul.tweet_list .more-tweets a {
+        border-top: 1px solid #222;
         color: #e00;
+        display: block;
+        padding: 12px 0 0 0;
         text-decoration: none; }
 
 #footer {
