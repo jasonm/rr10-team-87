@@ -18,8 +18,8 @@ Then 'a user has a phone number of "$phone_number"' do |phone_number|
 end
 
 Given 'the following two users are scheduled to date:' do |table|
-  users = table.raw.map do |phone_number,|
-    Factory(:user, :phone_number => phone_number)
+  users = table.raw.map do |phone_number,name|
+    Factory(:user, :phone_number => phone_number, :name => name)
   end
   Factory(:scheduled_meetup,
           :first_user => users.first,

@@ -82,7 +82,7 @@ class Message < ActiveRecord::Base
 
   def self.handle_texting_proxy(user, message)
     if dating_user = user.date
-      Message.deliver(user.date.phone_number, "Your date says: #{message}")
+      Message.deliver(user.date.phone_number, "#{user.name} says: #{message}")
     else
       Message.deliver(user.phone_number, "You have no date for us to share that with. Reply with '#{COMMANDS[:new_date]}'.")
     end
