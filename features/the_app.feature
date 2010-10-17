@@ -35,7 +35,7 @@ Feature: The whole app
 
   Scenario: Existing user texts ok without having a proposed meetup
     When "18004688487" texts instalover with "ok"
-    Then "18004688487" should get a text "Sorry, I don't know what to do with that. You can text 'new date' to get a date. To stop receiving texts, please text 'safeword'")
+    Then "18004688487" should get a text "Sorry, I don't know what to do with that. You can text 'new date' to get a date. To stop receiving texts, please text 'safeword'"
 
   Scenario: Existing user asks for a date, but they're picky
     When "18004688487" texts instalover with "new date"
@@ -107,7 +107,7 @@ Feature: The whole app
 
   Scenario: Unknown command handler
     When "18004688487" texts instalover with "all the dicks you can fit in your mouth?"
-    Then "18004688487" should get a text "Sorry, I don't know what to do with that. You can text 'new date' to get a date. To stop receiving texts, please text 'safeword'")
+    Then "18004688487" should get a text "Sorry, I don't know what to do with that. You can text 'new date' to get a date. To stop receiving texts, please text 'safeword'"
 
   Scenario: Safeword
     When "18004688487" texts instalover with "safeword"
