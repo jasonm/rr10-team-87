@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   validate :at_least_one_desired_gender, :on => :update
   validates_presence_of :dob, :on => :update
   validate :phone_number_new, :on => :create
+  validates_length_of :phone_number, :is => 11
 
   before_validation :secret_code, :on => :create
   before_validation :normalize_phone_number
