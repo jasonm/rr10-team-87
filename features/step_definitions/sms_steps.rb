@@ -10,7 +10,8 @@ end
 
 Then /^"([^"]*)" should get a text "([^"]*)"$/ do |user_phone, message|
   QUEUE.run_jobs
-  FakeTropo::Response.should have_text(user_phone, message)
+  FakeTropo::Response.should have_text(user_phone, message),
+    %{no text sent to #{user_phone} including #{message.inspect}; sent texts:\n#{FakeTropo::Response.all.map{|t| [t['to'],t['message']].inspect}.join("\n")}\n}
 end
 
 Then /^"([^"]*)" should not get a text "([^"]*)"$/ do |user_phone, message|
@@ -20,7 +21,8 @@ end
 
 Then /^"([^"]*)" should get a text whose message includes "([^"]*)"$/ do |user_phone, message|
   QUEUE.run_jobs
-  FakeTropo::Response.should have_text_including(user_phone, message)
+  FakeTropo::Response.should have_text_including(user_phone, message),
+    %{no text sent to #{user_phone} including #{message.inspect}; sent texts:\n#{FakeTropo::Response.all.map{|t| [t['to'],t['message']].inspect}.join("\n")}\n}
 end
 
 Then /^"([^"]*)" should not get a text whose message includes "([^"]*)"$/ do |user_phone, message|

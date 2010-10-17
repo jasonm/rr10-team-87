@@ -144,11 +144,7 @@ class Message < ActiveRecord::Base
   end
 
   def self.handle_accept(user)
-    if user.offers.pending.none?
-      Message.deliver(user.phone_number,
-                      "You don't have any date offers to accept")
-    else
-      accepted_offer = user.latest_offer
+    if accepted_offer = user.latest_offer
       accept_offer(accepted_offer)
 
       meetup = accepted_offer.meetup
@@ -157,6 +153,9 @@ class Message < ActiveRecord::Base
                         "Too slow! Would you like to get a date? Reply 'new date'.")
         offer.decline!
       end
+    else
+      Message.deliver(user.phone_number,
+                      "You don't have any date offers to accept")
     end
   end
 
@@ -170,7 +169,7 @@ class Message < ActiveRecord::Base
     Message.deliver(offer.offered_user.phone_number,
                     %{Nice! You've got a date with #{offer.meetup.first_user.name}, whose self-description is: '#{offer.meetup.first_user.description}'. Talk with your date by texting 'say ' with your message})
     Message.deliver(offer.meetup.first_user.phone_number,
-                          %{Nice! You've got a date with #{offer.meetup.second_user.name}, whose self-description is: '#{offer.meetup.second_user.description}'. Talk with your date by texting 'say ' with your message})
+                    %{Nice! You've got a date with #{offer.meetup.second_user.name}, whose self-description is: '#{offer.meetup.second_user.description}'. Talk with your date by texting 'say ' with your message})
 
     offer.accept!
   end

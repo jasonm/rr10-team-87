@@ -21,11 +21,11 @@ class User < ActiveRecord::Base
   attr_accessor :secret_code_confirmation
 
   def self.without_offers
-    where('users.id not in (select offered_user_id from offers)')
+    where('users.id NOT IN (SELECT offered_user_id FROM offers WHERE offers.state = "pending")')
   end
 
   def self.without_founded_meetups_in_progress
-    where("users.id not in (select first_user_id from meetups where (meetups.state = 'proposed' or meetups.state = 'unscheduled'))")
+    where("users.id NOT IN (SELECT first_user_id FROM meetups WHERE meetups.state = 'proposed' OR meetups.state = 'unscheduled')")
   end
 
   def self.within_age_range(min, max)
@@ -74,6 +74,7 @@ class User < ActiveRecord::Base
     Meetup.for(self).scheduled.newest.first.try(:for, self)
   end
 
+  ### TODO: Can find yourself
   def matching
     finder = User.
       within_age_range(self.looking_for_minimum_age, self.looking_for_maximum_age).
