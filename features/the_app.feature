@@ -49,22 +49,26 @@ Feature: The whole app
     And  "12222222222" should get a text "Want to go on a date at Mike's Apartment at 09:00PM? Reply 'accept' or ignore."
 
 
-  Scenario: Once a user proposes a date, they can no longer receive other date proposals
+  Scenario: Once a user proposes a date, they can no longer receive offers
     When "18004688487" texts instalover with "new date"
-    And "11111111111" texts instalover with "new date"
-    And "18004688487" texts instalover with "ok"
-    And "11111111111" texts instalover with "ok"
-    Then "18004688487" should not get a text whose message includes "Want to go on a date"
+    And  "11111111111" texts instalover with "new date"
+    And  "18004688487" texts instalover with "ok"
+    Then "11111111111" should not get a text whose message includes "Want to go on a date"
+
+  Scenario: Once a user has an unscheduled date, they can no longer receive offers
+    When "18004688487" texts instalover with "new date"
+    And  "11111111111" texts instalover with "new date"
+    And  "11111111111" texts instalover with "ok"
+    And  "18004688487" texts instalover with "ok"
+    Then "11111111111" should not get a text whose message includes "Want to go on a date"
 
   Scenario: Saying "new date" when you have an offer will delete your offer
     When "18004688487" texts instalover with "new date"
-    And "18004688487" texts instalover with "ok"
-
+    And  "18004688487" texts instalover with "ok"
     Then "11111111111" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
 
     When "11111111111" texts instalover with "new date"
-    And "11111111111" texts instalover with "accept"
-
+    And  "11111111111" texts instalover with "accept"
     Then "11111111111" should get a text whose message includes "You don't have any date offers to accept"
 
   Scenario: If you have an offer, you cannot receive a second one
@@ -72,10 +76,9 @@ Feature: The whole app
     And  "11111111111" texts instalover with "ok"
     Then "18004688487" should get a text whose message includes "Want to go on a date at Silvertone"
 
-    And  "12222222222" texts instalover with "new date"
-    When "12222222222" texts instalover with "ok"
+    When "12222222222" texts instalover with "new date"
+    And  "12222222222" texts instalover with "ok"
     Then "18004688487" should not get a text whose message includes "Want to go on a date at Mike's Apartment"
-
 
   @wip
   Scenario: Existing user asks for a date, but they get turned down

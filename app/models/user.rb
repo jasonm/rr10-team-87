@@ -47,7 +47,8 @@ class User < ActiveRecord::Base
     finder = User.
       within_age_range(self.looking_for_minimum_age, self.looking_for_maximum_age).
       looking_for(self).
-      without_offers
+      without_offers.
+      without_founded_meetups_in_progress
 
     finder = finder.men   if self.looking_for_male
     finder = finder.women if self.looking_for_female
@@ -57,6 +58,10 @@ class User < ActiveRecord::Base
 
   def self.without_offers
     where('users.id not in (select offered_user_id from offers)')
+  end
+
+  def self.without_founded_meetups_in_progress
+    where("users.id not in (select first_user_id from meetups where (meetups.state = 'proposed' or meetups.state = 'unscheduled'))")
   end
 
   def self.within_age_range(min, max)
