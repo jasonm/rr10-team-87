@@ -3,7 +3,7 @@ Feature: Accounts
   Scenario: New user gets desperate
     When I go to the home page
     And I fill in "18004688487" as my phone number
-    And I press the sign up button
+    And I press the text me button
     Then I get a text with my secret code
     And the secret code field is empty
     When I fill in my secret code
@@ -21,7 +21,7 @@ Feature: Accounts
   Scenario: Secret codes are not case-sensitive
     When I go to the home page
     And I fill in "18004688487" as my phone number
-    And I press the sign up button
+    And I press the text me button
     Then I get a text with my secret code
     And the secret code field is empty
     When I fill in my secret code in all caps
@@ -69,7 +69,7 @@ Feature: Accounts
   Scenario: User can not sign up twice
     When I go to the home page
     And I fill in "6178675309" as my phone number
-    And I press the sign up button
+    And I press the text me button
     Then I get a text with my secret code
     When I fill in my secret code
     And I fill in the date of birth with "December 31, 1977"
@@ -84,7 +84,7 @@ Feature: Accounts
     Then I see a description of how to use the Web site
     When I go to the home page
     And I fill in "6178675309" as my phone number
-    And I press the sign up button
+    And I press the text me button
     Then I should not see "Secret code from text message"
     And I should see "That number has already been registered!"
 
