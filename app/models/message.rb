@@ -124,6 +124,7 @@ class Message < ActiveRecord::Base
     else
       user.offers.first.meetup.offers.each do |o|
         if o.offered_user.id == user.id
+          o.meetup.state = 'scheduled'
           o.meetup.second_user = o.offered_user
           o.meetup.save!
           Message.deliver(o.offered_user.phone_number,
