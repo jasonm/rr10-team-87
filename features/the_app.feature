@@ -126,7 +126,7 @@ Feature: The whole app
 
     When jobs in 5 minutes from now are processed
 
-    Then "18004688487" should get a text "We called every number in our little black book, but only got answering machines.  Try again later?  Reply 'new date' to start again."
+    Then "18004688487" should get a text "We called every number in our little black book, but only got answering machines. Try again later? Reply 'new date' to start again."
     And "11111111111" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
     And "12222222222" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
 

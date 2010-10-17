@@ -111,7 +111,7 @@ class User < ActiveRecord::Base
     if !user.nil?
       if user.confirmed?
         Message.deliver(user.phone_number,
-                             "You are already a user - text 'new date' to start getting dates and 'safeword' to quit")
+                             "You are already a user - text '#{COMMANDS[:new_date]}' to start getting dates and '#{COMMANDS[:quit]}' to quit")
       else
         user.deliver_secret_code
       end
@@ -181,7 +181,7 @@ class User < ActiveRecord::Base
   def deliver_confirmation_congratulations
     if just_updated_for_the_first_time?
       Message.deliver(self.phone_number,
-        "Congrats, #{self.name}, you are now an instalover.  Text 'new date' to get a new date.")
+        "Congrats, #{self.name}, you are now an instalover.  Text '#{COMMANDS[:new_date]}' to get a new date.")
     end
   end
 end
