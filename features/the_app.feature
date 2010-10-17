@@ -152,14 +152,11 @@ Feature: The whole app
     Then "18004688487" should get a text "I got it - 'no' means no!  We could just be friends, but we're not fooling anyone.  You're unsubscribed - have a nice life!"
     And the "18004688487" user should be deleted
 
-  @lolwip
   Scenario: Texting something before you confirm
     When I go to the home page
     And I fill in "19998675309" as my phone number
     And I press the text me button
-
     And I clear the text message history
-
     And "19998675309" texts instalover with "new date"
     Then "19998675309" should get a text whose message includes "Before you can become an instalover you must know this secret code"
     And  "19998675309" should get a text whose message includes "Visit instalover.com to finish signing up."

@@ -346,6 +346,14 @@ body.users-create #container fieldset ol {
   }
 }
 
+ul.errors {
+  li {
+    color: #e00;
+    list-style: none;
+    text-align: center;
+  }
+}
+
 /* buttons
 *******************************************************************************/
 input[type="submit"]::-moz-focus-inner {

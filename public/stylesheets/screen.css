@@ -259,6 +259,11 @@ body.users-new #container fieldset ol p.inline-errors,
 body.users-create #container fieldset ol p.inline-errors {
   text-align: center; }
 
+ul.errors li {
+  color: #e00;
+  list-style: none;
+  text-align: center; }
+
 /* buttons
 *******************************************************************************/
 input[type="submit"]::-moz-focus-inner {
