@@ -8,6 +8,16 @@
   <%= stylesheet_link_tag :flutie, 'screen', :media => 'all' %>
   <%= stylesheet_link_tag 'mobile', :media => 'only screen and (max-device-width: 480px)' %>
   <%= csrf_meta_tag %>
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-19160270-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
 </head>
 <body class="<%= body_class %>">
   <div id="banner"><p>During the week or so after the <a href="http://rumbl.in/g/jason-morrison-s-little-death">Rails Rumble</a> ends, you might get matched with users who are far away from you. Feel free to sign up and play with our app!</p></div>

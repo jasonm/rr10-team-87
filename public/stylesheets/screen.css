@@ -6,7 +6,7 @@
   font-style: normal; }
 
 body {
-  background: url("/images/background.png");
+  background: #222222 url("/images/background.png");
   color: #bbb;
   font-family: MuseoSlab500, "helvetica neue", arial, sans-serif;
   text-rendering: optimizeLegibility; }
