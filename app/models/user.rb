@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 
   has_many :founded_meetups, :class_name => 'Meetup', :foreign_key => 'first_user_id'
   has_many :offers, :foreign_key => "offered_user_id"
+  has_many :dflns
 
   attr_accessor :secret_code_confirmation
 

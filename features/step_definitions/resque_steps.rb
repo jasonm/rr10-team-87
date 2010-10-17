@@ -11,3 +11,8 @@ When /^jobs in (\d+) minutes from now are procedsed$/ do |min|
   QUEUE.run_timed_jobs(Time.now)
 end
 
+When 'jobs tomorrow at 10am are processed' do
+  morning_after = 1.day.from_now.beginning_of_day + 10.hours
+  Timecop.freeze(morning_after)
+  QUEUE.run_timed_jobs(Time.now)
+end

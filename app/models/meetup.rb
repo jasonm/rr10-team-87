@@ -3,6 +3,8 @@ class Meetup < ActiveRecord::Base
   belongs_to :second_user, :class_name => 'User'
   has_many :offers
 
+  after_save :schedule_jobs
+
   validates_presence_of :first_user_id
 
   def self.newest
@@ -56,5 +58,14 @@ class Meetup < ActiveRecord::Base
 
   def proposed?
     state == "proposed"
+  end
+
+  private
+
+  def schedule_jobs
+    if state_was == "unscheduled" && state == "scheduled"
+      morning_after = 1.day.from_now.beginning_of_day + 10.hours
+      QUEUE.enqueue_at(morning_after, MorningAfterCheckerUpper, { :meetup_id => self.id })
+    end
   end
 end

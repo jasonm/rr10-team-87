@@ -58,6 +58,11 @@ class Message < ActiveRecord::Base
       return
     end
 
+    if user.dflns.unwritten.any?
+      handle_dfln(user, message_text)
+      return
+    end
+
     message_text = message_text.downcase
     if message_text == 'new date'
       handle_new_date(user)
@@ -163,6 +168,13 @@ class Message < ActiveRecord::Base
     Message.deliver(user.phone_number,
       "I got it - 'no' means no!  We could just be friends, but we're not fooling anyone.  You're unsubscribed - have a nice life!")
     user.destroy
+  end
+
+  def self.handle_dfln(user, message)
+    dfln = user.dflns.unwritten.last
+    dfln.update_attributes({
+      :text => message
+    })
   end
 
   def self.handle_no_responses(user)
