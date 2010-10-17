@@ -73,7 +73,6 @@ class Meetup < ActiveRecord::Base
   def schedule_jobs
     if state_was == "unscheduled" && state == "scheduled"
       morning_after = 1.day.from_now.beginning_of_day + 10.hours
-      morning_after = 1.minute.from_now
       QUEUE.enqueue_at(morning_after, MorningAfterCheckerUpper, { :meetup_id => self.id })
     end
   end
