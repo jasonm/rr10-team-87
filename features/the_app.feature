@@ -16,7 +16,6 @@ Feature: The whole app
     When "11234567890" texts instalover with "hey!!!"
     Then "11234567890" should get a text "You must register first at instalover.com"
 
-  @wip
   Scenario: Existing user tries to get some and is happy with everything
     When "18004688487" texts instalover with "new date"
     Then "18004688487" should get a text "How about Silvertone at 09:00PM? Reply 'ok' or 'new date'."
@@ -64,7 +63,17 @@ Feature: The whole app
 
     Then "11111111111" should get a text whose message includes "You don't have any date offers to accept"
 
-  @later
+  Scenario: If you have an offer, you cannot receive a second one
+    When "11111111111" texts instalover with "new date"
+    And  "11111111111" texts instalover with "ok"
+    Then "18004688487" should get a text whose message includes "Want to go on a date at Silvertone"
+
+    And  "12222222222" texts instalover with "new date"
+    When "12222222222" texts instalover with "ok"
+    Then "18004688487" should not get a text whose message includes "Want to go on a date at Mike's Apartment"
+
+
+  @wip
   Scenario: Existing user asks for a date, but they get turned down
     When "18004688487" texts instalover with "new date"
     Then "18004688487" should get a text "How about Silvertone at 09:00PM? Reply 'ok' or 'new date'."
@@ -80,15 +89,15 @@ Feature: The whole app
     And "11111111111" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
     And "12222222222" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
 
-  @later
+  @wip
   Scenario: User tries to get a new date while we're looking for people to accept
     # What a jerk
     # Tell them no
 
-  @later
+  @wip
   Scenario: Unknown command handler
     When "18004688487" texts instalover with "all the dicks you can fit in your mouth?"
     Then "18004688487" should get a text "Sorry dear, I don't know what you mean - if you're waiting to hear about your date, hang tight.  Otherwise, reply 'new date' to get a date!"
 
-  @later
+  @wip
   Scenario: Edge case: user texts a command e.g. 'new date' after entering their phone number but before confirming - what happens?
