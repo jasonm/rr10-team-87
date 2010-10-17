@@ -107,7 +107,6 @@ class Message < ActiveRecord::Base
     if meetup
       meetup.unschedule!
       user.matching.first(5).each do |matching_user|
-        puts "Found a match for #{user.phone_number} at #{matching_user.phone_number}"
         Offer.create(:offered_user => matching_user, :meetup => meetup)
       end
     else
