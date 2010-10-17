@@ -30,7 +30,6 @@ Feature: Scene 2: the morning after
     And  there should be a DFLN from "11111111111" about their most recent meetup that says "Blew my mind"
 
     When I am on the secret dflns page
-    Then show me the page
 
     Then I should see "Emma"
     Then I should see "18004688487"
