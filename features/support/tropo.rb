@@ -35,6 +35,8 @@ module FakeTropo
   end
 end
 
+disable :logging
+
 get '/1.0/sessions' do
   FakeTropo::Response.add!(params)
   '<success>true</success>'
