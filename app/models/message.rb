@@ -114,7 +114,7 @@ class Message < ActiveRecord::Base
   end
 
   def self.within_dating_hours?
-    now = Time.now
+    now = Time.zone.now
     now.hour >= DATING_START.hour &&
       now.hour <= DATING_END.hour
   end
