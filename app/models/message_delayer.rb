@@ -1,4 +1,5 @@
 class MessageDelayer
+  @queue = :timeouts
 
   def self.perform(args_hash)
     user_id = args_hash["user_id"]
