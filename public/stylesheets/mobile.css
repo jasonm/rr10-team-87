@@ -1,2 +1,8 @@
+body {
+  -webkit-text-size-adjust: none; }
+
+#banner {
+  line-height: 160%; }
+
 #header {
   margin-top: 10px; }
