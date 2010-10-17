@@ -146,6 +146,8 @@ class User < ActiveRecord::Base
       sleep
       breakfast
       morning
+      virgin
+      lonely
       shaved)
     codes[rand(codes.length)]
   end
