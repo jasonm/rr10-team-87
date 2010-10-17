@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   validate :at_least_one_gender, :on => :update
   validate :at_least_one_desired_gender, :on => :update
   validates_presence_of :dob, :on => :update
-  validates_uniqueness_of :phone_number, :message => 'That number has already been registered!'
+  validate :phone_number_new, :on => :create
 
   before_validation :secret_code, :on => :create
   before_validation :normalize_phone_number
@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
 
   # A user is confirmed if they have a name
   def confirmed?
+    puts self.inspect
     self.name.present?
   end
 
@@ -114,6 +115,19 @@ class User < ActiveRecord::Base
   def normalize_phone_number
     normalized = self.phone_number.gsub(/[^0-9]/,'')
     self.phone_number = normalized.chars.first == '1' ? normalized : "1#{normalized}"
+  end
+
+  def phone_number_new
+    user = User.find_by_phone_number(self.phone_number)
+    if !user.nil?
+      if user.confirmed?
+        Message.deliver(user.phone_number,
+                             "You are already a user - text 'new date' to start getting dates and 'safeword' to quit")
+      end
+      #Message.deliver(user.phone_number,
+      #                "Before you can become an instalover you must know this secret code: #{user.secret_code}")
+      errors.add(:base, "That number has already been registered!  We have retexted instructions")
+    end
   end
 
   def at_least_one_gender

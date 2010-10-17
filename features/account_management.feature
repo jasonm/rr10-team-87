@@ -67,7 +67,7 @@ Feature: Accounts
     And I see that my gender can't be blank
     And I see that my desired gender can't be blank
 
-  Scenario: User can not sign up twice
+  Scenario: User can not sign up twice after being confirmed
     When I go to the home page
     And I fill in "6178675309" as my phone number
     And I press the text me button
@@ -88,7 +88,18 @@ Feature: Accounts
     And I press the text me button
     Then I should not see "Secret code from text message"
     And I should see "That number has already been registered!"
+    And "16178675309" should get a text "You are already a user - text 'new date' to start getting dates and 'safeword' to quit"
 
+  Scenario: User is resent text if they enter their number in twice
+    When I go to the home page
+    And I fill in "6178675309" as my phone number
+    And I press the sign up button
+    Then I get a text with my secret code
+    When I go to the home page
+    And I fill in "6178675309" as my phone number
+    And I press the sign up button
+    Then I should see "Phone number is already taken - we have retexted instructions"
+    And I get a text with my secret code
 
   @wip @later
   Scenario: Secret code reminder
