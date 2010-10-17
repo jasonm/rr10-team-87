@@ -9,5 +9,3 @@ end
 Then /^"([^"]*)" should get a text "([^"]*)"$/ do |user_phone, message|
   FakeTropo::Response.should have_text(user_phone, message)
 end
-
-

@@ -11,3 +11,9 @@ end
 Factory.define :date_suggestion do |ds|
   ds.text  { "Thoughtbot" }
 end
+
+Factory.define :scheduled_meetup, :class => Meetup do |meetup_factory|
+  meetup_factory.association :first_user, :factory => :user
+  meetup_factory.association :second_user, :factory => :user
+  meetup_factory.state 'scheduled'
+end

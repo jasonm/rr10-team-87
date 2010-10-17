@@ -36,6 +36,11 @@ class User < ActiveRecord::Base
     ((Date.today - dob).to_f / 365.0).floor
   end
 
+  def date
+    Meetup.for(self).newest.first.try(:for, self)
+  end
+
+
   def matching
     finder = User.
       within_age_range(self.looking_for_minimum_age, self.looking_for_maximum_age).

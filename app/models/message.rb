@@ -61,7 +61,13 @@ class Message < ActiveRecord::Base
       handle_ok(user)
     elsif message_text == 'accept'
       handle_accept(user)
+    elsif message_text =~ /^say (.*)/i
+      handle_texting_proxy(user, $1)
     end
+  end
+
+  def self.handle_texting_proxy(user, message)
+    Message.deliver(user.date.phone_number, "Your date says: #{message}")
   end
 
   def self.handle_new_date(user)

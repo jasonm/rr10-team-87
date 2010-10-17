@@ -5,8 +5,8 @@ class Meetup < ActiveRecord::Base
 
   validates_presence_of :first_user_id
 
-  after_initialize do
-    self.state = "proposed"
+  def self.newest
+    order('created_at DESC')
   end
 
   # All the unscheduled dates.
@@ -16,6 +16,10 @@ class Meetup < ActiveRecord::Base
 
   def self.proposed
     where('state = "proposed"')
+  end
+
+  def self.for(user)
+    where('meetups.first_user_id = :id OR meetups.second_user_id = :id', :id => user.id)
   end
 
   # In a scheduled date produce the user that is opposite the one passed in.
