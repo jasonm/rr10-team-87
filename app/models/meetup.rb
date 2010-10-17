@@ -14,6 +14,11 @@ class Meetup < ActiveRecord::Base
     where('state = "unscheduled"')
   end
 
+  # All the scheduled dates.
+  def self.scheduled
+    where('state = "scheduled"')
+  end
+
   def self.proposed
     where('state = "proposed"')
   end

@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
 
   # The person this user has as a date right now
   def date
-    Meetup.for(self).newest.first.try(:for, self)
+    Meetup.for(self).scheduled.newest.first.try(:for, self)
   end
 
 
