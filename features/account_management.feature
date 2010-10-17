@@ -6,6 +6,7 @@ Feature: Accounts
     And I press the text me button
     Then I get a text with my secret code
     And the secret code field is empty
+    Given it is 1 hour later
     When I fill in my secret code
     And I fill in the date of birth with "December 31, 1977"
     And I fill in my name as "Mike"
