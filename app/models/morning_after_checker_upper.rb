@@ -15,7 +15,7 @@ class MorningAfterCheckerUpper
     Message.deliver(meetup.second_user.phone_number,
       "Hey #{meetup.second_user.name}, how did it go last night with #{meetup.first_user.name}?  Respond to this text to let us know.")
 
-    Dfln.create(:user => meetup.first_user,  :text => nil)
-    Dfln.create(:user => meetup.second_user, :text => nil)
+    Dfln.create(:meetup => meetup, :user => meetup.first_user,  :text => nil)
+    Dfln.create(:meetup => meetup, :user => meetup.second_user, :text => nil)
   end
 end

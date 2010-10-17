@@ -10,7 +10,8 @@ module NavigationHelpers
 
     when /the home\s?page/
       '/'
-
+    when /the secret dflns page/
+      '/secretsecret/dflns'
 
     else
       begin

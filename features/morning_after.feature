@@ -28,3 +28,14 @@ Feature: Scene 2: the morning after
 
     Then there should be a DFLN from "18004688487" about their most recent meetup that says "Ohmygod best date evar"
     And  there should be a DFLN from "11111111111" about their most recent meetup that says "Blew my mind"
+
+    When I am on the secret dflns page
+    Then show me the page
+
+    Then I should see "Emma"
+    Then I should see "18004688487"
+    And  I should see "Ohmygod best date evar"
+
+    Then I should see "Mike"
+    Then I should see "11111111111"
+    And  I should see "Blew my mind"

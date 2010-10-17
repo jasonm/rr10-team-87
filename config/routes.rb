@@ -2,6 +2,7 @@ Instalover::Application.routes.draw do
   root :to => 'users#new'
 
   match '/messages' => 'messages#index'
+  match '/secretsecret/dflns' => 'dflns#index'
 
   resources :users, :only => [:new, :create, :edit, :update]
 

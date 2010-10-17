@@ -1,0 +1,16 @@
+<table>
+  <thead>
+    <th>From</th>
+    <th>With</th>
+    <th>Message</th>
+  </thead>
+  <tbody>
+    <% Dfln.all.each do |dfln| %>
+      <tr>
+        <td><%= dfln.user.name %> (<%= dfln.user.phone_number %>)</td>
+        <td><%= dfln.about_whom.name %> (<%= dfln.about_whom.phone_number %>)</td>
+        <td><%= dfln.text %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

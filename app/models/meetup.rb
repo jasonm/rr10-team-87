@@ -2,6 +2,7 @@ class Meetup < ActiveRecord::Base
   belongs_to :first_user, :class_name => 'User'
   belongs_to :second_user, :class_name => 'User'
   has_many :offers
+  has_many :dflns
 
   after_save :schedule_jobs
 
