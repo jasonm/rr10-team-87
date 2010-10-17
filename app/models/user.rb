@@ -44,11 +44,17 @@ class User < ActiveRecord::Base
   def matching
     finder = User.
       within_age_range(self.looking_for_minimum_age, self.looking_for_maximum_age).
-      looking_for(self)
+      looking_for(self).
+      without_offers
+
     finder = finder.men   if self.looking_for_male
     finder = finder.women if self.looking_for_female
     finder = finder.other if self.looking_for_other
     finder
+  end
+
+  def self.without_offers
+    where('users.id not in (select offered_user_id from offers)')
   end
 
   def self.within_age_range(min, max)

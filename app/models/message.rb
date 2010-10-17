@@ -71,10 +71,7 @@ class Message < ActiveRecord::Base
   end
 
   def self.handle_new_date(user)
-    # Uncomment later
-    # if user.meetups.proposed.any?
-    #   user.meetups.proposed.destroy_all
-    # end
+    user.founded_meetups.proposed.destroy_all
 
     # Uncomment later
     # if user.meetups.unscheduled.any?
@@ -83,6 +80,7 @@ class Message < ActiveRecord::Base
     #   return
     # end
 
+    user.offers.destroy_all
 
     meetup = Meetup.create({
       :first_user => user,
@@ -99,9 +97,10 @@ class Message < ActiveRecord::Base
     if meetup
       meetup.make_unscheduled
       user.matching.each do |matching_user|
-        puts "Found a match for #{user.phone_number} at #{matching_user.phone_number}"
-        Offer.create(:offered_user => matching_user, :meetup => meetup)
-
+        if matching_user.founded_meetups.proposed.none?
+          puts "Found a match for #{user.phone_number} at #{matching_user.phone_number}"
+          Offer.create(:offered_user => matching_user, :meetup => meetup)
+        end
       end
     else
       handle_unknown(user)
@@ -115,19 +114,24 @@ class Message < ActiveRecord::Base
   end
 
   def self.handle_accept(user)
-    user.offers.first.meetup.offers.each do |o|
-      if o.offered_user.id == user.id
-        o.meetup.second_user = o.offered_user
-        o.meetup.save!
-        Message.deliver(o.offered_user.phone_number,
-                        "You got it! Meet at #{o.meetup.description}. Your date is: '#{o.meetup.first_user.description}'")
-        Message.deliver(o.meetup.first_user.phone_number,
-                        "You got it! Meet at #{o.meetup.description}. Your date is: '#{o.meetup.second_user.description}'")
-      else
-        Message.deliver(o.offered_user.phone_number,
-                        "Too slow! Would you like to get a date? Reply 'new date'.")
+    if user.offers.none?
+      Message.deliver(user.phone_number,
+                      "You don't have any date offers to accept")
+    else
+      user.offers.first.meetup.offers.each do |o|
+        if o.offered_user.id == user.id
+          o.meetup.second_user = o.offered_user
+          o.meetup.save!
+          Message.deliver(o.offered_user.phone_number,
+                          "You got it! Meet at #{o.meetup.description}. Your date is: '#{o.meetup.first_user.description}'")
+          Message.deliver(o.meetup.first_user.phone_number,
+                          "You got it! Meet at #{o.meetup.description}. Your date is: '#{o.meetup.second_user.description}'")
+        else
+          Message.deliver(o.offered_user.phone_number,
+                          "Too slow! Would you like to get a date? Reply 'new date'.")
+        end
+        o.delete
       end
-      o.delete
     end
   end
 

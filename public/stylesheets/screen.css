@@ -79,6 +79,11 @@ h1 a {
   list-style: disc outside;
   margin: 0 0 0 18px; }
 
+#container p {
+  font-size: 16px;
+  line-height: 150%;
+  margin: 0 0 12px 0; }
+
 p#yes {
   float: left;
   margin: 0 40px 0 37px; }
@@ -95,6 +100,8 @@ p#no {
   #footer a {
     color: #666;
     text-decoration: none; }
+    #footer a:hover {
+      color: #ccc; }
 
 /* form */
 /*****************************************************************************/
@@ -107,6 +114,8 @@ form#new_user {
   border: 0;
   margin: 0 0 4px 0;
   padding: 0; }
+  #container fieldset.buttons {
+    margin: 18px 0 0 0; }
   #container fieldset#looking_for {
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid #333;
@@ -187,6 +196,7 @@ body.users-new #container fieldset ol input[type="text"] {
   text-align: center; }
 body.users-new #container fieldset ol p.inline-hints {
   color: #bbb;
+  font-size: 14px;
   margin: 2px 0 16px 0;
   text-align: center; }
 
@@ -207,6 +217,7 @@ input[type="submit"] {
   -moz-box-shadow: inset 1px 1px 1px 0px rgba(135, 135, 135, 0.1), inset -1px -1px 1px 0px rgba(135, 135, 135, 0.1);
   -webkit-box-shadow: inset 1px 1px 1px 0px rgba(135, 135, 135, 0.1), inset -1px -1px 1px 0px rgba(135, 135, 135, 0.1);
   color: #fff;
+  float: right;
   font-size: 22px;
   font-family: MuseoSlab500, "helvetica neue", arial, sans-serif;
   font-weight: lighter;
