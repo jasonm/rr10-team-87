@@ -110,6 +110,13 @@ Feature: The whole app
     Then "18004688487" should not get a text whose message includes "Want to go on a date with Jason at Mike's Apartment"
 
   Scenario: Existing user asks for a date, but they get turned down
+    Given the following users exist:
+      | Phone Number | Male | Female | Looking For Male | Looking For Female | Dob          | Looking For Minimum Age | Looking For Maximum Age | Description | Name  |
+      | 13333333333  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
+      | 14444444444  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
+      | 15555555555  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
+      | 16666666666  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
+
     When "18004688487" texts instalover with "new date"
     Then "18004688487" should get a text "How about Silvertone at 09:00PM? Reply 'ok' or 'new date'."
 
@@ -128,8 +135,17 @@ Feature: The whole app
     Then "18004688487" should get a text whose message includes "Reply 'ok' or 'new date'."
 
     When "18004688487" texts instalover with "ok"
+    Then "11111111111" should not get a text whose message includes "Want to go on a date"
+    And  "12222222222" should not get a text whose message includes "Want to go on a date"
+    But  "16666666666" should get a text whose message includes "Want to go on a date"
+
+    Given jobs in 5 minutes from now are processed
+    And it is 1 hour later
+    And I clear the text message history
+    When "18004688487" texts instalover with "new date"
+    Then "18004688487" should get a text whose message includes "Reply 'ok' or 'new date'."
+    When "18004688487" texts instalover with "ok"
     Then "11111111111" should get a text whose message includes "Want to go on a date"
-    And  "12222222222" should get a text whose message includes "Want to go on a date"
 
   Scenario: Existing user falls asleep before oking date location
     When "18004688487" texts instalover with "new date"

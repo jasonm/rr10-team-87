@@ -1,4 +1,8 @@
 class Offer < ActiveRecord::Base
+  # pending:  the date requestor has not accepted yet
+  # declined: the other offers won the bidding
+  # accepted: the date is happening
+  # canceled: the date requestor denied the offer
   STATES = %w(pending declined accepted canceled)
   belongs_to :meetup
   belongs_to :offered_user, :class_name => "User"

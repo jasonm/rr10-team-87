@@ -3,7 +3,7 @@ Then 'I see a description of how to use the Web site' do
 end
 
 Then 'I see a welcome page' do
-  page.should have_content('Congratulations, you are now an instalover!')
+  page.should have_content('text these commands')
 end
 
 Then 'I see no description of how to use the Web site' do

@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   attr_accessor :secret_code_confirmation
 
   def self.without_offers
-    where('users.id NOT IN (SELECT offered_user_id FROM offers WHERE offers.state = "pending")')
+    where('users.id NOT IN (SELECT offered_user_id FROM offers WHERE offers.state = "pending" OR (offers.state = "canceled" AND offers.created_at > ?))', 1.hour.ago)
   end
 
   def self.without_founded_meetups_in_progress
