@@ -125,7 +125,7 @@ class User < ActiveRecord::Base
       end
       #Message.deliver(user.phone_number,
       #                "Before you can become an instalover you must know this secret code: #{user.secret_code}")
-      errors.add(:base, "That number has already been registered!  We have retexted instructions")
+      errors.add(:base, "That number has already been registered!  We have retexted instructions.")
     end
   end
 

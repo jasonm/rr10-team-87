@@ -3,7 +3,7 @@ $(document).ready(function() {
     $('form#new_user').toggle('slow');
   });
 
-  if ($('form#new_user li.error').size() > 0) {
+  if ($('form#new_user ul.errors').size() > 0) {
     $('form#new_user').show();
   }
 
