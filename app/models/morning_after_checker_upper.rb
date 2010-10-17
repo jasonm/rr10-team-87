@@ -1,4 +1,5 @@
 class MorningAfterCheckerUpper
+  @queue = :morning_after
 
   def self.perform(args_hash)
     meetup_id = args_hash["meetup_id"]
