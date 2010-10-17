@@ -16,6 +16,10 @@ body {
 #container a {
  color: #c00;
  text-decoration: none;
+
+ &:hover {
+  border-bottom: 1px solid #c00;
+ }
 }
 
 h1, h2 {
