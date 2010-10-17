@@ -17,9 +17,17 @@ default_run_options[:pty] = true
 
 # Passenger
 namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
+  task :start do
+    sudo "god start resque"
+    sudo "god start resque-scheduler"
+  end
+  task :stop do
+    sudo "god stop resque"
+    sudo "god stop resque-scheduler"
+  end
   task :restart, :roles => :app, :except => { :no_release => true } do
+    sudo "god restart resque"
+    sudo "god restart resque-scheduler"
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 end
