@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   validates_presence_of :dob, :on => :update
   validates_uniqueness_of :phone_number, :message => 'That number has already been registered!'
 
-  before_validation_on_create :secret_code # generates and sets it
+  before_validation :secret_code, :on => :create
   before_validation :normalize_phone_number
   after_create :deliver_secret_code
 
