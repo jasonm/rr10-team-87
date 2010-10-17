@@ -95,7 +95,8 @@ Feature: Accounts
     And I fill in "6178675309" as my phone number
     And I press the sign up button
     Then I get a text with my secret code
-    When I go to the home page
+    When I clear the text message history
+    And I go to the home page
     And I fill in "6178675309" as my phone number
     And I press the sign up button
     Then I should see "That number has already been registered! We have retexted instructions."

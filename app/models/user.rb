@@ -122,10 +122,11 @@ class User < ActiveRecord::Base
       if user.confirmed?
         Message.deliver(user.phone_number,
                              "You are already a user - text 'new date' to start getting dates and 'safeword' to quit")
+      else
+        user.deliver_secret_code
       end
-      #Message.deliver(user.phone_number,
-      #                "Before you can become an instalover you must know this secret code: #{user.secret_code}")
-      errors.add(:base, "That number has already been registered!  We have retexted instructions.")
+      errors.add(:base, "That number has already been registered!  We have retexted instructions")
+>>>>>>> Deliver users secret code
     end
   end
 
