@@ -8,6 +8,8 @@ class Message < ActiveRecord::Base
   MESSAGE_TOKEN = "aeea3bf2048d1848bc4e706ff76bfe98951f433968b934a2a1d80cf1e047ba36c91a2cd53a958e15319a564a"
 
   def self.deliver(to, message)
+    Rails.logger.info "SMS: TO: #{to}: #{message}"
+
     params = Addressable::URI.new
     params.query_values = {
       "relay" => "relay",
@@ -46,6 +48,8 @@ class Message < ActiveRecord::Base
   end
 
   def self.handle_incoming(phone_number, message_text)
+    Rails.logger.info("SMS INCOMING: FROM #{phone_number}: #{message_text}"
+
     user = User.find_by_phone_number(phone_number)
 
     if user.nil?

@@ -10,6 +10,7 @@ module FakeTropo
 
     def self.clear_all
       @@responses = []
+      Rails.logger.info "SMS: --------- RESET ---------"
     end
 
     def self.last
