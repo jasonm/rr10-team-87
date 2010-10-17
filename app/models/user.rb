@@ -7,8 +7,9 @@ class User < ActiveRecord::Base
   validate :at_least_one_gender, :on => :update
   validate :at_least_one_desired_gender, :on => :update
   validates_presence_of :dob, :on => :update
+  validates_uniqueness_of :phone_number
 
-  before_create :normalize_phone_number
+  before_validation :normalize_phone_number
   after_create :deliver_secret_code
 
   has_many :founded_meetups, :class_name => 'Meetup', :foreign_key => 'first_user_id'

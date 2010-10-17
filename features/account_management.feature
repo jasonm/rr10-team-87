@@ -48,6 +48,29 @@ Feature: Accounts
     And I see that my gender can't be blank
     And I see that my desired gender can't be blank
 
+  Scenario: User can not sign up twice
+    When I go to the home page
+    And I fill in "6178675309" as my phone number
+    And I press the sign up button
+    Then I get a text with my secret code
+    When I fill in my secret code
+    And I fill in the date of birth with "December 31, 1977"
+    And I fill in my name as "Jenny"
+    And I fill in my description as "black shirt, glasses, math book"
+    And I check my gender as female
+    And I fill in the minimum age with "21"
+    And I fill in the maximum age with "34"
+    And I check my desired gender as female
+    And I submit my profile
+    And "16178675309" is confirmed
+    Then I see a description of how to use the Web site
+    When I go to the home page
+    And I fill in "6178675309" as my phone number
+    And I press the sign up button
+    Then I should not see "Secret code from text message"
+    And I should see "has already been taken"
+
+
   @wip @later
   Scenario: Secret code reminder
     Given I am confirmed as "8004688487"

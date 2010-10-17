@@ -37,6 +37,10 @@ When 'I check my gender as male' do
   check 'user[male]'
 end
 
+When 'I check my gender as female' do
+  check 'user[female]'
+end
+
 When 'I fill in the minimum age with "$min_age"' do |min_age|
   select min_age, :from => 'user[looking_for_minimum_age]'
 end

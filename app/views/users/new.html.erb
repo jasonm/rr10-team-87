@@ -8,6 +8,7 @@
 </div>
 
 <%= semantic_form_for @user do |form| %>
+  <%= form.semantic_errors %>
   <%= form.inputs do %>
     <%= form.input :phone_number, :label => "Sweet, let&rsquo;s do this.", :hint => "I&rsquo;ll text you a secret code to verify your identity." %>
   <% end %>
