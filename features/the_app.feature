@@ -30,12 +30,12 @@ Feature: The whole app
     And there should be a meetup founded by "18004688487" that is "proposed"
 
     When "18004688487" texts instalover with "ok"
-    Then "11111111111" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
-    And  "12222222222" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
-    And  "13333333333" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
-    And  "14444444444" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
-    And  "15555555555" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
-    And  "16666666666" should not get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    Then "11111111111" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And  "12222222222" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And  "13333333333" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And  "14444444444" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And  "15555555555" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And  "16666666666" should not get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
 
     And there should be a meetup founded by "18004688487" that is "unscheduled"
 
@@ -60,8 +60,8 @@ Feature: The whole app
     Then "18004688487" should get a text "How about Mike's Apartment at 09:00PM? Reply 'ok' or 'new date'."
 
     When "18004688487" texts instalover with "ok"
-    Then "11111111111" should get a text "Want to go on a date at Mike's Apartment at 09:00PM? Reply 'accept' or ignore."
-    And  "12222222222" should get a text "Want to go on a date at Mike's Apartment at 09:00PM? Reply 'accept' or ignore."
+    Then "11111111111" should get a text "Want to go on a date with Emma at Mike's Apartment at 09:00PM? Reply 'accept' or ignore."
+    And  "12222222222" should get a text "Want to go on a date with Emma at Mike's Apartment at 09:00PM? Reply 'accept' or ignore."
 
   Scenario: Existing user asks for a date outside of the dating hours
     Given it is outside of the dating hours
@@ -94,7 +94,7 @@ Feature: The whole app
   Scenario: Saying "new date" when you have an offer will delete your offer
     When "18004688487" texts instalover with "new date"
     And  "18004688487" texts instalover with "ok"
-    Then "11111111111" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    Then "11111111111" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
 
     When "11111111111" texts instalover with "new date"
     And  "11111111111" texts instalover with "accept"
@@ -103,19 +103,19 @@ Feature: The whole app
   Scenario: If you have an offer, you cannot receive a second one
     When "11111111111" texts instalover with "new date"
     And  "11111111111" texts instalover with "ok"
-    Then "18004688487" should get a text whose message includes "Want to go on a date at Silvertone"
+    Then "18004688487" should get a text whose message includes "Want to go on a date with Mike at Silvertone"
 
     When "12222222222" texts instalover with "new date"
     And  "12222222222" texts instalover with "ok"
-    Then "18004688487" should not get a text whose message includes "Want to go on a date at Mike's Apartment"
+    Then "18004688487" should not get a text whose message includes "Want to go on a date with Jason at Mike's Apartment"
 
   Scenario: Existing user asks for a date, but they get turned down
     When "18004688487" texts instalover with "new date"
     Then "18004688487" should get a text "How about Silvertone at 09:00PM? Reply 'ok' or 'new date'."
 
     When "18004688487" texts instalover with "ok"
-    Then "11111111111" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
-    And  "12222222222" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    Then "11111111111" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And  "12222222222" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
 
     When jobs in 5 minutes from now are processed
 
@@ -142,8 +142,8 @@ Feature: The whole app
     When "18004688487" texts instalover with "new date"
     And "18004688487" texts instalover with "ok"
 
-    Then "11111111111" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
-    And  "12222222222" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    Then "11111111111" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And  "12222222222" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
 
     And there should be a meetup founded by "18004688487" that is "unscheduled"
 

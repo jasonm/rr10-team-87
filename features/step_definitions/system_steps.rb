@@ -1,5 +1,5 @@
 When 'it is outside of the dating hours' do
-  Timecop.freeze(Time.parse("4:00pm edt"))
+  Timecop.freeze(Time.parse("11:00am edt"))
 end
 
 Then /^there should be a meetup founded by "([^"]*)" that is "([^"]*)"$/ do |founder_phone, meetup_state|
