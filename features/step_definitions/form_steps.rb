@@ -6,6 +6,10 @@ When 'I press the text me button' do
   click_button 'Text me'
 end
 
+When 'I press the sign up button' do
+  click_button 'Text me'
+end
+
 When 'I fill in my secret code' do
   fill_in 'user[secret_code_confirmation]', :with => secret_code
 end
