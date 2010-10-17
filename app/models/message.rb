@@ -6,8 +6,8 @@ class Message < ActiveRecord::Base
 
   TROPO_URL = "http://api.tropo.com/1.0"
   MESSAGE_TOKEN = "aeea3bf2048d1848bc4e706ff76bfe98951f433968b934a2a1d80cf1e047ba36c91a2cd53a958e15319a564a"
-  DATING_START = Time.parse('5:00PM edt')
-  DATING_END = Time.parse('10:59PM edt')
+  DATING_START = Time.parse('1:00PM EDT')
+  DATING_END = Time.parse('10:59PM EDT')
 
   def self.deliver(to, message)
     Rails.logger.info "Enqueued SMS: TO: #{to}: #{message}"
