@@ -3,6 +3,7 @@ GEM
   remote: http://gems.github.com/
   specs:
     RedCloth (4.2.3)
+    SystemTimer (1.2)
     abstract (1.0.0)
     actionmailer (3.0.1)
       actionpack (= 3.0.1)
@@ -195,6 +196,7 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth
+  SystemTimer
   addressable
   bourne
   capistrano
