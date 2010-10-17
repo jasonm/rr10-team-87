@@ -17,6 +17,12 @@ module FakeTropo
         r["to"] == phone && r["message"] == message
       end
     end
+
+    def self.has_text_including?(phone, partial_message)
+      @@responses.any? do |r|
+        r["to"] == phone && r["message"].include?(partial_message)
+      end
+    end
   end
 end
 

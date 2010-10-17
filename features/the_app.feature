@@ -34,13 +34,35 @@ Feature: The whole app
     When "18004688487" texts instalover with "ok"
     Then "18004688487" should get a text "Please text 'new date' for a new date. To stop receiving texts, please text 'safeword'"
 
-  @later
   Scenario: Existing user asks for a date, but they're picky
     When "18004688487" texts instalover with "new date"
     Then "18004688487" should get a text "How about Silvertone at 09:00PM? Reply 'ok' or 'new date'."
 
     When "18004688487" texts instalover with "new date"
     Then "18004688487" should get a text "How about Mike's Apartment at 09:00PM? Reply 'ok' or 'new date'."
+
+    When "18004688487" texts instalover with "ok"
+    Then "11111111111" should get a text "Want to go on a date at Mike's Apartment at 09:00PM? Reply 'accept' or ignore."
+    And  "12222222222" should get a text "Want to go on a date at Mike's Apartment at 09:00PM? Reply 'accept' or ignore."
+
+
+  Scenario: Once a user proposes a date, they can no longer receive other date proposals
+    When "18004688487" texts instalover with "new date"
+    And "11111111111" texts instalover with "new date"
+    And "18004688487" texts instalover with "ok"
+    And "11111111111" texts instalover with "ok"
+    Then "18004688487" should not get a text whose message includes "Want to go on a date"
+
+  Scenario: Saying "new date" when you have an offer will delete your offer
+    When "18004688487" texts instalover with "new date"
+    And "18004688487" texts instalover with "ok"
+
+    Then "11111111111" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
+
+    When "11111111111" texts instalover with "new date"
+    And "11111111111" texts instalover with "accept"
+
+    Then "11111111111" should get a text whose message includes "You don't have any date offers to accept"
 
   @later
   Scenario: Existing user asks for a date, but they get turned down
