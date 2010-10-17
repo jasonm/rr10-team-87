@@ -13,6 +13,8 @@ role :db,  "173.255.195.4"
 
 set :deploy_to, "/srv/www/li205-4.members.linode.com"
 
+default_run_options[:pty] = true
+
 # Passenger
 namespace :deploy do
   task :start do ; end
