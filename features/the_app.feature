@@ -93,10 +93,17 @@ Feature: The whole app
     And "11111111111" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
     And "12222222222" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
 
-  @wip
   Scenario: User tries to get a new date while we're looking for people to accept
-    # What a jerk
-    # Tell them no
+    When "18004688487" texts instalover with "new date"
+    And "18004688487" texts instalover with "ok"
+
+    Then "11111111111" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And  "12222222222" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
+
+    And there should be a meetup founded by "18004688487" that is "unscheduled"
+
+    When "18004688487" texts instalover with "new date"
+    Then "18004688487" should get a text "Whoa there, partner - we're looking for someone right now.  If nobody shows after 5 minutes, then you can ask again."
 
   @wip
   Scenario: Unknown command handler

@@ -78,11 +78,11 @@ class Message < ActiveRecord::Base
     user.founded_meetups.proposed.destroy_all
 
     # Uncomment later
-    # if user.meetups.unscheduled.any?
-    #   Message.deliver(user.phone_number,
-    #                   "Hold tight already!")
-    #   return
-    # end
+    if user.founded_meetups.unscheduled.any?
+      Message.deliver(user.phone_number,
+        "Whoa there, partner - we're looking for someone right now.  If nobody shows after 5 minutes, then you can ask again.")
+      return
+    end
 
     user.offers.destroy_all
 
