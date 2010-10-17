@@ -8,7 +8,7 @@ class Message < ActiveRecord::Base
   MESSAGE_TOKEN = "aeea3bf2048d1848bc4e706ff76bfe98951f433968b934a2a1d80cf1e047ba36c91a2cd53a958e15319a564a"
 
   def self.deliver(to, message)
-    Rails.logger.info "SMS: TO: #{to}: #{message}"
+    Rails.logger.info "Enqueued SMS: TO: #{to}: #{message}"
 
     params = Addressable::URI.new
     params.query_values = {
