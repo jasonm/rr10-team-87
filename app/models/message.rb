@@ -51,6 +51,11 @@ class Message < ActiveRecord::Base
       return
     end
 
+    if user.unconfirmed?
+      user.deliver_secret_code
+      return
+    end
+
     message_text = message_text.downcase
     if message_text == 'new date'
       handle_new_date(user)

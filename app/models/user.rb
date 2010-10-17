@@ -36,6 +36,10 @@ class User < ActiveRecord::Base
     self.name.present?
   end
 
+  def unconfirmed?
+    ! confirmed?
+  end
+
   def age_in_years
     ((Date.today - dob).to_f / 365.0).floor
   end
@@ -88,6 +92,11 @@ class User < ActiveRecord::Base
     where('users.other')
   end
 
+  def deliver_secret_code
+    Message.deliver(self.phone_number,
+      "Before you can become an instalover you must know this secret code: '#{self.secret_code}'. " +
+      "Visit instalover.com to finish signing up.")
+  end
 
   protected
 
@@ -100,11 +109,6 @@ class User < ActiveRecord::Base
   #  finder = finder.other if self.looking_for_other
   #  finder
   #end
-
-  def deliver_secret_code
-    Message.deliver(self.phone_number,
-                    "Before you can become an instalover you must know this secret code: #{self.secret_code}")
-  end
 
   def normalize_phone_number
     normalized = self.phone_number.gsub(/[^0-9]/,'')

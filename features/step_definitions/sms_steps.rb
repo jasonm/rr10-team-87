@@ -22,3 +22,8 @@ Then /^"([^"]*)" should not get a text whose message includes "([^"]*)"$/ do |us
   QUEUE.run_jobs
   FakeTropo::Response.should_not have_text_including(user_phone, message)
 end
+
+When 'I clear the text message history' do
+  QUEUE.run_jobs
+  FakeTropo::Response.clear_all
+end
