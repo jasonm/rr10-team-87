@@ -34,4 +34,9 @@ Instalover::Application.configure do
   config.active_support.deprecation = :stderr
 
   config.action_mailer.default_url_options = { :host => 'example.com' }
+
+  config.after_initialize do
+    require "features/support/fake_resque"
+    ::QUEUE = FakeResque
+  end
 end

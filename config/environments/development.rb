@@ -24,5 +24,8 @@ Instalover::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   config.action_mailer.default_url_options = { :host => 'instalover.local' }
-end
 
+  config.after_initialize do
+    ::QUEUE = Resque
+  end
+end
