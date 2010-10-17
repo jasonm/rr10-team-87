@@ -34,5 +34,6 @@ class FakeResque
 
   def self.reset
     self.queue = []
+    self.delayed_queue = []
   end
 end

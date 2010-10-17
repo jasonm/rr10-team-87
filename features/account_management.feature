@@ -98,7 +98,7 @@ Feature: Accounts
     When I go to the home page
     And I fill in "6178675309" as my phone number
     And I press the sign up button
-    Then I should see "Phone number is already taken - we have retexted instructions"
+    Then I should see "That number has already been registered! We have retexted instructions"
     And I get a text with my secret code
 
   @wip @later
