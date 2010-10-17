@@ -125,8 +125,7 @@ class User < ActiveRecord::Base
       else
         user.deliver_secret_code
       end
-      errors.add(:base, "That number has already been registered!  We have retexted instructions")
->>>>>>> Deliver users secret code
+      errors.add(:base, "That number has already been registered! We have retexted instructions.")
     end
   end
 
