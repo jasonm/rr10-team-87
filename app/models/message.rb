@@ -105,7 +105,7 @@ class Message < ActiveRecord::Base
 
 
         Message.deliver(user.phone_number,
-                        "How about #{meetup.description}? Reply '#{COMMANDS[:ok]}' or '#{COMMANDS[:new_date]}'.")
+                        "Should we find you a date at #{meetup.description}? Reply 'ok' or 'new date' to try again.")
         QUEUE.enqueue_at(5.minutes.from_now, OkTimeoutMessageDelayer, :user_id => user.id)
       end
     else
