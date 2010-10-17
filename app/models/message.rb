@@ -167,9 +167,9 @@ class Message < ActiveRecord::Base
 
     # TODO: Extract
     Message.deliver(offer.offered_user.phone_number,
-                    %{Nice! You've got a date with #{offer.meetup.first_user.name}, whose self-description is: '#{offer.meetup.first_user.description}'. Talk with your date by texting us and starting your message with '#{COMMANDS[:sext]} '})
+                    %{Nice! You've got a date with #{offer.meetup.first_user.name}, '#{offer.meetup.first_user.description}'. Say something by texting '#{COMMANDS[:sext]}' and then your message.})
     Message.deliver(offer.meetup.first_user.phone_number,
-                    %{Nice! You've got a date with #{offer.meetup.second_user.name}, whose self-description is: '#{offer.meetup.second_user.description}'. Talk with your date by texting us starting your message with '#{COMMANDS[:sext]} '})
+                    %{Nice! You've got a date with #{offer.meetup.second_user.name}, '#{offer.meetup.second_user.description}'. Say something by texting '#{COMMANDS[:sext]}' and then your message.})
 
     offer.accept!
   end

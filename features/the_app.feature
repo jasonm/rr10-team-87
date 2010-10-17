@@ -45,8 +45,8 @@ Feature: The whole app
     Then "14444444444" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
     Then "15555555555" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
     Then "16666666666" should not get a text "Too slow! Would you like to get a date? Reply 'new date'."
-    And "11111111111" should get a text "Nice! You've got a date with Emma, whose self-description is: 'super hot'. Talk with your date by texting us and starting your message with 'say '"
-    And "18004688487" should get a text "Nice! You've got a date with Mike, whose self-description is: 'red hair'. Talk with your date by texting us starting your message with 'say '"
+    And "11111111111" should get a text "Nice! You've got a date with Emma, 'super hot'. Say something by texting 'say' and then your message."
+    And "18004688487" should get a text "Nice! You've got a date with Mike, 'red hair'. Say something by texting 'say' and then your message."
 
   Scenario: Existing user texts ok without having a proposed meetup
     When "18004688487" texts instalover with "ok"
