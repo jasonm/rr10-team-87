@@ -24,8 +24,6 @@ class FakeResque
     while !self.delayed_queue.empty?
       args = self.delayed_queue.pop
       timestamp, klass, args = args.shift, args.shift, args.shift
-      puts "args in fake res"
-      p args
       if (future_time - timestamp) >= 0
         klass.send(:perform, *JSON.parse(args))
       end
