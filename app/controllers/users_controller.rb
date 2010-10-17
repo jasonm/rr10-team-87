@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.secret_code_confirmation = params[:user][:secret_code]
     if @user.update_attributes(params[:user])
-      redirect_to page_url('welcome')
+      redirect_to page_url('how-does-this-work')
     else
       @user.errors[:secret_code_confirmation] = @user.errors[:secret_code]
       render :action => :edit
