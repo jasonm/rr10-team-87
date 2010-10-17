@@ -19,11 +19,15 @@ body {
   display: block;
   padding: 8px 20px 7px;
   text-align: center;
-}
 
-#banner p {
-  color: #eee;
-  margin: 0;
+  p {
+    color: #eee;
+    margin: 0;
+
+    a {
+      color: #fff;
+    }
+  }
 }
 
 #container a {
