@@ -117,7 +117,7 @@ Feature: The whole app
     Then "11111111111" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
     And  "12222222222" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
 
-    When jobs in 5 minutes from now are procedsed
+    When jobs in 5 minutes from now are processed
 
     Then "18004688487" should get a text "We called every number in our little black book, but only got answering machines.  Try again later?  Reply 'new date' to start again."
     And "11111111111" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
@@ -130,6 +130,13 @@ Feature: The whole app
     When "18004688487" texts instalover with "ok"
     Then "11111111111" should get a text whose message includes "Want to go on a date"
     And  "12222222222" should get a text whose message includes "Want to go on a date"
+
+  Scenario: Existing user falls asleep before oking date location
+    When "18004688487" texts instalover with "new date"
+    Then "18004688487" should get a text "How about Silvertone at 09:00PM? Reply 'ok' or 'new date'."
+
+    When jobs in 5 minutes from now are processed
+    Then "18004688487" should get a text "I guess you don't want to go on a date... Text 'new date' again when you change your mind"
 
   Scenario: User tries to get a new date while we're looking for people to accept
     When "18004688487" texts instalover with "new date"

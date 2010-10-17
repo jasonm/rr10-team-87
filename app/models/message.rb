@@ -105,6 +105,7 @@ class Message < ActiveRecord::Base
 
         Message.deliver(user.phone_number,
                         "How about #{meetup.description}? Reply 'ok' or 'new date'.")
+        QUEUE.enqueue_at(5.minutes.from_now, OkTimeoutMessageDelayer, :user_id => user.id)
       end
     else
       outside_dating_hours(user)
@@ -129,7 +130,7 @@ class Message < ActiveRecord::Base
       user.matching.first(5).each do |matching_user|
         Offer.create(:offered_user => matching_user, :meetup => meetup)
       end
-      QUEUE.enqueue_at(5.minutes.from_now, MessageDelayer, :user_id => user.id)
+      QUEUE.enqueue_at(5.minutes.from_now, RejectMessageDelayer, :user_id => user.id)
     else
       handle_unknown(user)
     end
@@ -190,6 +191,13 @@ class Message < ActiveRecord::Base
       meetup.state = "cancelled"
       meetup.save!
     end
+  end
 
+  def self.handle_ok_timeout(user)
+    meetup = user.founded_meetups.proposed.first
+    if !meetup.nil?
+      Message.deliver(user.phone_number,"I guess you don't want to go on a date... Text 'new date' again when you change your mind")
+      meetup.state == "cancelled"
+    end
   end
 end

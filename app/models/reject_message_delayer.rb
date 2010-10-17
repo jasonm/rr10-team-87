@@ -1,4 +1,4 @@
-class MessageDelayer
+class RejectMessageDelayer
   @queue = :timeouts
 
   def self.perform(args_hash)
