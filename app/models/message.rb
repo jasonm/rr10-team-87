@@ -63,16 +63,15 @@ class Message < ActiveRecord::Base
       return
     end
 
-    message_text = message_text.downcase
-    if message_text == 'new date'
+    if message_text =~ /new.*date/i
       handle_new_date(user)
-    elsif message_text == 'ok'
+    elsif message_text =~ /ok/i
       handle_ok(user)
-    elsif message_text == 'accept'
+    elsif message_text =~ /accept/i
       handle_accept(user)
     elsif message_text =~ /^say (.*)/i
       handle_texting_proxy(user, $1)
-    elsif message_text == 'safeword'
+    elsif message_text =~ /safeword/i
       handle_safeword(user)
     else
       handle_unknown(user)
