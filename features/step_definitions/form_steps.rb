@@ -10,6 +10,10 @@ When 'I fill in my secret code' do
   fill_in 'user[secret_code_confirmation]', :with => secret_code
 end
 
+When 'I fill in my secret code in all caps' do
+  fill_in 'user[secret_code_confirmation]', :with => secret_code.upcase
+end
+
 When 'I fill in "$secret_code" as my secret code' do |code|
   fill_in 'user[secret_code_confirmation]', :with => code
 end

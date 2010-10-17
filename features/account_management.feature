@@ -18,6 +18,24 @@ Feature: Accounts
     Then I see a description of how to use the Web site
     And "18004688487" is confirmed
 
+  Scenario: Secret codes are not case-sensitive
+    When I go to the home page
+    And I fill in "18004688487" as my phone number
+    And I press the sign up button
+    Then I get a text with my secret code
+    And the secret code field is empty
+    When I fill in my secret code in all caps
+    And I fill in the date of birth with "December 31, 1977"
+    And I fill in my name as "Mike"
+    And I fill in my description as "black shirt, glasses, math book"
+    And I check my gender as male
+    And I fill in the minimum age with "21"
+    And I fill in the maximum age with "34"
+    And I check my desired gender as female
+    And I submit my profile
+    Then I see a description of how to use the Web site
+    And "18004688487" is confirmed
+
   Scenario: New user fails to enter the proper secret code
     When I go to the home page
     And I fill in "8004688487" as my phone number

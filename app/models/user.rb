@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   attr_protected :secret_code, :phone_number
   validates_presence_of :phone_number
-  validates_confirmation_of :secret_code, :allow_nil => true
+  validate :secret_code_matches_or_nil
   validates_presence_of :name, :description, :looking_for_minimum_age, :looking_for_maximum_age,
     :on => :update
   validate :at_least_one_gender, :on => :update
@@ -9,11 +9,14 @@ class User < ActiveRecord::Base
   validates_presence_of :dob, :on => :update
   validates_uniqueness_of :phone_number, :message => 'That number has already been registered!'
 
+  before_validation_on_create :secret_code # generates and sets it
   before_validation :normalize_phone_number
   after_create :deliver_secret_code
 
   has_many :founded_meetups, :class_name => 'Meetup', :foreign_key => 'first_user_id'
   has_many :offers, :foreign_key => "offered_user_id"
+
+  attr_accessor :secret_code_confirmation
 
   # The magic of finding a match and making a date.
   # Produces either a scheduled or an unscheduled meetup.
@@ -117,6 +120,14 @@ class User < ActiveRecord::Base
   def at_least_one_desired_gender
     unless (looking_for_male? || looking_for_female? || looking_for_other?)
       errors.add(:base, "must look for at least one gender")
+    end
+  end
+
+  def secret_code_matches_or_nil
+    return true if self.secret_code_confirmation.nil?
+
+    if self.secret_code.try(:downcase) != self.secret_code_confirmation.try(:downcase)
+      self.errors.add(:secret_code, "doesn't match")
     end
   end
 

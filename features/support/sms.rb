@@ -1,5 +1,6 @@
 module SmsHelpers
   def secret_code
+    QUEUE.run_jobs
     response = FakeTropo::Response.last
     response.should_not be_nil,
       "expected Tropo to ping us. Perhaps you meant to call Message.deliver."
