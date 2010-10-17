@@ -6,8 +6,10 @@ class Message < ActiveRecord::Base
 
   TROPO_URL = "http://api.tropo.com/1.0"
   MESSAGE_TOKEN = "aeea3bf2048d1848bc4e706ff76bfe98951f433968b934a2a1d80cf1e047ba36c91a2cd53a958e15319a564a"
-  DATING_START = Time.parse('1:00PM EDT')
-  DATING_END = Time.parse('10:59PM EDT')
+  DATING_START_STRING = '1PM EDT'
+  DATING_END_STRING = '10:59PM EDT'
+  DATING_START = Time.parse(DATING_START_STRING)
+  DATING_END = Time.parse(DATING_END_STRING)
 
   def self.deliver(to, message)
     Rails.logger.info "Enqueued SMS: TO: #{to}: #{message}"
@@ -119,7 +121,7 @@ class Message < ActiveRecord::Base
 
   def self.outside_dating_hours(user)
     Message.deliver(user.phone_number,
-                    "Outside of the dating hours: 5PM to 11PM (EST). Please try again then!")
+                    "Outside of the dating hours: #{DATING_START_STRING} to #{DATING_END_STRING}. Please try again then!")
   end
 
   def self.handle_ok(user)
