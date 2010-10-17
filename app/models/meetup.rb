@@ -23,6 +23,7 @@ class Meetup < ActiveRecord::Base
     where('state = "proposed"')
   end
 
+  # All meetups for the given user
   def self.for(user)
     where('meetups.first_user_id = :id OR meetups.second_user_id = :id', :id => user.id)
   end
@@ -39,7 +40,7 @@ class Meetup < ActiveRecord::Base
     end
   end
 
-  def make_unscheduled
+  def unschedule!
     state = "unscheduled"
     self.save!
   end

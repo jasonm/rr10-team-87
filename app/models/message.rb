@@ -99,7 +99,7 @@ class Message < ActiveRecord::Base
   def self.handle_ok(user)
     meetup = user.founded_meetups.proposed.first
     if meetup
-      meetup.make_unscheduled
+      meetup.unschedule!
       user.matching.each do |matching_user|
         if matching_user.founded_meetups.proposed.none?
           puts "Found a match for #{user.phone_number} at #{matching_user.phone_number}"
