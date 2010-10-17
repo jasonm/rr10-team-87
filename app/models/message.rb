@@ -59,6 +59,8 @@ class Message < ActiveRecord::Base
       handle_new_date(user)
     elsif message_text == 'ok'
       handle_ok(user)
+    elsif message_text == 'accept'
+      handle_accept(user)
     end
   end
 
@@ -104,6 +106,23 @@ class Message < ActiveRecord::Base
       Message.deliver(user.phone_number,
                       "Please text 'new date' for a new date. To stop receiving texts, please text 'safeword'")
 
+  end
+
+  def self.handle_accept(user)
+    user.offers.first.meetup.offers.each do |o|
+      if o.offered_user.id == user.id
+        o.meetup.second_user = o.offered_user
+        o.meetup.save!
+        Message.deliver(o.offered_user.phone_number,
+                        "You got it! Meet at #{o.meetup.description}. Your date is: '#{o.meetup.first_user.description}'")
+        Message.deliver(o.meetup.first_user.phone_number,
+                        "You got it! Meet at #{o.meetup.description}. Your date is: '#{o.meetup.second_user.description}'")
+      else
+        Message.deliver(o.offered_user.phone_number,
+                        "Too slow! Would you like to get a date? Reply 'new date'.")
+      end
+      o.delete
+    end
   end
 
 end

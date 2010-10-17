@@ -1,8 +1,8 @@
 class CreateOffers < ActiveRecord::Migration
   def self.up
     create_table :offers do |t|
-      t.references :meetup_id
-      t.references :offered_user_id
+      t.references :meetup
+      t.references :offered_user
 
       t.timestamps
     end
