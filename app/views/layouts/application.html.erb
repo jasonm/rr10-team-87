@@ -7,7 +7,6 @@
   <title>instalover, because love can't wait.</title>
   <%= stylesheet_link_tag :flutie, 'screen', :media => 'all' %>
   <%= stylesheet_link_tag 'mobile', :media => 'only screen and (max-device-width: 480px)' %>
-  <%= javascript_include_tag "jquery", "jquery-ui", "prefilled_input", "rails", "application" %>
   <%= csrf_meta_tag %>
 </head>
 <body class="<%= body_class %>">
@@ -21,6 +20,8 @@
     <%= render :partial => 'shared/flashes' -%>
     <%= yield %>
   </div>
+
+  <div id="tweets"></div>
 
   <div id="footer">
     <p><a href="/pages/about">By Jason Morrison&rsquo;s Little Death</a> / <a href="http://twitter.com/instalover">@instalover</a> / <a href="/pages/terms">Terms of Service</a></p>

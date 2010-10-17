@@ -128,6 +128,44 @@ p#no {
   float: left;
 }
 
+#tweets {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #111;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.1), 0 0 2px 0 rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.1), 0 0 2px 0 rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.1), 0 0 2px 0 rgba(0, 0, 0, 0.6);
+  margin: 20px auto 10px;
+  padding: 25px 25px 5px 30px;
+  width: 420px;
+
+  ul.tweet_list {
+    list-style: none;
+
+    .tweet_text {
+      font-size: 18px;
+      font-weight: normal;
+
+      a {
+        color: #e00;
+        text-decoration: none;
+      }
+    }
+
+    .tweet_time {
+      display: block;
+      text-align: right;
+
+      a {
+        color: #e00;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
 #footer {
   color: #999;
   margin: 30px auto 80px;
