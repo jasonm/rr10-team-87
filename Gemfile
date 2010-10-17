@@ -1,4 +1,5 @@
 source :rubygems
+source 'http://gems.github.com/'
 
 gem 'childprocess', '0.0.9'
 gem "rails", ">= 3.0"
@@ -42,4 +43,5 @@ group :test, :cucumber do
   gem "launchy"
   gem 'sinatra'
   gem 'sham_rack'
+  gem 'relevance-rcov'
 end
