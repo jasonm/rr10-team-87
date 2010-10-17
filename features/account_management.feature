@@ -15,7 +15,7 @@ Feature: Accounts
     And I fill in the maximum age with "34"
     And I check my desired gender as female
     And I submit my profile
-    Then I see a description of how to use the Web site
+    Then I see a welcome page
     And "18004688487" is confirmed
     And "18004688487" should get a text "Congrats, Mike, you are now an instalover.  Text 'new date' to get a new date."
 
@@ -34,7 +34,7 @@ Feature: Accounts
     And I fill in the maximum age with "34"
     And I check my desired gender as female
     And I submit my profile
-    Then I see a description of how to use the Web site
+    Then I see a welcome page
     And "18004688487" is confirmed
 
   Scenario: New user fails to enter the proper secret code
@@ -82,7 +82,7 @@ Feature: Accounts
     And I check my desired gender as female
     And I submit my profile
     And "16178675309" is confirmed
-    Then I see a description of how to use the Web site
+    Then I see a welcome page
     When I go to the home page
     And I fill in "6178675309" as my phone number
     And I press the text me button
