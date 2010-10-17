@@ -11,6 +11,17 @@ body {
   font-family: MuseoSlab500, "helvetica neue", arial, sans-serif;
   text-rendering: optimizeLegibility; }
 
+#banner {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #111;
+  display: block;
+  padding: 8px 20px 7px;
+  text-align: center; }
+
+#banner p {
+  color: #eee;
+  margin: 0; }
+
 #container a {
   color: #e00;
   text-decoration: none; }
@@ -21,8 +32,8 @@ h1, h2 {
   font-family: MuseoSlab500, "helvetica neue", arial, sans-serif; }
 
 #header {
-  margin: 40px auto 40px;
-  padding: 25px 25px 0px 30px;
+  margin: 30px auto 40px;
+  padding: 0 25px 0px 30px;
   width: 420px; }
 
 h1 a {
