@@ -19,15 +19,8 @@ class Message < ActiveRecord::Base
       "action" =>"create"
     }
     param_string = params.query
-    uri = URI.parse("#{TROPO_URL}/sessions?#{param_string}")
-    response = Net::HTTP.get(uri)
 
-    if response.include?("<success>true</success>")
-      true
-    else
-      raise "Failed to text, to=#{to}, message=#{message}:\n#{response.inspect}"
-    end
-
+    QUEUE.enqueue(MessageSender, "#{TROPO_URL}/sessions?#{param_string}")
   end
 
   def self.json_for_relay(message_params)

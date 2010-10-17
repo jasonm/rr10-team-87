@@ -15,7 +15,10 @@ gem "flutie"
 gem "dynamic_form"
 gem 'tropo-webapi-ruby'
 gem "addressable"
+
 gem 'resque'
+gem 'resque-restriction'
+
 gem "capistrano"
 
 # http://blog.davidchelimsky.net/2010/07/11/rspec-rails-2-generators-and-rake-tasks/

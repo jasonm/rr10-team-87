@@ -11,6 +11,7 @@ Feature: The whole app
       | text             |
       | Silvertone       |
       | Mike's Apartment |
+    And jobs are cleared
 
   Scenario: An unregistered user tries to text instalover
     When "11234567890" texts instalover with "hey!!!"
