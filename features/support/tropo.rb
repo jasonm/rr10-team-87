@@ -8,6 +8,10 @@ module FakeTropo
       @@responses << response
     end
 
+    def self.clear_all
+      @@responses = []
+    end
+
     def self.last
       @@responses.last
     end
