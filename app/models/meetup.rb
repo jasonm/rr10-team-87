@@ -41,7 +41,7 @@ class Meetup < ActiveRecord::Base
   end
 
   def unschedule!
-    state = "unscheduled"
+    self.state = "unscheduled"
     self.save!
   end
 
