@@ -148,7 +148,7 @@ Feature: The whole app
     And there should be a meetup founded by "18004688487" that is "unscheduled"
 
     When "18004688487" texts instalover with "new date"
-    Then "18004688487" should get a text "Whoa there, partner - we're looking for someone right now.  If nobody shows after 5 minutes, then you can ask again."
+    Then "18004688487" should get a text "Whoa there, pardner - we're looking for someone right now.  If nobody shows after 5 minutes, then you can ask again."
 
   Scenario: Unknown command handler
     When "18004688487" texts instalover with "all the dicks you can fit in your mouth?"

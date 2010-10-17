@@ -94,7 +94,7 @@ class Message < ActiveRecord::Base
 
       if user.founded_meetups.unscheduled.any?
         Message.deliver(user.phone_number,
-                        "Whoa there, partner - we're looking for someone right now.  If nobody shows after 5 minutes, then you can ask again.")
+                        "Whoa there, pardner - we're looking for someone right now.  If nobody shows after 5 minutes, then you can ask again.")
       else
         user.offers.cancel_all
 
