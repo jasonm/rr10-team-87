@@ -6,6 +6,8 @@ class Message < ActiveRecord::Base
 
   TROPO_URL = "http://api.tropo.com/1.0"
   MESSAGE_TOKEN = "aeea3bf2048d1848bc4e706ff76bfe98951f433968b934a2a1d80cf1e047ba36c91a2cd53a958e15319a564a"
+  DATING_START = Time.parse('5:00PM edt')
+  DATING_END = Time.parse('11:00PM edt')
 
   def self.deliver(to, message)
     Rails.logger.info "Enqueued SMS: TO: #{to}: #{message}"
@@ -81,25 +83,40 @@ class Message < ActiveRecord::Base
   end
 
   def self.handle_new_date(user)
-    user.founded_meetups.proposed.destroy_all
+    if within_dating_hours?
+      user.founded_meetups.proposed.destroy_all
 
-    # Uncomment later
-    if user.founded_meetups.unscheduled.any?
-      Message.deliver(user.phone_number,
-        "Whoa there, partner - we're looking for someone right now.  If nobody shows after 5 minutes, then you can ask again.")
-      return
+      if user.founded_meetups.unscheduled.any?
+        Message.deliver(user.phone_number,
+                        "Whoa there, partner - we're looking for someone right now.  If nobody shows after 5 minutes, then you can ask again.")
+      else
+        user.offers.destroy_all
+
+        meetup = Meetup.create({
+          :first_user => user,
+          :description => DateSuggestion.next_place_and_time
+        })
+
+
+        Message.deliver(user.phone_number,
+                        "How about #{meetup.description}? Reply 'ok' or 'new date'.")
+      end
+    else
+      outside_dating_hours(user)
     end
+  end
 
-    user.offers.destroy_all
+  def self.within_dating_hours?
+    now = Time.now
+    now.hour >= DATING_START.hour &&
+      now.min >= DATING_START.min &&
+      now.hour <= DATING_END.hour &&
+      now.min <= DATING_END.min
+  end
 
-    meetup = Meetup.create({
-      :first_user => user,
-      :description => DateSuggestion.next_place_and_time
-    })
-
-
+  def self.outside_dating_hours(user)
     Message.deliver(user.phone_number,
-                    "How about #{meetup.description}? Reply 'ok' or 'new date'.")
+                    "Outside of the dating hours: 5PM to 11PM (EST). Please try again then!")
   end
 
   def self.handle_ok(user)

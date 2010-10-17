@@ -63,6 +63,11 @@ Feature: The whole app
     Then "11111111111" should get a text "Want to go on a date at Mike's Apartment at 09:00PM? Reply 'accept' or ignore."
     And  "12222222222" should get a text "Want to go on a date at Mike's Apartment at 09:00PM? Reply 'accept' or ignore."
 
+  Scenario: Existing user asks for a date outside of the dating hours
+    Given it is outside of the dating hours
+    When "18004688487" texts instalover with "new date"
+    Then "18004688487" should get a text "Outside of the dating hours: 5PM to 11PM (EST). Please try again then!"
+
   Scenario: Once a user proposes a date, they can no longer receive offers
     When "18004688487" texts instalover with "new date"
     And  "11111111111" texts instalover with "new date"
