@@ -41,7 +41,7 @@ class Message < ActiveRecord::Base
   end
 
   def self.handle_incoming(phone_number, message_text)
-    Rails.logger.info("SMS INCOMING: FROM #{phone_number}: #{message_text}"
+    Rails.logger.info("SMS INCOMING: FROM #{phone_number}: #{message_text}")
 
     user = User.find_by_phone_number(phone_number)
 
