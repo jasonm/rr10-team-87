@@ -13,6 +13,11 @@ Then /^"([^"]*)" should get a text "([^"]*)"$/ do |user_phone, message|
   FakeTropo::Response.should have_text(user_phone, message)
 end
 
+Then /^"([^"]*)" should not get a text "([^"]*)"$/ do |user_phone, message|
+  QUEUE.run_jobs
+  FakeTropo::Response.should_not have_text(user_phone, message)
+end
+
 Then /^"([^"]*)" should get a text whose message includes "([^"]*)"$/ do |user_phone, message|
   QUEUE.run_jobs
   FakeTropo::Response.should have_text_including(user_phone, message)

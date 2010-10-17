@@ -18,6 +18,12 @@ Feature: The whole app
     Then "11234567890" should get a text "Sorry, you must register first at instalover.com"
 
   Scenario: Existing user tries to get some and is happy with everything
+    Given the following users exist:
+      | Phone Number | Male | Female | Looking For Male | Looking For Female | Dob          | Looking For Minimum Age | Looking For Maximum Age | Description | Name  |
+      | 13333333333  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
+      | 14444444444  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
+      | 15555555555  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
+      | 16666666666  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
     When "18004688487" texts instalover with "new date"
     Then "18004688487" should get a text "How about Silvertone at 09:00PM? Reply 'ok' or 'new date'."
 
@@ -26,11 +32,19 @@ Feature: The whole app
     When "18004688487" texts instalover with "ok"
     Then "11111111111" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
     And  "12222222222" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And  "13333333333" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And  "14444444444" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And  "15555555555" should get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And  "16666666666" should not get a text "Want to go on a date at Silvertone at 09:00PM? Reply 'accept' or ignore."
 
     And there should be a meetup founded by "18004688487" that is "unscheduled"
 
     When "11111111111" texts instalover with "accept"
     Then "12222222222" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
+    Then "13333333333" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
+    Then "14444444444" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
+    Then "15555555555" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
+    Then "16666666666" should not get a text "Too slow! Would you like to get a date? Reply 'new date'."
     And "11111111111" should get a text "Nice! You've got a date with Emma, whose self-description is: 'super hot'"
     And "18004688487" should get a text "Nice! You've got a date with Mike, whose self-description is: 'red hair'"
 
