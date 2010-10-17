@@ -31,6 +31,9 @@ Then /^the "([^"]*)" user should be deleted$/ do |phone_number|
 end
 
 Then /^"([^"]*)" should have only one proposed meetup$/ do |phone_number|
-  User.find_by_phone_number(phone_number).founded_meetups.proposed.count == 1
+  User.find_by_phone_number(phone_number).founded_meetups.proposed.count.should == 1
 end
 
+Then /^"([^"]*)" should have no proposed meetups$/ do |phone_number|
+  User.find_by_phone_number(phone_number).founded_meetups.proposed.count.should == 0
+end

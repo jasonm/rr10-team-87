@@ -162,6 +162,7 @@ Feature: The whole app
     Then "18004688487" should have only one proposed meetup
     When jobs in 5 minutes from now are processed
     Then "18004688487" should get a text "I guess you don't want to go on a date... Text 'new date' again when you change your mind"
+    And  "18004688487" should have no proposed meetups
 
   Scenario: User tries to get a new date while we're looking for people to accept
     When "18004688487" texts instalover with "new date"

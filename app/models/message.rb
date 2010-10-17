@@ -207,7 +207,8 @@ class Message < ActiveRecord::Base
     meetup = user.founded_meetups.proposed.first
     if !meetup.nil?
       Message.deliver(user.phone_number,"I guess you don't want to go on a date... Text 'new date' again when you change your mind")
-      meetup.state == "cancelled"
+      meetup.state = "cancelled"
+      meetup.save
     end
   end
 end
