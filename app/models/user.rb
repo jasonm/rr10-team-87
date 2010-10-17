@@ -20,51 +20,6 @@ class User < ActiveRecord::Base
 
   attr_accessor :secret_code_confirmation
 
-  # The magic of finding a match and making a date.
-  # Produces either a scheduled or an unscheduled meetup.
-  #def schedule_date_in(location)
-  #  meetup_finder_near(location).first || founded_meetups.build(:location => location)
-  #end
-
-  # The secret code that the user uses to prove that they have that phone
-  # number.
-  def secret_code
-    read_attribute(:secret_code) ||
-      write_attribute(:secret_code, generate_secret_code)
-  end
-
-  # A user is confirmed if they have a name
-  def confirmed?
-    self.name.present?
-  end
-
-  def unconfirmed?
-    ! confirmed?
-  end
-
-  def age_in_years
-    ((Date.today - dob).to_f / 365.0).floor
-  end
-
-  # The person this user has as a date right now
-  def date
-    Meetup.for(self).scheduled.newest.first.try(:for, self)
-  end
-
-
-  def matching
-    finder = User.
-      within_age_range(self.looking_for_minimum_age, self.looking_for_maximum_age).
-      looking_for(self).
-      without_offers.
-      without_founded_meetups_in_progress
-
-    finder = finder.men   if self.looking_for_male
-    finder = finder.women if self.looking_for_female
-    finder = finder.other if self.looking_for_other
-    finder
-  end
-
   def self.without_offers
     where('users.id not in (select offered_user_id from offers)')
   end
@@ -94,23 +49,55 @@ class User < ActiveRecord::Base
     where('users.other')
   end
 
+  # The secret code that the user uses to prove that they have that phone
+  # number.
+  def secret_code
+    read_attribute(:secret_code) ||
+      write_attribute(:secret_code, generate_secret_code)
+  end
+
+  # A user is confirmed if they have a name
+  def confirmed?
+    self.name.present?
+  end
+
+  def unconfirmed?
+    ! confirmed?
+  end
+
+  def age_in_years
+    ((Date.today - dob).to_f / 365.0).floor
+  end
+
+  # The person this user has as a date right now
+  def date
+    Meetup.for(self).scheduled.newest.first.try(:for, self)
+  end
+
+  def matching
+    finder = User.
+      within_age_range(self.looking_for_minimum_age, self.looking_for_maximum_age).
+      looking_for(self).
+      without_offers.
+      without_founded_meetups_in_progress
+
+    finder = finder.men   if self.looking_for_male
+    finder = finder.women if self.looking_for_female
+    finder = finder.other if self.looking_for_other
+    finder
+  end
+
   def deliver_secret_code
     Message.deliver(self.phone_number,
       "Before you can become an instalover you must know this secret code: '#{self.secret_code}'. " +
       "Visit instalover.com to finish signing up.")
   end
 
-  protected
+  def latest_offer
+    offers.pending.first
+  end
 
-  #def meetup_finder_near(location)
-  #  finder = Meetup.unscheduled.
-  #    within_age_range(self.looking_for_minimum_age, self.looking_for_maximum_age).
-  #    looking_for(self)
-  #  finder = finder.men   if self.looking_for_male
-  #  finder = finder.women if self.looking_for_female
-  #  finder = finder.other if self.looking_for_other
-  #  finder
-  #end
+  protected
 
   def normalize_phone_number
     normalized = self.phone_number.gsub(/[^0-9]/,'')

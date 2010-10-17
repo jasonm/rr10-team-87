@@ -96,7 +96,7 @@ class Message < ActiveRecord::Base
         Message.deliver(user.phone_number,
                         "Whoa there, partner - we're looking for someone right now.  If nobody shows after 5 minutes, then you can ask again.")
       else
-        user.offers.destroy_all
+        user.offers.cancel_all
 
         meetup = Meetup.create({
           :first_user => user,
@@ -144,26 +144,35 @@ class Message < ActiveRecord::Base
   end
 
   def self.handle_accept(user)
-    if user.offers.none?
+    if user.offers.pending.none?
       Message.deliver(user.phone_number,
                       "You don't have any date offers to accept")
     else
-      user.offers.first.meetup.offers.each do |o|
-        if o.offered_user.id == user.id
-          o.meetup.state = 'scheduled'
-          o.meetup.second_user = o.offered_user
-          o.meetup.save!
-          Message.deliver(o.offered_user.phone_number,
-                          %{Nice! You've got a date with #{o.meetup.first_user.name}, whose self-description is: '#{o.meetup.first_user.description}'. Talk with your date by texting 'say ' with your message})
-          Message.deliver(o.meetup.first_user.phone_number,
-                          %{Nice! You've got a date with #{o.meetup.second_user.name}, whose self-description is: '#{o.meetup.second_user.description}'. Talk with your date by texting 'say ' with your message})
-        else
-          Message.deliver(o.offered_user.phone_number,
-                          "Too slow! Would you like to get a date? Reply 'new date'.")
-        end
-        o.delete
+      accepted_offer = user.latest_offer
+      accept_offer(accepted_offer)
+
+      meetup = accepted_offer.meetup
+      meetup.pending_offers.each do |offer|
+        Message.deliver(offer.offered_user.phone_number,
+                        "Too slow! Would you like to get a date? Reply 'new date'.")
+        offer.decline!
       end
     end
+  end
+
+  def self.accept_offer(offer)
+    # TODO: push onto Meetup
+    offer.meetup.state = 'scheduled'
+    offer.meetup.second_user = offer.offered_user
+    offer.meetup.save!
+
+    # TODO: Extract
+    Message.deliver(offer.offered_user.phone_number,
+                    %{Nice! You've got a date with #{offer.meetup.first_user.name}, whose self-description is: '#{offer.meetup.first_user.description}'. Talk with your date by texting 'say ' with your message})
+    Message.deliver(offer.meetup.first_user.phone_number,
+                          %{Nice! You've got a date with #{offer.meetup.second_user.name}, whose self-description is: '#{offer.meetup.second_user.description}'. Talk with your date by texting 'say ' with your message})
+
+    offer.accept!
   end
 
   def self.handle_safeword(user)
@@ -184,11 +193,12 @@ class Message < ActiveRecord::Base
     if !meetup.nil?
       Message.deliver(user.phone_number,
                       "We called every number in our little black book, but only got answering machines.  Try again later?  Reply 'new date' to start again.")
-      meetup.offers.each do |o|
-        Message.deliver(o.offered_user.phone_number,
+      meetup.offers.pending.each do |offer|
+        Message.deliver(offer.offered_user.phone_number,
                         "Too slow! Would you like to get a date? Reply 'new date'.")
-        o.delete
+        offer.cancel!
       end
+      # TODO: push onto Meetup
       meetup.state = "cancelled"
       meetup.save!
     end

@@ -31,6 +31,11 @@ class Meetup < ActiveRecord::Base
     where('meetups.first_user_id = :id OR meetups.second_user_id = :id', :id => user.id)
   end
 
+  # All pending offers for this meetup
+  def pending_offers
+    offers.pending
+  end
+
   # In a scheduled date produce the user that is opposite the one passed in.
   # In an unscheduled date produce nil.
   def for(user)
