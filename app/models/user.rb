@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   validate :at_least_one_gender, :on => :update
   validate :at_least_one_desired_gender, :on => :update
   validates_presence_of :dob, :on => :update
-  validates_uniqueness_of :phone_number
+  validates_uniqueness_of :phone_number, :message => 'That number has already been registered!'
 
   before_validation :normalize_phone_number
   after_create :deliver_secret_code

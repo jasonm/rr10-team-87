@@ -68,7 +68,7 @@ Feature: Accounts
     And I fill in "6178675309" as my phone number
     And I press the sign up button
     Then I should not see "Secret code from text message"
-    And I should see "has already been taken"
+    And I should see "That number has already been registered!"
 
 
   @wip @later

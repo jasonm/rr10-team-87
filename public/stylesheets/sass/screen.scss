@@ -263,7 +263,8 @@ form ol li.time ol li label {
   display: none;
 }
 
-body.users-new #container fieldset ol {
+body.users-new #container fieldset ol,
+body.users-create #container fieldset ol {
   label {
     margin: 0 0 5px 0;
     text-align: center;
@@ -279,6 +280,10 @@ body.users-new #container fieldset ol {
     color: #bbb;
     font-size: 14px;
     margin: 2px 0 16px 0;
+    text-align: center;
+  }
+
+  p.inline-errors {
     text-align: center;
   }
 }

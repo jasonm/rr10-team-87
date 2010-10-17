@@ -195,17 +195,23 @@ form ol li.date ol li label,
 form ol li.time ol li label {
   display: none; }
 
-body.users-new #container fieldset ol label {
+body.users-new #container fieldset ol label,
+body.users-create #container fieldset ol label {
   margin: 0 0 5px 0;
   text-align: center; }
-body.users-new #container fieldset ol input[type="text"] {
+body.users-new #container fieldset ol input[type="text"],
+body.users-create #container fieldset ol input[type="text"] {
   font-size: 26px;
   margin: 0 0 2px 0;
   text-align: center; }
-body.users-new #container fieldset ol p.inline-hints {
+body.users-new #container fieldset ol p.inline-hints,
+body.users-create #container fieldset ol p.inline-hints {
   color: #bbb;
   font-size: 14px;
   margin: 2px 0 16px 0;
+  text-align: center; }
+body.users-new #container fieldset ol p.inline-errors,
+body.users-create #container fieldset ol p.inline-errors {
   text-align: center; }
 
 /* buttons
