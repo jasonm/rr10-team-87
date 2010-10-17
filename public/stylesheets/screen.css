@@ -108,12 +108,14 @@ p#no {
   #tweets h3 {
     color: #666;
     font-size: 14px;
-    margin: 0 0 12px 0; }
+    margin: 0 0 12px 0;
+    text-shadow: 0 1px 0 #000; }
   #tweets ul.tweet_list {
     list-style: none; }
     #tweets ul.tweet_list .tweet_text {
       font-size: 18px;
-      font-weight: normal; }
+      font-weight: normal;
+      text-shadow: 0 1px 0 #000; }
       #tweets ul.tweet_list .tweet_text a {
         color: #666;
         text-decoration: none; }
@@ -124,7 +126,8 @@ p#no {
       color: #333;
       font-size: 14px;
       margin: 12px 0 0 0;
-      text-align: right; }
+      text-align: right;
+      text-shadow: 0 1px 0 #000; }
       #tweets ul.tweet_list .more-tweets a {
         border-top: 1px solid #333;
         color: #ccc;
@@ -139,6 +142,7 @@ p#no {
   margin: 30px auto 80px;
   padding: 0 25px;
   text-align: center;
+  text-shadow: 0 1px 0 #000;
   width: 470px; }
   #footer a {
     color: #666;
@@ -182,6 +186,11 @@ form#new_user {
           font-size: 15px; }
         #container fieldset ol li#user_male_input input, #container fieldset ol li#user_female_input input, #container fieldset ol li#user_other_input input, #container fieldset ol li#user_looking_for_female_input input, #container fieldset ol li#user_looking_for_male_input input, #container fieldset ol li#user_looking_for_other_input input {
           margin: 0 4px 0 0; }
+      #container fieldset ol li#user_male_input, #container fieldset ol li#user_female_input, #container fieldset ol li#user_other_input {
+        margin: 5px 0px 0 0;
+        width: 140px; }
+        #container fieldset ol li#user_male_input input[type="checkbox"], #container fieldset ol li#user_female_input input[type="checkbox"], #container fieldset ol li#user_other_input input[type="checkbox"] {
+          margin-left: 3px; }
       #container fieldset ol li#user_looking_for_minimum_age_input, #container fieldset ol li#user_looking_for_maximum_age_input {
         float: left;
         width: 190px; }

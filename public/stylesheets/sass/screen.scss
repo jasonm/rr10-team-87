@@ -139,6 +139,7 @@ p#no {
     color: #666;
     font-size: 14px;
     margin: 0 0 12px 0;
+    text-shadow: 0 1px 0 #000;
   }
 
   ul.tweet_list {
@@ -147,6 +148,7 @@ p#no {
     .tweet_text {
       font-size: 18px;
       font-weight: normal;
+      text-shadow: 0 1px 0 #000;
 
       a {
         color: #666;
@@ -164,6 +166,7 @@ p#no {
       font-size: 14px;
       margin: 12px 0 0 0;
       text-align: right;
+      text-shadow: 0 1px 0 #000;
 
       a {
         border-top: 1px solid #333;
@@ -185,6 +188,7 @@ p#no {
   margin: 30px auto 80px;
   padding: 0 25px;
   text-align: center;
+  text-shadow: 0 1px 0 #000;
   width: 470px;
 
   a {
@@ -251,6 +255,17 @@ form#new_user {
 
         input {
           margin: 0 4px 0 0;
+        }
+      }
+
+      &#user_male_input,
+      &#user_female_input,
+      &#user_other_input {
+        margin: 5px 0px 0 0;
+        width: 140px;
+
+        input[type="checkbox"] {
+          margin-left: 3px;
         }
       }
 
