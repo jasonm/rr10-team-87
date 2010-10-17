@@ -13,6 +13,10 @@ module FakeTropo
       Rails.logger.info "SMS: --------- RESET ---------"
     end
 
+    def self.all
+      @@responses
+    end
+
     def self.last
       @@responses.last
     end

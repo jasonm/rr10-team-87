@@ -17,6 +17,7 @@ Feature: Accounts
     And I submit my profile
     Then I see a description of how to use the Web site
     And "18004688487" is confirmed
+    And "18004688487" should get a text "Congrats, Mike, you are now an instalover.  Text 'new date' to get a new date."
 
   Scenario: Secret codes are not case-sensitive
     When I go to the home page

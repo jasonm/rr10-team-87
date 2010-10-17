@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   before_validation :secret_code, :on => :create
   before_validation :normalize_phone_number
   after_create :deliver_secret_code
+  after_save :deliver_confirmation_congratulations
 
   has_many :founded_meetups, :class_name => 'Meetup', :foreign_key => 'first_user_id'
   has_many :offers, :foreign_key => "offered_user_id"
@@ -165,5 +166,19 @@ class User < ActiveRecord::Base
       lonely
       shaved)
     codes[rand(codes.length)]
+  end
+
+  def just_updated_for_the_first_time?
+    we_have_updated            = self.updated_at     != self.created_at
+    we_had_not_updated_before  = self.updated_at_was == self.created_at
+
+    we_have_updated && we_had_not_updated_before
+  end
+
+  def deliver_confirmation_congratulations
+    if just_updated_for_the_first_time?
+      Message.deliver(self.phone_number,
+        "Congrats, #{self.name}, you are now an instalover.  Text 'new date' to get a new date.")
+    end
   end
 end
