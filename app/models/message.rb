@@ -149,9 +149,9 @@ class Message < ActiveRecord::Base
           o.meetup.second_user = o.offered_user
           o.meetup.save!
           Message.deliver(o.offered_user.phone_number,
-                          "Nice! You've got a date with #{o.meetup.first_user.name}, whose self-description is: '#{o.meetup.first_user.description}'")
+                          %{Nice! You've got a date with #{o.meetup.first_user.name}, whose self-description is: '#{o.meetup.first_user.description}. Talk with your date by texting "say " with your message'})
           Message.deliver(o.meetup.first_user.phone_number,
-                          "Nice! You've got a date with #{o.meetup.second_user.name}, whose self-description is: '#{o.meetup.second_user.description}'")
+                          %{Nice! You've got a date with #{o.meetup.second_user.name}, whose self-description is: '#{o.meetup.second_user.description}. Talk with your date by texting "say " with your message'})
         else
           Message.deliver(o.offered_user.phone_number,
                           "Too slow! Would you like to get a date? Reply 'new date'.")
