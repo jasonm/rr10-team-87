@@ -48,7 +48,6 @@ Feature: The whole app
     Then "11111111111" should get a text "Want to go on a date at Mike's Apartment at 09:00PM? Reply 'accept' or ignore."
     And  "12222222222" should get a text "Want to go on a date at Mike's Apartment at 09:00PM? Reply 'accept' or ignore."
 
-
   Scenario: Once a user proposes a date, they can no longer receive offers
     When "18004688487" texts instalover with "new date"
     And  "11111111111" texts instalover with "new date"
@@ -61,6 +60,16 @@ Feature: The whole app
     And  "11111111111" texts instalover with "ok"
     And  "18004688487" texts instalover with "ok"
     Then "11111111111" should not get a text whose message includes "Want to go on a date"
+
+  Scenario: If you have a scheduled date, you are now eligible for offers again since we consider you done with the date
+    When "18004688487" texts instalover with "new date"
+    And  "18004688487" texts instalover with "ok"
+    And  "11111111111" texts instalover with "accept"
+
+    And  "11111111111" texts instalover with "new date"
+    And  "11111111111" texts instalover with "ok"
+
+    Then "18004688487" should get a text whose message includes "Mike's Apartment"
 
   Scenario: Saying "new date" when you have an offer will delete your offer
     When "18004688487" texts instalover with "new date"
