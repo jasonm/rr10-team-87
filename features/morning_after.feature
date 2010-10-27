@@ -38,3 +38,7 @@ Feature: Scene 2: the morning after
     Then I should see "Mike"
     Then I should see "11111111111"
     And  I should see "Blew my mind"
+
+    When "11111111111" texts instalover with "safeword"
+    And I am on the secret dflns page
+    Then I should see "Emma"
