@@ -13,7 +13,7 @@ $(document).ready(function() {
     join_text: "auto",
     avatar_size: 0,
     count: 1,
-    query: "#dfln",
+    query: "from:instalover #dfln",
     auto_join_text_default: "",
     auto_join_text_ed: "we",
     auto_join_text_ing: "we were",
