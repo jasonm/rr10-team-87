@@ -1,16 +1,16 @@
 <div id="decide" class="clearfix">
-  <h2>Can I have your phone number?</h2>
+  <h2>Want to go on a date right now?</h2>
 
   <div id="button_box" class="clearfix">
     <p id="yes" class="button"><a href="#">Yes</a></p>
-    <p id="no" class="button"><a href="/pages/what-is-this">Why?</a></p>
+    <p id="no" class="button"><a href="/pages/what-is-this">Maybe?</a></p>
   </div>
 </div>
 
 <%= semantic_form_for @user do |form| %>
   <%= form.semantic_errors %>
   <%= form.inputs do %>
-    <%= form.input :phone_number, :label => "Sweet, let&rsquo;s do this.", :hint => "I&rsquo;ll text you a secret code to verify your identity." %>
+    <%= form.input :phone_number, :label => "Great, let&rsquo;s get you signed up.", :hint => "Enter your number and we&rsquo;ll text you a secret code to start the process." %>
   <% end %>
 
   <%= form.buttons do %>
