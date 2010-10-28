@@ -196,6 +196,17 @@ Feature: The whole app
     Then "18004688487" should get a text "I got it - 'no' means no!  We could just be friends, but we're not fooling anyone.  You're unsubscribed - have a nice life!"
     And the "18004688487" user should be deleted
 
+  Scenario: Safeword race condition with timing out offers
+    When "18004688487" texts instalover with "new date"
+    Then "18004688487" should get a text "Should we find you a date at Silvertone at 09:00PM? Reply 'ok' or 'new date' to try again."
+    When "18004688487" texts instalover with "ok"
+    Then "11111111111" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    When "11111111111" texts instalover with "safeword"
+    Then "11111111111" should get a text "I got it - 'no' means no!  We could just be friends, but we're not fooling anyone.  You're unsubscribed - have a nice life!"
+    And the "11111111111" user should be deleted
+    When jobs in 5 minutes from now are processed
+    Then "11111111111" should not get a text "Too slow! Would you like to get a date? Reply 'new date'."
+
   Scenario: Texting something before you confirm
     When I go to the home page
     And I fill in "19998675309" as my phone number

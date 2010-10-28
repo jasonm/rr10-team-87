@@ -150,7 +150,6 @@ class Message < ActiveRecord::Base
 
       meetup = accepted_offer.meetup
       meetup.pending_offers.each do |offer|
-        # TODO: race condition: the offered user unsubscribes before responding
         Message.deliver(offer.offered_user.phone_number,
                         "Too slow! Would you like to get a date? Reply '#{COMMANDS[:new_date]}'.")
         offer.decline!

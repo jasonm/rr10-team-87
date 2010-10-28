@@ -15,8 +15,8 @@ class User < ActiveRecord::Base
   after_create :deliver_secret_code
   after_save :deliver_confirmation_congratulations
 
-  has_many :founded_meetups, :class_name => 'Meetup', :foreign_key => 'first_user_id'
-  has_many :offers, :foreign_key => "offered_user_id"
+  has_many :founded_meetups, :class_name => 'Meetup', :foreign_key => 'first_user_id', :dependent => :destroy
+  has_many :offers, :foreign_key => "offered_user_id", :dependent => :destroy
   has_many :dflns
 
   attr_accessor :secret_code_confirmation
