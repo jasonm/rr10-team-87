@@ -146,8 +146,6 @@ Feature: The whole app
     Then "18004688487" should get a text whose message includes "Reply 'ok' or 'new date'"
     When "18004688487" texts instalover with "ok"
 
-  # TODO: "Bi chick gets date" has moved to the get_bi_girls_dates branch, SO WE CAN HAVE NICE THINGS, MIKE BURNS
-
   Scenario: Existing user falls asleep before oking date location
     When "18004688487" texts instalover with "new date"
     Then "18004688487" should get a text "Should we find you a date at Silvertone at 09:00PM? Reply 'ok' or 'new date' to try again."
