@@ -161,10 +161,7 @@ class Message < ActiveRecord::Base
   end
 
   def self.accept_offer(offer)
-    # TODO: push onto Meetup
-    offer.meetup.state = 'scheduled'
-    offer.meetup.second_user = offer.offered_user
-    offer.meetup.save!
+    offer.schedule_meetup!
 
     # TODO: Extract
     Message.deliver(offer.offered_user.phone_number,
@@ -198,9 +195,7 @@ class Message < ActiveRecord::Base
                         "Too slow! Would you like to get a date? Reply '#{COMMANDS[:new_date]}'.")
         offer.cancel!
       end
-      # TODO: push onto Meetup
-      meetup.state = "cancelled"
-      meetup.save!
+      meetup.cancel!
     end
   end
 

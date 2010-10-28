@@ -32,6 +32,10 @@ class Offer < ActiveRecord::Base
     self.save!
   end
 
+  def schedule_meetup!
+    self.meetup.schedule_with!(self.offered_user)
+  end
+
   private
 
   def send_message

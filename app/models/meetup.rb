@@ -55,6 +55,17 @@ class Meetup < ActiveRecord::Base
     self.save!
   end
 
+  def cancel!
+    self.state = "cancelled"
+    self.save!
+  end
+
+  def schedule_with!(second_user)
+    self.state = 'scheduled'
+    self.second_user = second_user
+    self.save!
+  end
+
   # True if the date has two people and a meeting spot.
   def scheduled?
     state == "scheduled"
