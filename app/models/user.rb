@@ -76,7 +76,6 @@ class User < ActiveRecord::Base
   end
 
   ### TODO: Can find yourself
-  # TODO: sort such that least contacted people are in front
   def matching
     finder = User.
       within_age_range(self.looking_for_minimum_age, self.looking_for_maximum_age).
