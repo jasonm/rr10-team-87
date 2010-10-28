@@ -50,6 +50,18 @@ class User < ActiveRecord::Base
     where('users.other')
   end
 
+  def self.looking_for_gender(user)
+    wheres = []
+    wheres << 'users.male'   if user.looking_for_male
+    wheres << 'users.female' if user.looking_for_female
+    wheres << 'users.other'  if user.looking_for_other
+    where(wheres.join(' OR '))
+  end
+
+  def self.exclude(user)
+    where('users.id <> ?', user.id)
+  end
+
   # The secret code that the user uses to prove that they have that phone
   # number.
   def secret_code
@@ -75,18 +87,13 @@ class User < ActiveRecord::Base
     Meetup.for(self).scheduled.newest.first.try(:for, self)
   end
 
-  ### TODO: Can find yourself
   def matching
-    finder = User.
+    User.
       within_age_range(self.looking_for_minimum_age, self.looking_for_maximum_age).
       looking_for(self).
       without_offers.
-      without_founded_meetups_in_progress
-
-    finder = finder.men   if self.looking_for_male
-    finder = finder.women if self.looking_for_female
-    finder = finder.other if self.looking_for_other
-    finder
+      without_founded_meetups_in_progress.looking_for_gender(self).
+      exclude(self)
   end
 
   def deliver_secret_code

@@ -20,21 +20,25 @@ Feature: Matching people up
       | 17777777777  | false | true   | false            | true               | Gay girl one  |
       | 18888888888  | false | true   | false            | true               | Gay girl two  |
 
-    Then "Bi girl" should get matched with:
+    Then "Straight girl" should get matched with:
+      | Straight guy |
+      | Bi guy       |
+
+    And "Straight guy" should get matched with:
+      | Straight girl |
+      | Bi girl       |
+
+    And "Bi girl" should get matched with:
       | Straight guy |
       | Gay girl one |
       | Gay girl two |
+      | Bi guy       |
 
     And "Bi guy" should get matched with:
       | Straight girl |
       | Gay guy one   |
       | Gay guy two   |
-
-    And "Straight girl" should get matched with:
-      | Straight guy |
-
-    And "Straight guy" should get matched with:
-      | Straight girl |
+      | Bi girl       |
 
     And "Gay guy one" should get matched with:
       | Gay guy two |
