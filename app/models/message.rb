@@ -6,7 +6,7 @@ class Message < ActiveRecord::Base
 
   TROPO_URL = "http://api.tropo.com/1.0"
   MESSAGE_TOKEN = "aeea3bf2048d1848bc4e706ff76bfe98951f433968b934a2a1d80cf1e047ba36c91a2cd53a958e15319a564a"
-  DATING_START_STRING = '1PM EDT'
+  DATING_START_STRING = '5PM EDT'
   DATING_END_STRING = '10:59PM EDT'
   DATING_START = Time.zone.parse(DATING_START_STRING)
   DATING_END = Time.zone.parse(DATING_END_STRING)
