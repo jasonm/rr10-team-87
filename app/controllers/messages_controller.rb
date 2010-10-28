@@ -13,7 +13,7 @@ class MessagesController < ApplicationController
       # else
       #   render :json => failed_to_save_date_message
       # end
-      render :status => 200, :text => "OK"
+      render :status => 200, :text => Message::HANGUP_RESPONSE
     end
   end
 

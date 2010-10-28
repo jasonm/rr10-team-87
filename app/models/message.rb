@@ -10,6 +10,7 @@ class Message < ActiveRecord::Base
   DATING_END_STRING = '10:59PM EDT'
   DATING_START = Time.zone.parse(DATING_START_STRING)
   DATING_END = Time.zone.parse(DATING_END_STRING)
+  HANGUP_RESPONSE = '{"tropo": [{"hangup": null}]}'
 
   def self.deliver(to, message)
     Rails.logger.info "Enqueued SMS: TO: #{to}: #{message}"
