@@ -162,14 +162,14 @@ class Message < ActiveRecord::Base
 
   def self.accept_offer(offer)
     offer.schedule_meetup!
-
-    # TODO: Extract
-    Message.deliver(offer.offered_user.phone_number,
-                    %{Nice! You've got a date with #{offer.meetup.first_user.name}, '#{offer.meetup.first_user.description}'. Say something by texting '#{COMMANDS[:sext]}' and then your message.})
-    Message.deliver(offer.meetup.first_user.phone_number,
-                    %{Nice! You've got a date with #{offer.meetup.second_user.name}, '#{offer.meetup.second_user.description}'. Say something by texting '#{COMMANDS[:sext]}' and then your message.})
-
+    deliver_date(offer.offered_user, offer.meetup.first_user)
+    deliver_date(offer.meetup.first_user, offer.meetup.second_user)
     offer.accept!
+  end
+
+  def self.deliver_date(first_user, second_user)
+    Message.deliver(first_user.phone_number,
+                    %{Nice! You've got a date with #{second_user.name}, '#{second_user.description}'. Say something by texting '#{COMMANDS[:sext]}' and then your message.})
   end
 
   def self.handle_safeword(user)

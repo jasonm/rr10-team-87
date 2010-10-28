@@ -14,7 +14,7 @@ end
 When /^I run the rake task "([^\"]*)"$/ do |task_name|
   # Make sure you're in the RAILS_ROOT
   oldpwd = Dir.pwd
-  Dir.chdir(RAILS_ROOT)
+  Dir.chdir(::Rails.root.to_s)
   old_args = ARGV.dup
   ARGV.clear
 
