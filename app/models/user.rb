@@ -25,6 +25,11 @@ class User < ActiveRecord::Base
     where('users.id NOT IN (SELECT offered_user_id FROM offers WHERE offers.state = "pending" OR (offers.state = "canceled" AND offers.created_at > ?))', 1.hour.ago)
   end
 
+  def self.sort_by_least_offered
+    select('users.*, (SELECT MAX(offers.created_at) FROM offers WHERE offers.offered_user_id = users.id GROUP BY offers.offered_user_id) as last_offer_time').
+      order('IFNULL(last_offer_time,0) ASC')
+  end
+
   def self.without_founded_meetups_in_progress
     where("users.id NOT IN (SELECT first_user_id FROM meetups WHERE meetups.state = 'proposed' OR meetups.state = 'unscheduled')")
   end
@@ -92,8 +97,10 @@ class User < ActiveRecord::Base
       within_age_range(self.looking_for_minimum_age, self.looking_for_maximum_age).
       looking_for(self).
       without_offers.
-      without_founded_meetups_in_progress.looking_for_gender(self).
-      exclude(self)
+      without_founded_meetups_in_progress.
+      looking_for_gender(self).
+      exclude(self).
+      sort_by_least_offered
   end
 
   def deliver_secret_code

@@ -111,33 +111,61 @@ Feature: The whole app
 
   Scenario: Existing user asks for a date, but they get turned down
     Given the following users exist:
-      | Phone Number | Male | Female | Looking For Male | Looking For Female | Dob          | Looking For Minimum Age | Looking For Maximum Age | Description | Name  |
-      | 13333333333  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
-      | 14444444444  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
-      | 15555555555  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
-      | 16666666666  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
-
+      | Phone Number | Male | Looking For Female | Dob          | Looking For Minimum Age | Looking For Maximum Age |
+      | 13333333333  | true | true               | 11/06/1989   | 18                      | 34                      |
+      | 14444444444  | true | true               | 11/06/1989   | 18                      | 34                      |
+      | 15555555555  | true | true               | 11/06/1989   | 18                      | 34                      |
+      | 16666666666  | true | true               | 11/06/1989   | 18                      | 34                      |
+      | 17777777777  | true | true               | 11/06/1989   | 18                      | 34                      |
+      | 18888888888  | true | true               | 11/06/1989   | 18                      | 34                      |
+      | 19999999999  | true | true               | 11/06/1989   | 18                      | 34                      |
+      | 10000000000  | true | true               | 11/06/1989   | 18                      | 34                      |
+      | 11111111112  | true | true               | 11/06/1989   | 18                      | 34                      |
+        
     When "18004688487" texts instalover with "new date"
     Then "18004688487" should get a text "Should we find you a date at Silvertone at 09:00PM? Reply 'ok' or 'new date' to try again."
-
+       
     When "18004688487" texts instalover with "ok"
     Then "11111111111" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
     And  "12222222222" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And  "13333333333" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And  "14444444444" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And  "15555555555" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    But  "16666666666" should not get a text whose message includes "Want to go on a date"
 
     When jobs in 5 minutes from now are processed
 
     Then "18004688487" should get a text "We called every number in our little black book, but only got answering machines. Try again later? Reply 'new date' to start again."
     And "11111111111" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
     And "12222222222" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
+    And "13333333333" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
+    And "14444444444" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
+    And "15555555555" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
+    But "16666666666" should not get a text whose message includes "Too slow!"
 
-    When I clear the text message history
+    Given I clear the text message history
     When "18004688487" texts instalover with "new date"
     Then "18004688487" should get a text whose message includes "Reply 'ok' or 'new date'"
-
     When "18004688487" texts instalover with "ok"
     Then "11111111111" should not get a text whose message includes "Want to go on a date"
     And  "12222222222" should not get a text whose message includes "Want to go on a date"
+    And  "13333333333" should not get a text whose message includes "Want to go on a date"
+    And  "14444444444" should not get a text whose message includes "Want to go on a date"
+    And  "15555555555" should not get a text whose message includes "Want to go on a date"
     But  "16666666666" should get a text whose message includes "Want to go on a date"
+
+    Given jobs in 5 minutes from now are processed
+    And I clear the text message history
+    When "18004688487" texts instalover with "new date"
+    Then "18004688487" should get a text whose message includes "Reply 'ok' or 'new date'"
+    When "18004688487" texts instalover with "ok"
+    Then "11111111111" should not get a text whose message includes "Want to go on a date"
+    And  "12222222222" should not get a text whose message includes "Want to go on a date"
+    And  "13333333333" should not get a text whose message includes "Want to go on a date"
+    And  "14444444444" should not get a text whose message includes "Want to go on a date"
+    And  "15555555555" should not get a text whose message includes "Want to go on a date"
+    And  "16666666666" should not get a text whose message includes "Want to go on a date"
+    But  "11111111112" should get a text whose message includes "Want to go on a date"
 
     Given jobs in 5 minutes from now are processed
     And it is 1 hour later
@@ -145,6 +173,29 @@ Feature: The whole app
     When "18004688487" texts instalover with "new date"
     Then "18004688487" should get a text whose message includes "Reply 'ok' or 'new date'"
     When "18004688487" texts instalover with "ok"
+
+  Scenario: Emma realizes that Chad cockblocked her
+    Given the following users exist:
+      | Phone Number | Male | Looking For Female | Dob          | Looking For Minimum Age | Looking For Maximum Age | Name |
+      | 16666666666  | true | true               | 11/06/1989   | 18                      | 34                      | Chad |
+      | 13333333333  | true | true               | 11/06/1989   | 18                      | 34                      | Jim  |
+      | 14444444444  | true | true               | 11/06/1989   | 18                      | 34                      | Jim  |
+      | 15555555555  | true | true               | 11/06/1989   | 18                      | 34                      | Jim  |
+      | 17777777777  | true | true               | 11/06/1989   | 18                      | 34                      | Jim  |
+      | 18888888888  | true | true               | 11/06/1989   | 18                      | 34                      | Jim  |
+      | 19999999999  | true | true               | 11/06/1989   | 18                      | 34                      | Jim  |
+      | 10000000000  | true | true               | 11/06/1989   | 18                      | 34                      | Jim  |
+      | 11111111112  | true | true               | 11/06/1989   | 18                      | 34                      | Jim  |
+    When "18004688487" texts instalover with "new date"
+    And "18004688487" texts instalover with "ok"
+    Then "16666666666" should get a text whose message includes "Want to go on a date"
+    But "15555555555" should not get a text whose message includes "Want to go on a date"
+    When "16666666666" texts instalover with "accept"
+    Given I clear the text message history
+    When "18004688487" texts instalover with "new date"
+    And "18004688487" texts instalover with "ok"
+    Then "16666666666" should not get a text whose message includes "Want to go on a date"
+    But "15555555555" should get a text whose message includes "Want to go on a date"
 
   Scenario: Existing user falls asleep before oking date location
     When "18004688487" texts instalover with "new date"
