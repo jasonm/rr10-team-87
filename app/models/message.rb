@@ -129,10 +129,7 @@ class Message < ActiveRecord::Base
     meetup = user.founded_meetups.proposed.first
     if meetup
       meetup.unschedule!
-      user.matching.first(5).each do |matching_user|
-        Offer.create(:offered_user => matching_user, :meetup => meetup)
-      end
-      QUEUE.enqueue_at(5.minutes.from_now, RejectMessageDelayer, :user_id => user.id)
+      QUEUE.enqueue(Offerizer, :meetup_id => meetup.id, :user_id => user.id)
     else
       handle_unknown(user)
     end
