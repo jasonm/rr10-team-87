@@ -198,4 +198,8 @@ class User < ActiveRecord::Base
         "Congrats, #{self.name}, you are now an instalover.  Text '#{COMMANDS[:new_date]}' to get a new date.")
     end
   end
+
+  def identifier
+    "#{name} (#{phone_number})"
+  end
 end

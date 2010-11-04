@@ -5,4 +5,13 @@ namespace :instalover do
       Message.handle_new_date(w)
     end
   end
+
+  desc "Backfill events"
+  task :backfill_events => :environment do
+    [Meetup, Offer].each do |eventable_class|
+      eventable_class.all.each do |eventable_instance|
+        eventable_instance.send(:create_event)
+      end
+    end
+  end
 end

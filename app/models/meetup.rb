@@ -7,6 +7,7 @@ class Meetup < ActiveRecord::Base
   has_many :dflns
 
   after_save :schedule_jobs
+  after_save :create_event
 
   validates_presence_of :first_user_id
 
@@ -79,6 +80,18 @@ class Meetup < ActiveRecord::Base
     state == "proposed"
   end
 
+  def event_from
+    first_user.try(:name)
+  end
+
+  def event_to
+    second_user.try(:name)
+  end
+
+  def event_information
+    description
+  end
+
   private
 
   def schedule_jobs
@@ -86,5 +99,15 @@ class Meetup < ActiveRecord::Base
       morning_after = 1.day.from_now.beginning_of_day + 10.hours
       QUEUE.enqueue_at(morning_after, MorningAfterCheckerUpper, { :meetup_id => self.id })
     end
+  end
+
+  def create_event
+    Event.create(
+      :kind        => "#{state.capitalize} Meetup",
+      :actor       => first_user.try(:identifier),
+      :description => description,
+      :created_at  => updated_at,
+      :updated_at  => updated_at
+    )
   end
 end

@@ -9,3 +9,7 @@ end
 Then 'I see no description of how to use the Web site' do
   page.should_not have_content('your phone number')
 end
+
+Then %{I should see the following table:} do |table|
+  table.diff!(tableish('table', "th,td"))
+end

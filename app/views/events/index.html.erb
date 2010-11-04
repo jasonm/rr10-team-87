@@ -1,0 +1,26 @@
+<% content_for :additional_body_class do %>secretsecret<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Action</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Actor</th>
+      <th>Subject</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @events.each do |event| %>
+      <tr class="<%= event.kind.parameterize.underscore %>">
+        <td><%= event.kind %></td>
+        <td><%= event.date %></td>
+        <td><%= event.time %></td>
+        <td><%= event.actor %></td>
+        <td><%= event.subject %></td>
+        <td><%= event.description %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

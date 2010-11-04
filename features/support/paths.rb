@@ -12,6 +12,8 @@ module NavigationHelpers
       '/'
     when /the secret dflns page/
       '/secretsecret/dflns'
+    when /the secret events page/
+      '/secretsecret/events'
 
     else
       begin
