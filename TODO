@@ -1,7 +1,17 @@
+* "moar" command to fetch the next 5 etc
+* autodater
 * DateEvent (date-event-crud branch)
 * Jason has this almost working in the events_page branch, just need to fix the test
   /secretsecret/events
   A log of every text sent and received. user id, datetime, text.
-* /secretsecret/stats
+  Also log signups, meetups, offers, dflns
+* Jason
+  /secretsecret/stats
   A page detailing: User count, profiled user count, 0 date profiled user count, 1 date profiled user count, etc
+                    Age ranges
+                    Gender breakdown
 * HTTP auth for /secretsecret
+
+
+Lead generation ideas:
+* scrape craigslist 
