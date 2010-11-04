@@ -12,7 +12,11 @@ class Message < ActiveRecord::Base
   DATING_END = Time.zone.parse(DATING_END_STRING)
   HANGUP_RESPONSE = '{"tropo": [{"hangup": null}]}'
 
-  def self.deliver(to, message)
+  def self.deliver(to, message, deliver_in_development = false)
+    if Rails.env.development? && !deliver_in_development
+      raise "Tried to deliver an SMS in development without passing deliver_in_development = true."
+    end
+
     Rails.logger.info "Enqueued SMS: TO: #{to}: #{message}"
 
     params = Addressable::URI.new
