@@ -83,9 +83,9 @@ class Message < ActiveRecord::Base
 
   def self.handle_texting_proxy(user, message)
     if dating_user = user.date
-      Message.deliver(user.date.phone_number, "#{user.name} says: #{message}")
+      user.date.tell("#{user.name} says: #{message}")
     else
-      Message.deliver(user.phone_number, "You have no date for us to share that with. Reply with '#{COMMANDS[:new_date]}'.")
+      user.tell("You have no date for us to share that with. Reply with '#{COMMANDS[:new_date]}'.")
     end
   end
 
@@ -94,8 +94,7 @@ class Message < ActiveRecord::Base
       user.founded_meetups.proposed.destroy_all
 
       if user.founded_meetups.unscheduled.any?
-        Message.deliver(user.phone_number,
-                        "Whoa there, pardner - we're looking for someone right now.  If nobody shows after 5 minutes, then you can ask again.")
+        user.tell("Whoa there, pardner - we're looking for someone right now.  If nobody shows after 5 minutes, then you can ask again.")
       else
         user.offers.cancel_all
 
@@ -105,8 +104,7 @@ class Message < ActiveRecord::Base
         })
 
 
-        Message.deliver(user.phone_number,
-                        "Should we find you a date at #{meetup.description}? Reply 'ok' or 'new date' to try again.")
+        user.tell("Should we find you a date at #{meetup.description}? Reply 'ok' or 'new date' to try again.")
         QUEUE.enqueue_at(5.minutes.from_now, OkTimeoutMessageDelayer, :user_id => user.id)
       end
     else
@@ -121,8 +119,7 @@ class Message < ActiveRecord::Base
   end
 
   def self.outside_dating_hours(user)
-    Message.deliver(user.phone_number,
-                    "Outside of the dating hours: #{DATING_START_STRING} to #{DATING_END_STRING}. Please try again then!")
+    user.tell("Outside of the dating hours: #{DATING_START_STRING} to #{DATING_END_STRING}. Please try again then!")
   end
 
   def self.handle_ok(user)
@@ -136,8 +133,7 @@ class Message < ActiveRecord::Base
   end
 
   def self.handle_unknown(user)
-      Message.deliver(user.phone_number,
-          "Sorry, I don't know what to do with that. You can text '#{COMMANDS[:new_date]}' to get a date. To stop receiving texts, please text '#{COMMANDS[:quit]}'")
+      user.tell("Sorry, I don't know what to do with that. You can text '#{COMMANDS[:new_date]}' to get a date. To stop receiving texts, please text '#{COMMANDS[:quit]}'")
 
   end
 
@@ -147,13 +143,11 @@ class Message < ActiveRecord::Base
 
       meetup = accepted_offer.meetup
       meetup.pending_offers.each do |offer|
-        Message.deliver(offer.offered_user.phone_number,
-                        "Too slow! Would you like to get a date? Reply '#{COMMANDS[:new_date]}'.")
+        offer.offered_user.tell("Too slow! Would you like to get a date? Reply '#{COMMANDS[:new_date]}'.")
         offer.decline!
       end
     else
-      Message.deliver(user.phone_number,
-                      "You don't have any date offers to accept")
+      user.tell("You don't have any date offers to accept")
     end
   end
 
@@ -165,13 +159,11 @@ class Message < ActiveRecord::Base
   end
 
   def self.deliver_date(first_user, second_user)
-    Message.deliver(first_user.phone_number,
-                    %{Nice! You've got a date with #{second_user.name}, '#{second_user.description}'. Say something by texting '#{COMMANDS[:sext]}' and then your message.})
+    first_user.tell(%{Nice! You've got a date with #{second_user.name}, '#{second_user.description}'. Say something by texting '#{COMMANDS[:sext]}' and then your message.})
   end
 
   def self.handle_safeword(user)
-    Message.deliver(user.phone_number,
-      "I got it - 'no' means no!  We could just be friends, but we're not fooling anyone.  You're unsubscribed - have a nice life!")
+    user.tell("I got it - 'no' means no!  We could just be friends, but we're not fooling anyone.  You're unsubscribed - have a nice life!")
     user.destroy
   end
 
@@ -185,11 +177,9 @@ class Message < ActiveRecord::Base
   def self.handle_no_responses(user)
     meetup = user.founded_meetups.unscheduled.first
     if !meetup.nil?
-      Message.deliver(user.phone_number,
-                      "We called every number in our little black book, but only got answering machines. Try again later? Reply '#{COMMANDS[:new_date]}' to start again.")
+      user.tell("We called every number in our little black book, but only got answering machines. Try again later? Reply '#{COMMANDS[:new_date]}' to start again.")
       meetup.offers.pending.each do |offer|
-        Message.deliver(offer.offered_user.phone_number,
-                        "Too slow! Would you like to get a date? Reply '#{COMMANDS[:new_date]}'.")
+        offer.offered_user.tell("Too slow! Would you like to get a date? Reply '#{COMMANDS[:new_date]}'.")
         offer.cancel!
       end
       meetup.cancel!
@@ -199,7 +189,7 @@ class Message < ActiveRecord::Base
   def self.handle_ok_timeout(user)
     meetup = user.founded_meetups.proposed.first
     if !meetup.nil?
-      Message.deliver(user.phone_number,"I guess you don't want to go on a date... Text '#{COMMANDS[:new_date]}' again when you change your mind")
+      user.tell("I guess you don't want to go on a date... Text '#{COMMANDS[:new_date]}' again when you change your mind")
       meetup.state = "cancelled"
       meetup.save
     end

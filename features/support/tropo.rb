@@ -32,6 +32,10 @@ module FakeTropo
         r["to"] == phone && r["message"].include?(partial_message)
       end
     end
+
+    def self.has_text_for?(phone)
+      @@responses.any? {|r| r['to'] == phone}
+    end
   end
 end
 

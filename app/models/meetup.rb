@@ -79,6 +79,11 @@ class Meetup < ActiveRecord::Base
     state == "proposed"
   end
 
+  # Cancel all pending offers
+  def cancel_pending_offers
+    offers.pending.each(&:cancel!)
+  end
+
   private
 
   def schedule_jobs

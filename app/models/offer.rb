@@ -17,12 +17,20 @@ class Offer < ActiveRecord::Base
     all.each(&:cancel!)
   end
 
+  def self.create_for_meetup_and_users(meetup, users)
+    users.each do |matching_user|
+      Offer.create(:offered_user => matching_user, :meetup => meetup)
+    end
+  end
+
   def accept!
     self.state = 'accepted'
     self.save!
   end
 
   def cancel!
+    Message.deliver(self.offered_user.phone_number,
+                    "Too slow! Would you like to get a date? Reply '#{COMMANDS[:new_date]}'.")
     self.state = 'canceled'
     self.save!
   end

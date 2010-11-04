@@ -122,7 +122,9 @@ Feature: The whole app
       | 19999999999  | true | true               | 11/06/1989   | 18                      | 34                      |
       | 10000000000  | true | true               | 11/06/1989   | 18                      | 34                      |
       | 11111111112  | true | true               | 11/06/1989   | 18                      | 34                      |
-        
+    And I clear the text message history
+    And jobs are cleared
+
     When "18004688487" texts instalover with "new date"
     When jobs are processed
     Then "18004688487" should get a text "Should we find you a date at Silvertone at 09:00PM? Reply 'ok' or 'new date' to try again."
@@ -133,77 +135,45 @@ Feature: The whole app
     And  "13333333333" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
     And  "14444444444" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
     And  "15555555555" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
-    But  "16666666666" should not get a text whose message includes "Want to go on a date"
+    But  "16666666666" should not get a text
 
-    When jobs are processed
-    And jobs in 5 minutes from now are processed
-
-    Then "18004688487" should get a text "We called every number in our little black book, but only got answering machines. Try again later? Reply 'new date' to start again."
-    And "11111111111" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
+    Given I clear the text message history
+    When jobs in 5 minutes from now are processed
+    Then "11111111111" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
     And "12222222222" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
     And "13333333333" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
     And "14444444444" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
     And "15555555555" should get a text "Too slow! Would you like to get a date? Reply 'new date'."
-    But "16666666666" should not get a text whose message includes "Too slow!"
 
-    Given I clear the text message history
-    When "18004688487" texts instalover with "new date"
-    Then "18004688487" should get a text whose message includes "Reply 'ok' or 'new date'"
-    When "18004688487" texts instalover with "ok"
     Then "11111111111" should not get a text whose message includes "Want to go on a date"
     And  "12222222222" should not get a text whose message includes "Want to go on a date"
     And  "13333333333" should not get a text whose message includes "Want to go on a date"
     And  "14444444444" should not get a text whose message includes "Want to go on a date"
     And  "15555555555" should not get a text whose message includes "Want to go on a date"
     But  "16666666666" should get a text whose message includes "Want to go on a date"
+    And "17777777777" should get a text whose message includes "Want to go on a date"
+    And "18888888888" should get a text whose message includes "Want to go on a date"
+    And "19999999999" should get a text whose message includes "Want to go on a date"
+    And "10000000000" should get a text whose message includes "Want to go on a date"
+    And "18004688487" should get a text "We're still looking for a date for you, back in five."
 
-    Given jobs in 5 minutes from now are processed
-    And I clear the text message history
-    When "18004688487" texts instalover with "new date"
-    Then "18004688487" should get a text whose message includes "Reply 'ok' or 'new date'"
-    When "18004688487" texts instalover with "ok"
+    Given I clear the text message history
+    When jobs in 5 minutes from now are processed
     Then "11111111111" should not get a text whose message includes "Want to go on a date"
     And  "12222222222" should not get a text whose message includes "Want to go on a date"
     And  "13333333333" should not get a text whose message includes "Want to go on a date"
     And  "14444444444" should not get a text whose message includes "Want to go on a date"
     And  "15555555555" should not get a text whose message includes "Want to go on a date"
     And  "16666666666" should not get a text whose message includes "Want to go on a date"
+
     But  "11111111112" should get a text whose message includes "Want to go on a date"
-
-    Given I clear the text message history
-    And jobs in 5 minutes from now are processed
-    Then "17777777777" should get a text whose message includes "Want to go on a date"
-    And "18888888888" should get a text whose message includes "Want to go on a date"
-    And "19999999999" should get a text whose message includes "Want to go on a date"
-    And "10000000000" should get a text whose message includes "Want to go on a date"
-    And "11111111112" should get a text whose message includes "Want to go on a date"
     And "18004688487" should get a text "We're still looking for a date for you, back in five."
-    When "18888888888" texts instalover with "accept"
+    When "11111111112" texts instalover with "accept"
+    And jobs in 5 minutes from now are processed
+    And jobs in 5 minutes from now are processed
     Then "18004688487" should get a text whose message includes "Nice!"
-    And "18888888888" should get a text whose message includes "Nice!"
-
-    Given I clear the text message history
-    And jobs in 5 minutes from now are processed
-    Then "17777777777" should get a text whose message includes "Want to go on a date"
-    And "18888888888" should get a text whose message includes "Want to go on a date"
-    And "19999999999" should get a text whose message includes "Want to go on a date"
-    And "10000000000" should get a text whose message includes "Want to go on a date"
-    And "11111111112" should get a text whose message includes "Want to go on a date"
-    And "18004688487" should get a text "We're still looking for a date for you, back in five."
-    Given I clear the text message history
-    And jobs in 5 minutes from now are processed
-    Then "18004688487" should get a text whose message includes "black book"
-    And "10000000000" should not get a text whose message includes "Want to go on a date"
-    And "11111111111" should not get a text whose message includes "Want to go on a date"
-    And "12222222222" should not get a text whose message includes "Want to go on a date"
-    And "13333333333" should not get a text whose message includes "Want to go on a date"
-    And "14444444444" should not get a text whose message includes "Want to go on a date"
-    And "15555555555" should not get a text whose message includes "Want to go on a date"
-    And "16666666666" should not get a text whose message includes "Want to go on a date"
-    And "17777777777" should not get a text whose message includes "Want to go on a date"
-    And "18888888888" should not get a text whose message includes "Want to go on a date"
-    And "19999999999" should not get a text whose message includes "Want to go on a date"
-    And "11111111112" should not get a text whose message includes "Want to go on a date"
+    And "11111111112" should get a text whose message includes "Nice!"
+    And "11111111112" should not get a text whose message includes "Too late"
 
     Given jobs in 5 minutes from now are processed
     And it is 1 hour later

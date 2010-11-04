@@ -34,3 +34,9 @@ When 'I clear the text message history' do
   QUEUE.run_jobs
   FakeTropo::Response.clear_all
 end
+
+Then '"$user_phone" should not get a text' do |user_phone|
+  QUEUE.run_jobs
+  FakeTropo::Response.should_not have_text_for(user_phone),
+    %{expected no text sent to "#{user_phone}"; sent texts:\n#{FakeTropo::Response.all.map{|t| [t['to'],t['message']].inspect}.join("\n")}\n}
+end

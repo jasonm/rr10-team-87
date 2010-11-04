@@ -1,4 +1,4 @@
-class Offerizer
+class SubsequentOfferizer
   @queue = :offers
 
   def self.perform(args_hash)
@@ -7,6 +7,7 @@ class Offerizer
 
     meetup.cancel_pending_offers
     Offer.create_for_meetup_and_users(meetup, user.matching.first(5))
+    user.tell("We're still looking for a date for you, back in five.")
 
     QUEUE.enqueue_at(5.minutes.from_now, SubsequentOfferizer,
                      :user_id => user.id,
