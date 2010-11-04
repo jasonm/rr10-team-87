@@ -104,13 +104,17 @@ class User < ActiveRecord::Base
   end
 
   def deliver_secret_code
-    Message.deliver(self.phone_number,
+    self.tell(
       "Before you can become an instalover you must know this secret code: '#{self.secret_code}'. " +
       "Visit instalover.com to finish signing up.")
   end
 
   def latest_offer
     offers.pending.first
+  end
+
+  def tell(msg)
+    Message.deliver(self.phone_number, msg)
   end
 
   protected
@@ -124,8 +128,7 @@ class User < ActiveRecord::Base
     user = User.find_by_phone_number(self.phone_number)
     if !user.nil?
       if user.confirmed?
-        Message.deliver(user.phone_number,
-                             "You are already a user - text '#{COMMANDS[:new_date]}' to start getting dates and '#{COMMANDS[:quit]}' to quit")
+        user.tell("You are already a user - text '#{COMMANDS[:new_date]}' to start getting dates and '#{COMMANDS[:quit]}' to quit")
       else
         user.deliver_secret_code
       end
@@ -194,8 +197,7 @@ class User < ActiveRecord::Base
 
   def deliver_confirmation_congratulations
     if just_updated_for_the_first_time?
-      Message.deliver(self.phone_number,
-        "Congrats, #{self.name}, you are now an instalover.  Text '#{COMMANDS[:new_date]}' to get a new date.")
+      self.tell("Congrats, #{self.name}, you are now an instalover.  Text '#{COMMANDS[:new_date]}' to get a new date.")
     end
   end
 end

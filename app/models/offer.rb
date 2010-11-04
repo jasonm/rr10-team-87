@@ -39,7 +39,6 @@ class Offer < ActiveRecord::Base
   private
 
   def send_message
-    Message.deliver(offered_user.phone_number,
-      "Want to go on a date with #{meetup.first_user.name} at #{meetup.description}? Reply '#{COMMANDS[:accept]}' or ignore.")
+    offered_user.tell("Want to go on a date with #{meetup.first_user.name} at #{meetup.description}? Reply '#{COMMANDS[:accept]}' or ignore.")
   end
 end
