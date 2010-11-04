@@ -1,7 +1,7 @@
 * DateEvent (date-event-crud branch)
-* /secretsecret/log
+* Jason has this almost working in the events_page branch, just need to fix the test
+  /secretsecret/events
   A log of every text sent and received. user id, datetime, text.
-* Jason
-  /secretsecret/stats
+* /secretsecret/stats
   A page detailing: User count, profiled user count, 0 date profiled user count, 1 date profiled user count, etc
 * HTTP auth for /secretsecret
