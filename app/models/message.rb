@@ -135,10 +135,6 @@ class Message < ActiveRecord::Base
     end
   end
 
-  def self.handle_unknown_retry(user)
-    raise "handle_unknown_retry"
-  end
-
   def self.within_dating_hours?
     now = Time.zone.now
     now.hour >= DATING_START.hour &&
