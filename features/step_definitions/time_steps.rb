@@ -1,8 +1,8 @@
 Given 'the day and time is "$datetime"' do |datetime|
+  Timecop.return
   Timecop.freeze(DateTime.parse(datetime))
 end
 
 Given %r{it is (\d+) hours? later} do |h|
-  h = h.to_i
-  Timecop.freeze(h.hours.from_now)
+  Timecop.freeze(h.to_i.hours.from_now)
 end

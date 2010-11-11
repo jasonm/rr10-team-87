@@ -6,7 +6,7 @@ Feature: The whole app
       | 11111111111  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
       | 12222222222  | true | false  | false            | true               | 10/20/1989   | 18                      | 34                      | black shirt | Jason |
       | 18004688487  | false| true   | true             | false              | 12/31/1977   | 14                      | 22                      | super hot   | Emma  |
-    And the day and time is "October 16, 2010 8:00pm edt"
+    And the day and time is "October 16, 2010 8:00pm est"
     And the following date suggestions exist:
       | text             |
       | Silvertone       |

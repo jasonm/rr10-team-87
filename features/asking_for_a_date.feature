@@ -23,6 +23,7 @@ Feature: Asking for a date
       | Silvertone       |
       | Mike's Apartment |
     And jobs are cleared
+    And I clear the text message history
 
   Scenario: People ask for dates
     When "18004688487" texts instalover with "new date"
