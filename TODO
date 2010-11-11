@@ -1,4 +1,3 @@
-* "moar" command to fetch the next 5 etc
 * autodater
 * DateEvent (date-event-crud branch)
 * Jason has this almost working in the events_page branch, just need to fix the test
