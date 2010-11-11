@@ -3,5 +3,6 @@ COMMANDS = {
   :ok       => 'ok',
   :accept   => 'accept',
   :sext     => 'say',
-  :quit     => 'safeword'
+  :quit     => 'safeword',
+  :retry    => 'retry'
 }

@@ -80,6 +80,8 @@ class Message < ActiveRecord::Base
       handle_texting_proxy(user, $1)
     elsif message_text =~ /^\s*#{COMMANDS[:quit].gsub(' ','.*')}/i
       handle_safeword(user)
+    elsif message_text =~ /^\s*#{COMMANDS[:retry].gsub(' ','.*')}/i
+      handle_retry(user)
     else
       handle_unknown(user)
     end
@@ -114,6 +116,27 @@ class Message < ActiveRecord::Base
     else
       outside_dating_hours(user)
     end
+  end
+
+  def self.handle_retry(user)
+    if within_dating_hours?
+      if meetup = user.founded_meetups.retryable.last
+        meetup.unschedule!
+        user.matching.first(5).each do |matching_user|
+          Offer.create(:offered_user => matching_user, :meetup => meetup)
+        end
+        QUEUE.enqueue_at(5.minutes.from_now, RejectMessageDelayer, :user_id => user.id)
+        user.tell("Trying to get you a date. Back in five.")
+      else
+        handle_unknown_retry(user)
+      end
+    else
+      outside_dating_hours(user)
+    end
+  end
+
+  def self.handle_unknown_retry(user)
+    raise "handle_unknown_retry"
   end
 
   def self.within_dating_hours?
@@ -184,12 +207,12 @@ class Message < ActiveRecord::Base
   def self.handle_no_responses(user)
     meetup = user.founded_meetups.unscheduled.first
     if !meetup.nil?
-      user.tell("We called every number in our little black book, but only got answering machines. Try again later? Reply '#{COMMANDS[:new_date]}' to start again.")
+      user.tell("We called every number in our little black book, but only got answering machines. Try again with '#{COMMANDS[:retry]}'.")
       meetup.offers.pending.each do |offer|
         offer.offered_user.tell("Too slow! Would you like to get a date? Reply '#{COMMANDS[:new_date]}'.")
         offer.cancel!
       end
-      meetup.cancel!
+      meetup.retryable!
     end
   end
 

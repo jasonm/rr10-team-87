@@ -28,6 +28,11 @@ class Meetup < ActiveRecord::Base
     where('state = "proposed"')
   end
 
+  # All dates that are not yet canceled but are not actively being searched.
+  def self.retryable
+    where('state = "retryable"')
+  end
+
   # All meetups for the given user
   def self.for(user)
     where('meetups.first_user_id = :id OR meetups.second_user_id = :id', :id => user.id)
@@ -57,6 +62,11 @@ class Meetup < ActiveRecord::Base
 
   def cancel!
     self.state = "cancelled"
+    self.save!
+  end
+
+  def retryable!
+    self.state = 'retryable'
     self.save!
   end
 
