@@ -185,7 +185,7 @@ class Message < ActiveRecord::Base
   end
 
   def self.deliver_date(first_user, second_user)
-    first_user.tell(%{Nice! You've got a date with #{second_user.name}, '#{second_user.description}'. Say something by texting '#{COMMANDS[:sext]}' and then your message.})
+    first_user.tell(%{Nice! You've got a date with #{second_user.name}. Describe yourself using '#{COMMANDS[:sext]}' followed by a message.})
   end
 
   def self.handle_safeword(user)

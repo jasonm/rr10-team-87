@@ -4,19 +4,18 @@ end
 
 Factory.define :user do |u|
   u.phone_number    { Factory.next :phone_number }
-  u.secret_code     { "supercode" }
-  u.name            { "Jenny" }
-  u.description     { "great personality" }
+  u.secret_code     "supercode"
+  u.name            "Jenny"
 end
 
 Factory.define :young_person, :parent => :user do |u|
-  u.dob { 21.years.ago }
-  u.looking_for_minimum_age { 20 }
-  u.looking_for_maximum_age { 22 }
+  u.dob                     { 21.years.ago }
+  u.looking_for_minimum_age 20
+  u.looking_for_maximum_age 22
 end
 
 Factory.define :date_suggestion do |ds|
-  ds.text  { "Thoughtbot" }
+  ds.text "Thoughtbot"
 end
 
 Factory.define :scheduled_meetup, :class => Meetup do |meetup_factory|

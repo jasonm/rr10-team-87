@@ -10,7 +10,6 @@ Feature: Accounts
     When I fill in my secret code
     And I fill in the date of birth with "December 31, 1977"
     And I fill in my name as "Mike"
-    And I fill in my description as "black shirt, glasses, math book"
     And I check my gender as male
     And I fill in the minimum age with "21"
     And I fill in the maximum age with "34"
@@ -29,7 +28,6 @@ Feature: Accounts
     When I fill in my secret code in all caps
     And I fill in the date of birth with "December 31, 1977"
     And I fill in my name as "Mike"
-    And I fill in my description as "black shirt, glasses, math book"
     And I check my gender as male
     And I fill in the minimum age with "21"
     And I fill in the maximum age with "34"
@@ -61,7 +59,6 @@ Feature: Accounts
     And I see the error "doesn't match" on the secret code field
     And I see the error "can't be blank" on the following user fields:
       | name                    |
-      | description             |
       | looking_for_minimum_age |
       | looking_for_maximum_age |
       | dob                     |
@@ -76,7 +73,6 @@ Feature: Accounts
     When I fill in my secret code
     And I fill in the date of birth with "December 31, 1977"
     And I fill in my name as "Jenny"
-    And I fill in my description as "black shirt, glasses, math book"
     And I check my gender as female
     And I fill in the minimum age with "21"
     And I fill in the maximum age with "34"

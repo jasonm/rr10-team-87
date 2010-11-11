@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   attr_protected :secret_code, :phone_number
   validates_presence_of :phone_number
   validate :secret_code_matches_or_nil
-  validates_presence_of :name, :description, :looking_for_minimum_age, :looking_for_maximum_age,
+  validates_presence_of :name, :looking_for_minimum_age, :looking_for_maximum_age,
     :on => :update
   validate :at_least_one_gender, :on => :update
   validate :at_least_one_desired_gender, :on => :update
