@@ -1,5 +1,5 @@
 * autodater
-* DateEvent (date-event-crud branch)
+* CRUD admin UI for adding new date locations (date-event-crud branch)
 * Jason has this almost working in the events_page branch, just need to fix the test
   /secretsecret/events
   A log of every text sent and received. user id, datetime, text.
