@@ -128,7 +128,7 @@ class Message < ActiveRecord::Base
         QUEUE.enqueue_at(5.minutes.from_now, RejectMessageDelayer, :user_id => user.id)
         user.tell("Trying to get you a date. Back in five.")
       else
-        handle_unknown_retry(user)
+        handle_new_date(user)
       end
     else
       outside_dating_hours(user)

@@ -92,3 +92,7 @@ Feature: Asking for a date
     And  "15555555555" should not get a text whose message includes "Want to go on a date"
     But  "16666666666" should get a text whose message includes "Want to go on a date"
     And  "18004688487" should get a text "Trying to get you a date. Back in five."
+
+  Scenario: Asking for a retry when you haven't even tried
+    When "18004688487" texts instalover with "retry"
+    Then "18004688487" should get a text "Should we find you a date at Silvertone at 09:00PM? Reply 'ok' or 'new date' to try again."
