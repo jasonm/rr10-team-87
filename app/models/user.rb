@@ -55,11 +55,11 @@ class User < ActiveRecord::Base
     where('users.other')
   end
 
-  def self.looking_for_gender(user)
+  def self.looking_for_gender(meetup)
     wheres = []
-    wheres << 'users.male'   if user.looking_for_male
-    wheres << 'users.female' if user.looking_for_female
-    wheres << 'users.other'  if user.looking_for_other
+    wheres << 'users.male'   if meetup.desires_male
+    wheres << 'users.female' if meetup.desires_female
+    wheres << 'users.other'  if meetup.desires_other
     where(wheres.join(' OR '))
   end
 
@@ -92,13 +92,13 @@ class User < ActiveRecord::Base
     Meetup.for(self).scheduled.newest.first.try(:for, self)
   end
 
-  def matching
+  def matching_for_meetup(meetup)
     User.
       within_age_range(self.looking_for_minimum_age, self.looking_for_maximum_age).
       looking_for(self).
       without_offers.
       without_founded_meetups_in_progress.
-      looking_for_gender(self).
+      looking_for_gender(meetup).
       exclude(self).
       sort_by_least_offered
   end

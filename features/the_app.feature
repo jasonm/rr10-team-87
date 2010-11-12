@@ -2,10 +2,10 @@ Feature: The whole app
 
   Background:
     Given the following users exist:
-      | Phone Number | Male | Female | Looking For Male | Looking For Female | Dob          | Looking For Minimum Age | Looking For Maximum Age | Description | Name  |
-      | 11111111111  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
-      | 12222222222  | true | false  | false            | true               | 10/20/1989   | 18                      | 34                      | black shirt | Jason |
-      | 18004688487  | false| true   | true             | false              | 12/31/1977   | 14                      | 22                      | super hot   | Emma  |
+      | Phone Number | Male | Female | Looking For Male | Looking For Female | Dob          | Looking For Minimum Age | Looking For Maximum Age | Name  |
+      | 11111111111  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | Mike  |
+      | 12222222222  | true | false  | false            | true               | 10/20/1989   | 18                      | 34                      | Jason |
+      | 18004688487  | false| true   | true             | false              | 12/31/1977   | 14                      | 22                      | Emma  |
     And the day and time is "October 16, 2010 8:00pm est"
     And the following date suggestions exist:
       | text             |
@@ -19,11 +19,11 @@ Feature: The whole app
 
   Scenario: Existing user tries to get some and is happy with everything
     Given the following users exist:
-      | Phone Number | Male | Female | Looking For Male | Looking For Female | Dob          | Looking For Minimum Age | Looking For Maximum Age | Description | Name  |
-      | 13333333333  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
-      | 14444444444  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
-      | 15555555555  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
-      | 16666666666  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | red hair    | Mike  |
+      | Phone Number | Male | Female | Looking For Male | Looking For Female | Dob          | Looking For Minimum Age | Looking For Maximum Age | Name  |
+      | 13333333333  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | Mike  |
+      | 14444444444  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | Mike  |
+      | 15555555555  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | Mike  |
+      | 16666666666  | true | false  | false            | true               | 11/06/1989   | 18                      | 34                      | Mike  |
     When "18004688487" texts instalover with "new date"
     Then "18004688487" should get a text "Should we find you a date at Silvertone at 09:00PM? Reply 'ok' or 'new date' to try again."
 
@@ -189,3 +189,47 @@ Feature: The whole app
     And "19998675309" texts instalover with "new date"
     Then "19998675309" should get a text whose message includes "Before you can become an instalover you must know this secret code"
     And  "19998675309" should get a text whose message includes "Visit instalover.com to finish signing up."
+
+  Scenario: Asking for a date with a woman
+    Given the following users exist:
+      | Phone Number | Male  | Female | Looking For Male | Looking For Female | Dob          | Looking For Minimum Age | Looking For Maximum Age | Name  |
+      | 16176060842  | false | true   | true             | true               | 11/06/1989   | 18                      | 34                      | Becca |
+    When "18004688487" texts instalover with "woman"
+    Then "18004688487" should get a text "Should we find you a date at Silvertone at 09:00PM? Reply 'ok' or 'new date' to try again."
+    When "18004688487" texts instalover with "ok"
+    Then "16176060842" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    But "11111111111" should not get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+
+  Scenario: Asking for a date with a man
+    Given the following users exist:
+      | Phone Number | Male  | Female | Looking For Male | Looking For Female | Dob          | Looking For Minimum Age | Looking For Maximum Age | Name  |
+      | 16176060842  | false | true   | true             | true               | 11/06/1989   | 18                      | 34                      | Becca |
+    When "18004688487" texts instalover with "man"
+    Then "18004688487" should get a text "Should we find you a date at Silvertone at 09:00PM? Reply 'ok' or 'new date' to try again."
+    When "18004688487" texts instalover with "ok"
+    Then "11111111111" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    But "16176060842" should not get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+
+  Scenario: Asking for a date with other
+    Given the following users exist:
+      | Phone Number | Male  | Female | Other | Looking For Male | Looking For Female | Looking For Other | Dob          | Looking For Minimum Age | Looking For Maximum Age | Name  |
+      | 16176060842  | false | true   | false | true             | true               | true              | 11/06/1989   | 18                      | 34                      | Becca |
+      | 16171231234  | false | false  | true  | true             | true               | true              | 11/06/1989   | 18                      | 34                      | Pat   |
+    When "18004688487" texts instalover with "other"
+    Then "18004688487" should get a text "Should we find you a date at Silvertone at 09:00PM? Reply 'ok' or 'new date' to try again."
+    When "18004688487" texts instalover with "ok"
+    Then "16171231234" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    But "16176060842" should not get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And "11111111111" should not get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+
+  Scenario: Asking for a date with anything
+    Given the following users exist:
+      | Phone Number | Male  | Female | Other | Looking For Male | Looking For Female | Looking For Other | Dob          | Looking For Minimum Age | Looking For Maximum Age | Name  |
+      | 16176060842  | false | true   | false | true             | true               | true              | 11/06/1989   | 18                      | 34                      | Becca |
+      | 16171231234  | false | false  | true  | true             | true               | true              | 11/06/1989   | 18                      | 34                      | Pat   |
+    When "18004688487" texts instalover with "whatever"
+    Then "18004688487" should get a text "Should we find you a date at Silvertone at 09:00PM? Reply 'ok' or 'new date' to try again."
+    When "18004688487" texts instalover with "ok"
+    Then "16171231234" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And "16176060842" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+    And "11111111111" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."

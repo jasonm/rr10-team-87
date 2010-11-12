@@ -82,6 +82,14 @@ class Message < ActiveRecord::Base
       handle_safeword(user)
     elsif message_text =~ /^\s*#{COMMANDS[:retry].gsub(' ','.*')}/i
       handle_retry(user)
+    elsif message_text =~ /^\s*#{COMMANDS[:women_only].gsub(' ','.*')}/i
+      handle_new_date(user, :desires_male => false, :desires_female => true, :desires_other => false)
+    elsif message_text =~ /^\s*#{COMMANDS[:men_only].gsub(' ','.*')}/i
+      handle_new_date(user, :desires_male => true, :desires_female => false, :desires_other => false)
+    elsif message_text =~ /^\s*#{COMMANDS[:other_only].gsub(' ','.*')}/i
+      handle_new_date(user, :desires_male => false, :desires_female => false, :desires_other => true)
+    elsif message_text =~ /^\s*#{COMMANDS[:anything].gsub(' ','.*')}/i
+      handle_new_date(user, :desires_male => true, :desires_female => true, :desires_other => true)
     else
       handle_unknown(user)
     end
@@ -95,7 +103,7 @@ class Message < ActiveRecord::Base
     end
   end
 
-  def self.handle_new_date(user)
+  def self.handle_new_date(user, meetup_restrictions = {})
     if within_dating_hours?
       user.founded_meetups.proposed.destroy_all
 
@@ -104,10 +112,11 @@ class Message < ActiveRecord::Base
       else
         user.offers.cancel_all
 
-        meetup = Meetup.create({
-          :first_user => user,
-          :description => DateSuggestion.next_place_and_time
-        })
+        meetup = Meetup.create(
+          meetup_restrictions.merge(
+            :first_user => user,
+            :description => DateSuggestion.next_place_and_time)
+        )
 
 
         user.tell("Should we find you a date at #{meetup.description}? Reply 'ok' or 'new date' to try again.")
@@ -122,7 +131,7 @@ class Message < ActiveRecord::Base
     if within_dating_hours?
       if meetup = user.founded_meetups.retryable.last
         meetup.unschedule!
-        user.matching.first(5).each do |matching_user|
+        user.matching_for_meetup(meetup).first(5).each do |matching_user|
           Offer.create(:offered_user => matching_user, :meetup => meetup)
         end
         QUEUE.enqueue_at(5.minutes.from_now, RejectMessageDelayer, :user_id => user.id)
@@ -149,7 +158,7 @@ class Message < ActiveRecord::Base
     meetup = user.founded_meetups.proposed.first
     if meetup
       meetup.unschedule!
-      user.matching.first(5).each do |matching_user|
+      user.matching_for_meetup(meetup).first(5).each do |matching_user|
         Offer.create(:offered_user => matching_user, :meetup => meetup)
       end
       QUEUE.enqueue_at(5.minutes.from_now, RejectMessageDelayer, :user_id => user.id)

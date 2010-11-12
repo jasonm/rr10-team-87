@@ -7,6 +7,7 @@ class Meetup < ActiveRecord::Base
   has_many :dflns
 
   after_save :schedule_jobs
+  before_validation :set_default_desired_genders
 
   validates_presence_of :first_user_id
 
@@ -96,5 +97,12 @@ class Meetup < ActiveRecord::Base
       morning_after = 1.day.from_now.beginning_of_day + 10.hours
       QUEUE.enqueue_at(morning_after, MorningAfterCheckerUpper, { :meetup_id => self.id })
     end
+  end
+
+  def set_default_desired_genders
+    self.desires_male   = !!first_user.looking_for_male   if desires_male.nil?
+    self.desires_female = !!first_user.looking_for_female if desires_female.nil?
+    self.desires_other  = !!first_user.looking_for_other  if desires_other.nil?
+    true
   end
 end

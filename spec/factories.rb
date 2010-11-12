@@ -23,3 +23,8 @@ Factory.define :scheduled_meetup, :class => Meetup do |meetup_factory|
   meetup_factory.association :second_user, :factory => :user
   meetup_factory.state 'scheduled'
 end
+
+Factory.define :proposed_meetup, :class => Meetup do |meetup_factory|
+  meetup_factory.association :first_user, :factory => :user
+  meetup_factory.state 'proposed'
+end
