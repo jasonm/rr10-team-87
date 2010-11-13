@@ -5,4 +5,11 @@ namespace :instalover do
       Message.handle_new_date(w)
     end
   end
+
+  namespace :annoy do
+    desc "Enqueue users without completed profiles for annoyance"
+    task :empty_profiles => :environment do
+      User.incomplete.each(&:start_annoyer)
+    end
+  end
 end

@@ -11,7 +11,7 @@ Feature: Motivate people to use this service
 
   Scenario: Annoy the people who have never filled out their profile
     Given the day and time is "November 12, 2010 01:00 est"
-    Given the following empty user exists:
+    And the following empty user exists:
       | phone number | secret code |
       | 18004688487  | tits        |
     And the day and time is "November 18, 2010 01:00 est"
@@ -41,6 +41,34 @@ Feature: Motivate people to use this service
     When it is 24 hours later
     And timed jobs are processed
     Then "18004688487" should not get a text whose message includes "fill out"
+
+  Scenario: Enqueue existing users for the annoyance queue
+    Given the day and time is "November 12, 2010 01:00 est"
+    And the following empty unenqueued user exists:
+      | phone number |
+      | 18004688487  |
+    And the following empty user exists:
+      | phone number |
+      | 18004688488  |
+    And the following young person exists:
+      | phone number |
+      | 18004688489  |
+    And the day and time is "November 18, 2010 01:00 est"
+    Then "18004688487" should not get a text whose message includes "fill out"
+    Then "18004688488" should not get a text whose message includes "fill out"
+    Then "18004688489" should not get a text whose message includes "fill out"
+    When it is 24 hours later
+    And timed jobs are processed
+    Then "18004688487" should not get a text whose message includes "fill out"
+    Then "18004688488" should get a text whose message includes "fill out"
+    Then "18004688489" should not get a text whose message includes "fill out"
+    When I run the rake task "instalover:annoy:empty_profiles"
+    And it is 7 days later
+    And I clear the text message history
+    And timed jobs are processed
+    Then "18004688487" should get a text whose message includes "fill out"
+    Then "18004688488" should get a text whose message includes "fill out"
+    Then "18004688489" should not get a text whose message includes "fill out"
 
   @wip
   Scenario: Ask out those who have asked for one date on behalf of those who have asked out none

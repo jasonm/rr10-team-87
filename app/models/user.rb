@@ -67,6 +67,10 @@ class User < ActiveRecord::Base
     where('users.id <> ?', user.id)
   end
 
+  def self.incomplete
+    where('dob IS NULL')
+  end
+
   # The secret code that the user uses to prove that they have that phone
   # number.
   def secret_code
@@ -119,6 +123,10 @@ class User < ActiveRecord::Base
 
   def incomplete?
     dob.nil?
+  end
+
+  def start_annoyer
+    QUEUE.enqueue_at(7.days.from_now, ProfileAnnoyer, :user_id => self.id)
   end
 
   protected
@@ -203,9 +211,5 @@ class User < ActiveRecord::Base
     if just_updated_for_the_first_time?
       self.tell("Congrats, #{self.name}, you are now an instalover.  Text '#{COMMANDS[:new_date]}' to get a new date.")
     end
-  end
-
-  def start_annoyer
-    QUEUE.enqueue_at(7.days.from_now, ProfileAnnoyer, :user_id => self.id)
   end
 end
