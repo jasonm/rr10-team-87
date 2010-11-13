@@ -20,7 +20,7 @@ gem 'SystemTimer'
 
 gem 'resque'
 gem 'resque-restriction'
-gem 'resque-scheduler'
+gem 'resque-scheduler', :require => 'resque_scheduler'
 
 gem "capistrano"
 

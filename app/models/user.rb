@@ -1,5 +1,3 @@
-require 'resque_scheduler'
-
 class User < ActiveRecord::Base
   attr_protected :secret_code, :phone_number
   validates_presence_of :phone_number
