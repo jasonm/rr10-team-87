@@ -8,6 +8,10 @@ Factory.define :user do |u|
   u.name            "Jenny"
 end
 
+Factory.define :empty_user, :class => User do |user_factory|
+  user_factory.phone_number { Factory.next :phone_number }
+end
+
 Factory.define :young_person, :parent => :user do |u|
   u.dob                     { 21.years.ago }
   u.looking_for_minimum_age 20

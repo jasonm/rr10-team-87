@@ -11,6 +11,8 @@
                     Gender breakdown
 * HTTP auth for /secretsecret
 
+* Bug people who have never filled out their profile. This is implemented but does not work for existing users.
+
 
 Lead generation ideas:
 * scrape craigslist 

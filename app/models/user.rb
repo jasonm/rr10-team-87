@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   before_validation :secret_code, :on => :create
   before_validation :normalize_phone_number
-  after_create :deliver_secret_code
+  after_create :deliver_secret_code, :start_annoyer
   after_save :deliver_confirmation_congratulations
 
   has_many :founded_meetups, :class_name => 'Meetup', :foreign_key => 'first_user_id', :dependent => :destroy
@@ -117,6 +117,10 @@ class User < ActiveRecord::Base
     Message.deliver(self.phone_number, msg)
   end
 
+  def incomplete?
+    dob.nil?
+  end
+
   protected
 
   def normalize_phone_number
@@ -199,5 +203,9 @@ class User < ActiveRecord::Base
     if just_updated_for_the_first_time?
       self.tell("Congrats, #{self.name}, you are now an instalover.  Text '#{COMMANDS[:new_date]}' to get a new date.")
     end
+  end
+
+  def start_annoyer
+    QUEUE.enqueue_at(7.days.from_now, ProfileAnnoyer, :user_id => self.id)
   end
 end

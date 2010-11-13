@@ -21,10 +21,9 @@ class FakeResque
   end
 
   def self.run_timed_jobs(future_time)
-    while !self.delayed_queue.empty?
-      args = self.delayed_queue.pop
-      timestamp, klass, args = args.shift, args.shift, args.shift
-      if (future_time - timestamp) >= 0
+    self.delayed_queue.each do |timestamp, klass, args|
+      time_diff = future_time - timestamp
+      if  time_diff < 1 && time_diff >= 0
         klass.send(:perform, *JSON.parse(args))
       end
     end

@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_filter :edit_empty_profile, :only => :create
+
   def new
     @user = User.new
   end
@@ -26,5 +28,12 @@ class UsersController < ApplicationController
       @user.errors[:secret_code_confirmation] = @user.errors[:secret_code]
       render :action => :edit
     end
+  end
+
+  protected
+
+  def edit_empty_profile
+    user = User.find_by_phone_number(params[:user][:phone_number])
+    redirect_to edit_user_path(user.id) if user.try(:incomplete?)
   end
 end
