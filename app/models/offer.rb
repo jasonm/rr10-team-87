@@ -18,6 +18,9 @@ class Offer < ActiveRecord::Base
   end
 
   def accept!
+    self.schedule_meetup!
+    self.offered_user.deliver_date(self.meetup.first_user)
+    self.meetup.first_user.deliver_date(self.meetup.second_user)
     self.state = 'accepted'
     self.save!
   end
