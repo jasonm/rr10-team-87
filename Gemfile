@@ -15,7 +15,7 @@ gem "mysql"
 gem "flutie"
 gem "dynamic_form"
 gem 'tropo-webapi-ruby'
-gem "addressable"
+gem "addressable", :require => 'addressable/uri'
 gem 'SystemTimer'
 
 gem 'resque'
