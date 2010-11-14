@@ -43,6 +43,12 @@ class User < ActiveRecord::Base
           user.male, user.female, user.other, user.age_in_years, user.age_in_years)
   end
 
+  def self.looking_for_sort_of_like(user)
+    where('(users.looking_for_male = ? OR users.looking_for_female = ? OR users.looking_for_other = ?) AND ? >= users.looking_for_minimum_age AND ? <= users.looking_for_maximum_age',
+          user.male, user.female, user.other, user.age_in_years + 2, user.age_in_years - 2)
+
+  end
+
   def self.men
     where('users.male')
   end
@@ -105,6 +111,17 @@ class User < ActiveRecord::Base
       looking_for_gender(meetup).
       exclude(self).
       sort_by_least_offered
+  end
+
+  def skeeze_matching_for_meetup(meetup)
+    User.
+      within_age_range(self.looking_for_minimum_age, self.looking_for_maximum_age).
+      looking_for_sort_of_like(self).
+      without_offers.
+      without_founded_meetups_in_progress.
+      looking_for_gender(meetup)#.
+     # exclude(self).
+     # sort_by_least_offered
   end
 
   def deliver_secret_code

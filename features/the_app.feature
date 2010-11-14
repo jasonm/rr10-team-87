@@ -233,3 +233,19 @@ Feature: The whole app
     Then "16171231234" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
     And "16176060842" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
     And "11111111111" should get a text "Want to go on a date with Emma at Silvertone at 09:00PM? Reply 'accept' or ignore."
+
+  Scenario: User skeezes to increase the matches they can get
+    Given the following users exist:
+      | Phone Number | Male  | Female | Other | Looking For Male | Looking For Female | Looking For Other | Dob          | Looking For Minimum Age | Looking For Maximum Age | Name  |
+      | 16669996669  | false | true   | false | true             | true               | true              | 09/08/1984   | 18                      | 30                      | Emma  |
+      | 19991119991  | false | true   | false | false            | true               | false             | 11/06/1990   | 18                      | 30                      | Tatu  |
+    When "16669996669" texts instalover with "woman"
+    Then "16669996669" should get a text whose message includes "Should we find you a date"
+    When "16669996669" texts instalover with "OK"
+    Then "19991119991" should get a text whose message includes "Want to go on a date with Emma"
+    When jobs in 5 minutes from now are processed
+    Then "16669996669" should get a text whose message includes "every number in our little black book"
+    When "16669996669" texts instalover with "woman"
+    Then "16669996669" should get a text whose message includes "Should we find you a date"
+    When "16669996669" texts instalover with "skeeze"
+    Then "19991119991" should get a text whose message includes "Want to go on a date with Emma"

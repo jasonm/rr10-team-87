@@ -74,6 +74,8 @@ class Message < ActiveRecord::Base
       handle_new_date(user)
     elsif message_text =~ /^\s*#{COMMANDS[:ok].gsub(' ','.*')}/i
       handle_ok(user)
+    elsif message_text =~ /^\s*#{COMMANDS[:skeeze].gsub(' ','.*')}/i
+      handle_ok(user, :skeeze => true)
     elsif message_text =~ /^\s*#{COMMANDS[:accept].gsub(' ','.*')}/i
       handle_accept(user)
     elsif message_text =~ /^\s*#{COMMANDS[:sext].gsub(' ','.*')}\s*(.*)/i
@@ -154,11 +156,29 @@ class Message < ActiveRecord::Base
     user.tell("Outside of the dating hours: #{DATING_START_STRING} to #{DATING_END_STRING}. Please try again then!")
   end
 
-  def self.handle_ok(user)
+  def self.handle_ok(user, meetup_restrictions = {})
     meetup = user.founded_meetups.proposed.first
     if meetup
       meetup.unschedule!
-      user.matching_for_meetup(meetup).first(5).each do |matching_user|
+      if meetup_restrictions[:skeeze]
+        matches = user.skeeze_matching_for_meetup(meetup).first(5)
+      else
+        matches = user.matching_for_meetup(meetup).first(5)
+      end
+      matches.each do |matching_user|
+        Offer.create(:offered_user => matching_user, :meetup => meetup)
+      end
+      QUEUE.enqueue_at(5.minutes.from_now, RejectMessageDelayer, :user_id => user.id)
+    else
+      handle_unknown(user)
+    end
+  end
+
+  def self.handle_skeeze(user)
+    meetup = user.founded_meetups.proposed.first
+    if meetup
+      meetup.unschedule!
+      user.skeeze_matching_for_meetup(meetup).first(5).each do |matching_user|
         Offer.create(:offered_user => matching_user, :meetup => meetup)
       end
       QUEUE.enqueue_at(5.minutes.from_now, RejectMessageDelayer, :user_id => user.id)
