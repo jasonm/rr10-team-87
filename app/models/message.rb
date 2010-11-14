@@ -32,7 +32,7 @@ class Message < ActiveRecord::Base
     QUEUE.enqueue(MessageSender, "#{TROPO_URL}/sessions?#{param_string}")
   end
 
-  ### TODO: unused?
+  ### TODO: untested
   def self.json_for_relay(message_params)
     to = message_params[:to]
     message = message_params[:message]
