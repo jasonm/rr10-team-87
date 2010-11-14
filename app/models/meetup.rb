@@ -82,16 +82,6 @@ class Meetup < ActiveRecord::Base
     state == "scheduled"
   end
 
-  ### TODO: unused?
-  def unscheduled?
-    state == "unscheduled"
-  end
-
-  ### TODO: unused?
-  def proposed?
-    state == "proposed"
-  end
-
   private
 
   def schedule_jobs
