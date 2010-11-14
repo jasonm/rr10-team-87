@@ -49,14 +49,19 @@ class User < ActiveRecord::Base
 
   end
 
+  # Produce only the users who identify as at least male. Currently unused but
+  # interesting from irb. TODO: Use from a stats page.
   def self.men
     where('users.male')
   end
 
+  # Produce only the users who identify as at least female. TODO: Use from a stats page.
   def self.women
     where('users.female')
   end
 
+  # Produce only the users who identify as at least non-male, non-female.
+  # Currently unused but interesting from irb. TODO: Use from a stats page.
   def self.other
     where('users.other')
   end

@@ -32,6 +32,7 @@ class Message < ActiveRecord::Base
     QUEUE.enqueue(MessageSender, "#{TROPO_URL}/sessions?#{param_string}")
   end
 
+  ### TODO: unused?
   def self.json_for_relay(message_params)
     to = message_params[:to]
     message = message_params[:message]
@@ -142,6 +143,7 @@ class Message < ActiveRecord::Base
         handle_new_date(user)
       end
     else
+      ### TODO: untested
       outside_dating_hours(user)
     end
   end

@@ -49,6 +49,7 @@ class Meetup < ActiveRecord::Base
       if first_user_id == user.id
         second_user
       elsif second_user_id == user.id
+        ### TODO: untested
         first_user
       end
     end
@@ -59,6 +60,7 @@ class Meetup < ActiveRecord::Base
     self.save!
   end
 
+  ### TODO: Use this when the user asks for a new date
   def cancel!
     self.state = "cancelled"
     self.save!
@@ -80,10 +82,12 @@ class Meetup < ActiveRecord::Base
     state == "scheduled"
   end
 
+  ### TODO: unused?
   def unscheduled?
     state == "unscheduled"
   end
 
+  ### TODO: unused?
   def proposed?
     state == "proposed"
   end

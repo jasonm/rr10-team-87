@@ -5,6 +5,7 @@ class MorningAfterCheckerUpper
     meetup_id = args_hash["meetup_id"]
 
     if ! Meetup.exists?(meetup_id)
+      ### TODO: untested
       raise "MorningAfterCheckerUpper ran for meetup_id #{args_hash["meetup_id"]} but could not find that meetup"
     end
 

@@ -1,7 +1,3 @@
-Then 'I see a description of how to use the Web site' do
-  page.should have_content('you want a date')
-end
-
 Then 'I see a welcome page' do
   page.should have_content('text these commands')
 end

@@ -41,10 +41,6 @@ When 'I fill in my name as "$name"' do |name|
   fill_in 'user[name]', :with => name
 end
 
-When 'I fill in my description as "$description"' do |description|
-  fill_in 'user[description]', :with => description
-end
-
 When 'I check my gender as male' do
   check 'user[male]'
 end
