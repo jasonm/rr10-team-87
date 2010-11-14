@@ -1,4 +1,4 @@
-class Message
+module Message
   DATING_START_STRING = '5PM EDT'
   DATING_END_STRING   = '10:59PM EDT'
   DATING_START        = Time.zone.parse(DATING_START_STRING)
